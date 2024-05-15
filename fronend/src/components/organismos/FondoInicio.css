@@ -1,0 +1,65 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.iniciossss{
+  width: 100%;
+  height: 100px;
+  color: white;
+  padding: 4px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.contenerdor{
+  width: 100%;
+  height: 100vh;
+  background:  url(../../assets/ImagenFondoCropLink.png);
+  background-size: cover;
+  background-position: center;
+  color: rgb(48, 43, 43);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo{
+  width: 120px;
+  height: 90px;
+}
+.iniciossss .ulua .liasss {
+  display: inline-block;
+  list-style: none;
+  margin: 5px 10px;
+  font-size: 16px;
+}
+
+.texto{
+  text-align: center;
+  max-width: 800px;
+}
+.texto h1 {
+  font-size: 70px;
+  color: white;
+  font-weight: 600;
+} 
+.texto p{
+  color: white;
+  font-size: 20px;
+  max-width: 700px;
+  margin: 10px  20px;
+  line-height: 1.4;
+}
+
+.button {
+ background: #006000;
+}
+
+.buttonr{
+  border: transparent;
+}
+

@@ -1,0 +1,15 @@
+.contenidoempleado {
+    margin-top: 45px; 
+    margin-left: 200px;
+    padding-top: 30px;
+    height: 100vh; 
+    overflow-x: hidden; 
+    display: flex;
+    flex-direction: row;
+  }
+  .contenido-extendidoempleado {
+    margin-left: 220px; 
+    width: calc(100% - 220px);
+  }
+  
+  
