@@ -1,0 +1,76 @@
+{
+  "hash": "47570950",
+  "configHash": "307920c4",
+  "lockfileHash": "a5f49c47",
+  "browserHash": "2c8a4381",
+  "optimized": {
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "48acad86",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "4925e698",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "0a3332b0",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "f1887c8f",
+      "needsInterop": false
+    },
+    "@nextui-org/react": {
+      "src": "../../node_modules/@nextui-org/react/dist/index.mjs",
+      "file": "@nextui-org_react.js",
+      "fileHash": "45b55968",
+      "needsInterop": false
+    },
+    "sweetalert2": {
+      "src": "../../node_modules/sweetalert2/dist/sweetalert2.all.js",
+      "file": "sweetalert2.js",
+      "fileHash": "e8a863ba",
+      "needsInterop": true
+    },
+    "@fortawesome/react-fontawesome": {
+      "src": "../../node_modules/@fortawesome/react-fontawesome/index.es.js",
+      "file": "@fortawesome_react-fontawesome.js",
+      "fileHash": "979e9d7a",
+      "needsInterop": false
+    },
+    "@fortawesome/free-solid-svg-icons": {
+      "src": "../../node_modules/@fortawesome/free-solid-svg-icons/index.mjs",
+      "file": "@fortawesome_free-solid-svg-icons.js",
+      "fileHash": "2639cbcb",
+      "needsInterop": false
+    },
+    "@nextui-org/select": {
+      "src": "../../node_modules/@nextui-org/select/dist/index.mjs",
+      "file": "@nextui-org_select.js",
+      "fileHash": "8a2f735c",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-35VKS57S": {
+      "file": "chunk-35VKS57S.js"
+    },
+    "chunk-KB4VQC4Z": {
+      "file": "chunk-KB4VQC4Z.js"
+    },
+    "chunk-PMYDY72F": {
+      "file": "chunk-PMYDY72F.js"
+    },
+    "chunk-ZS7NZCD4": {
+      "file": "chunk-ZS7NZCD4.js"
+    }
+  }
+}
