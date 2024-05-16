@@ -1,11 +1,11 @@
 import React from 'react';
 import FondoInicio from '../organismos/FondoInicio';
 
-const Inicio = () => {
+const InicioF = () => {
     return (
         <FondoInicio />
     );
 };
 
-export default Inicio;
+export default InicioF;
 

@@ -1,42 +1,78 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.nav-menu.active{
+  left: 0;
+  transition: 550ms;
+  scroll-behavior: smooth;
+  z-index: 500;
+  overflow-x: hidden;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+.nav-menu{
+  background-color: #BEC3C7;
+  width: 350px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;
+  scroll-behavior: smooth;
+  z-index: 500;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* .nav-menu{
+  background-color: #BEC3C7;
+  width: 350px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 350ms;
+  scroll-behavior: smooth;
+  left: -100%;
+} */
+
+.nav-menu-user.active{
+  right: 0;
+  transition: 550ms;
+  scroll-behavior: smooth;
+  z-index: 500;
+  overflow-x: hidden;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.nav-menu-user{
+  background-color: #035020;
+  width: 250px;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  transition: 850ms;
+  scroll-behavior: smooth;
+  z-index: 500;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.formLogin{
+  position: absolute;
+  opacity: 0;
+  z-index: 100;
 }
 
-.card {
-  padding: 2em;
+.formLogin.active{
+  opacity: 1;
+  width: 1900px;
+  margin: 0;
+  z-index: 1;
+  top: 70px;
+  left: 150px;
 }
 
-.read-the-docs {
-  color: #888;
+.fondo{
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
 }
