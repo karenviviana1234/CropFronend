@@ -4,6 +4,7 @@ import { InicioSesion } from "./components/pages/InicarSesion.jsx";
 import Registro from "./components/pages/Registro.jsx";
 import CambiarContra from "./components/pages/cambiarcontra.jsx";
 import Recuperarcontra from "./components/pages/Recuperarcontra.jsx";
+import Hola from './components/pages/nn.jsx';
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/registro" element={<Registro />} />
         <Route path="/recuperar" element={<Recuperarcontra />} />
         <Route path="/cambia" element={<CambiarContra />} />
+        <Route path="/nada" element={<Hola/>} />
 
 
       </Routes>

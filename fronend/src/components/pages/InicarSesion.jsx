@@ -83,8 +83,8 @@ export const InicioSesion = () => {
             <Icon icon={v.iconoVolver} className='w-6 h-6'/>
         </Link>
           <span className="mb-3 text-4xl font-bold">Inicio De Sesion</span>
-          <div>
-            <img src={v.imageLogo} style={{ width: '190px', height: '150px', marginLeft: '50px' }} alt="" />
+          <div style={{display: 'flex', justifyContent: 'center'}}>
+            <img src={v.imageLogoV} style={{ width: '120px', height: '120px' }} alt="" />
           </div>
           <div className='py-2'>
             <Input

@@ -1,15 +1,13 @@
-.contenidoempleado {
-    margin-top: 45px; 
-    margin-left: 200px;
-    padding-top: 30px;
-    height: 100vh; 
-    overflow-x: hidden; 
-    display: flex;
-    flex-direction: row;
-  }
-  .contenido-extendidoempleado {
-    margin-left: 220px; 
-    width: calc(100% - 220px);
-  }
-  
-  
+.contenid{
+  margin-top: 45px; /* Altura del header */
+  height: auto; /* Usar altura completa de la ventana */
+  overflow-x: hidden; /* Ocultar la barra de desplazamiento en el eje x */
+  margin-left: 60px;
+
+}
+.contenido-extendid {
+  margin-left: 220px; /* Ajusta el margen izquierdo cuando el sidebar esté abierto */
+  width: calc(100% - 220px); /* Ajustar el ancho del contenido cuando el sidebar esté abierto */
+}
+
+
