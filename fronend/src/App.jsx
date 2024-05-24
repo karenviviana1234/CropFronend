@@ -10,6 +10,7 @@ import Hola from './components/pages/nn.jsx';
 
 
 
+
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/recuperar" element={<Recuperarcontra />} />
         <Route path="/cambia" element={<CambiarContra />} />
         <Route path="/nada" element={<Hola/>} />
+
 
 
       </Routes>
