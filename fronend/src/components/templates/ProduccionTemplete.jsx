@@ -1,16 +1,15 @@
-import React from 'react'
+import React from 'react';
 import FormProduccion from '../moleculas/FormProduccion.jsx';
-import AccionesModal from '../organismos/ModalAcciones';
+import { ModalAcciones } from '../organismos/Modal.jsx';
 
-function ModalProdu ({ open, onClose, handleSubmit, actionLabel, title, initialData, mode}){
-
+function ProduccionModal({ open, onClose, handleSubmit, actionLabel, title, initialData, mode }) {
     return (
-      <>
-      <AccionesModal open={open} title={title} onClose={onClose} > 
-        <FormProduccion initialData={initialData} mode={mode} handleSubmit={handleSubmit} onClose={onClose} actionLabel={actionLabel} />
-      </AccionesModal>
-      </>
-    )
-} 
+        <>
+            <ModalAcciones open={open} title={title} onClose={onClose} >
+                <FormProduccion initialData={initialData} mode={mode} handleSubmit={handleSubmit} onClose={onClose} actionLabel={actionLabel} />
+            </ModalAcciones>
 
-export default ModalProdu
+        </>
+    )
+}
+export default ProduccionModal

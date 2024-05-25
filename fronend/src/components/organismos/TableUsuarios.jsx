@@ -95,9 +95,14 @@ export default function Ejemplo({ clickEditar, clickDesactivar, clickRegistrar, 
     const cellValue = usuario[columnKey];
 
 
-    const handleUpdateClick = (identificacion) => {
-      clickEditar(identificacion)
+    const handleUpdateClick = (identificacion, usuario) => {
+      localStorage.setItem('idUser', identificacion);
+      clickEditar(identificacion, usuario);
+      console.log('ID del usuario seleccionado:', identificacion);
+      console.log('Datos del usuario seleccionado:', usuario);
     };
+
+
 
     switch (columnKey) {
       case "estado":
@@ -111,7 +116,7 @@ export default function Ejemplo({ clickEditar, clickDesactivar, clickRegistrar, 
           <div className="relative flex justify-end items-center gap-2">
             <Dropdown>
               <div className="flex items-center gap-2">
-                <ButtonActualizar onClick={() => handleUpdateClick(usuario.identificacion)} />
+                <ButtonActualizar onClick={() => handleUpdateClick(usuario.identificacion, usuario)} />
                 <ButtonDesactivar
                   onClick={() => clickDesactivar(usuario.identificacion)}
                   estado={usuario.estado}
@@ -199,13 +204,13 @@ export default function Ejemplo({ clickEditar, clickDesactivar, clickRegistrar, 
                   ))}
                 </DropdownMenu>
               </Dropdown>
-              <Button className="z-1 mr-40 text-white bg-[#006000] " style={{position:'relative'}} endContent={<PlusIcon />} onClick={clickRegistrar}>
+              <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={clickRegistrar}>
                 Registrar
               </Button>
             </div>
           </div>
           <div className="flex justify-between items-center z-10 mr-40  mt-2">
-          <span className="text-white text-small">Total {usuarios.length} Resultados</span>
+            <span className="text-white text-small">Total {usuarios.length} Resultados</span>
             <label className="flex items-center text-white text-small">
               Columnas por página:
               <select
@@ -255,7 +260,7 @@ export default function Ejemplo({ clickEditar, clickDesactivar, clickRegistrar, 
   }, [items.length, page, pages, hasSearchFilter]);
 
   return (
-    <div className="flex items-center justify-center p-5 m-10">
+    <div className="flex items-center justify-center p-5">
       <Table
         aria-label="Tabla"
         isHeaderSticky
