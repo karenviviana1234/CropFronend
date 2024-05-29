@@ -33,7 +33,7 @@ function App() {
       {/*   <Sidebar /> */}
       <Routes>
         
-
+{/* no pana */}
           <Route path="/" element={<InicioF />} />
           
           <Route path="/iniciosesion" element={<InicioSesion />} />
