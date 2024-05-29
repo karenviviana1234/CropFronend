@@ -5,6 +5,7 @@ import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import VariedadesContext from '../../context/VariedadContext.jsx';
+import Header from '../organismos/Header/Header.jsx';
 import {
     Table,
     TableHeader,
@@ -421,7 +422,7 @@ export function Variedades() {
                 })
             } else if (mode === 'update') {
 
-                await axiosClient.put(`/actualizarVariedad/${idVariedad.id}`, formData).then((response) => {
+                await axiosClient.put(`/actualizarVariedad/${idVariedad.id_variedad}`, formData).then((response) => {
                     console.log(response);
                     if (response.status === 200) {
                         Swal.fire({
@@ -455,6 +456,8 @@ export function Variedades() {
 
         <>
             <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}
@@ -473,6 +476,7 @@ export function Variedades() {
                     data={data}
                     variedades={variedades}
                 />
+            </div>
             </div>
         </>
     )

@@ -62,21 +62,28 @@ const FormVariedades = ({ mode, initialData, handleSubmit, onClose, actionLabel 
               name="nombrevariedad"
               value={nombreVariedad}
               onChange={(e) => setNombreVariedad(e.target.value)}
-              required={true}
+              required
+              pattern="^[a-zA-Z\s]{1,20}$"
+              title="El nombre de la variedad debe tener máximo 20 caracteres, y solo puede contener letras y espacios"
             />
           </div>
-          <div className='py-2'>
-            <Select
+          <div className="py-2">
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800"></span>
+          <select
+            className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               label='tipo de cultivo'
               name='tipo_cultivo'
-              className='w-80'
               value={tipoCultivoOp}
               onChange={(e) => setTipoCultivoOp(e.target.value)}
+               required={true}
             >
+                  <option value="" hidden className="text-gray-600">
+              Seleccionar Finca
+            </option>
               {tipoCultivo.map((item) => (
-                <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>
+                <option key={item.value} value={item.value}>{item.label}</option>
               ))}
-            </Select>
+            </select>
           </div>
 
           <ModalFooter>

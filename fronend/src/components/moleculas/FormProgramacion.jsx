@@ -1,76 +1,102 @@
-import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState, useContext } from 'react';
 import { ModalFooter, Button, Input, Select, SelectItem } from "@nextui-org/react";
+import axiosClient from '../axiosClient'; // Asegúrate de importar axiosClient si es necesario
 
-const FormProgramacion = ({ actionLabel, handleSubmit, initialdata, mode, onClose }) => {
-  const token = localStorage.getItem('token');
-  const [estado, setEstado] = useState('activo');
-  const fecha_inicio = useRef(null);
-  const fecha_fin = useRef(null);
-  const fk_identificacion = useRef(null);
-  const fk_id_actividad = useRef(null);
-  const fk_id_variedad = useRef(null);
+import ProgramacionesContext from './../../context/ProgramacionesContext';
 
-  const EstadoProgramacion = [
-    { value: 'activo', label: 'Activo' },
-    { value: 'inactivo', label: 'Inactivo' },
-    { value: 'proceso', label: 'Proceso' },
-    { value: 'terminado', label: 'Terminado' },
-  ];
+const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
+
+  const [variedades, setVariedades] = useState([]);
+  const [cultivos, setCultivos] = useState([]);
+  const [actividad, setActividad] = useState([]);
+  const [usuario, setUsuarios] = useState([]);
+  const [estado, setEstado] = useState([]);
+
+  const [estadoOp, setEstadoOp] = useState('');
+  const [fechaInicio, setFechaInicio] = useState('');
+  const [fechaFin, setFechaFin] = useState('');
+  const [identificacionFK, setIdentificacionFK] = useState('');
+  const [actividadFK, setActividadFK] = useState('');
+  const [variedadFK, setVariedadFK] = useState('');
+  const [cultivoFK, setCultivoFK] = useState('');
+  const { idProgramacion } = useContext(ProgramacionesContext);
 
   useEffect(() => {
-    if (mode === 'update' && initialdata) {
-      fecha_inicio.current.value = initialdata.fecha_inicio;
-      fecha_fin.current.value = initialdata.fecha_fin;
-      fk_identificacion.current.value = initialdata.fk_identificacion;
-      fk_id_actividad.current.value = initialdata.fk_id_actividad;
-      fk_id_variedad.current.value = initialdata.fk_id_variedad;
-      setEstado(initialdata.estado);
+    const enumData = [
+      { value: 'activo', label: 'Activo' },
+      { value: 'inactivo', label: 'Inactivo' },
+      { value: 'proceso', label: 'Proceso' },
+      { value: 'terminado', label: 'Terminado' },
+    ];
+    setEstado(enumData);
+  }, []);
+
+  useEffect(() => {
+    axiosClient.get('/usuario/listarUsuarios').then((response) => {
+      const usuarioFilter = response.data.filter(usuario => usuario.estado === 'activo');
+      console.log(response.data)
+      setUsuarios(usuarioFilter);
+    });
+  }, []);
+
+  useEffect(() => {
+    axiosClient.get('/listara').then((response) => {
+      const actividadFilter = response.data.filter(actividad => actividad.estado === 'activo');
+      console.log(response.data)
+      setActividad(actividadFilter);
+    });
+  }, []);
+
+  useEffect(() => {
+    axiosClient.get('/listarVariedades').then((response) => {
+      const variedadFilter = response.data.filter(variedad => variedad.estado === 'activo');
+      console.log(response.data)
+      setVariedades(variedadFilter);
+    });
+  }, []);
+
+  useEffect(() => {
+    axiosClient.get('/listarCultivos').then((response) => {
+      const cultivoFilter = response.data.filter(cultivo => cultivo.estado === 'activo');
+      console.log('API Cultivo:', response.data);
+      setCultivos(cultivoFilter);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'update' && idProgramacion) {
+      setFechaFin(idProgramacion.fecha_inicio);
+      setFechaFin(idProgramacion.fecha_fin);
+      setIdentificacionFK(idProgramacion.fk_identificacion);
+      setActividadFK(idProgramacion.fk_id_actividad);
+      setVariedadFK(idProgramacion.fk_id_variedad);
+      setCultivoFK(idProgramacion.fk_id_cultivo);
+      setEstadoOp(idProgramacion.estado);
     }
-  }, [mode, initialdata]);
+  }, [mode, idProgramacion]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-    const datosForm = {
-      fecha_inicio: new Date(fecha_inicio.current.value),
-      fecha_fin: new Date(fecha_fin.current.value),
-      fk_identificacion: parseInt(fk_identificacion.current.value),
-      fk_id_actividad: parseInt(fk_id_actividad.current.value),
-      fk_id_variedad: parseInt(fk_id_variedad.current.value),
-      estado: estado,
-    };
-
     try {
-      handleSubmit(datosForm, e);
+      const formData = {
+        fecha_inicio: fechaInicio,
+        fecha_fin: fechaFin,
+        fk_identificacion: identificacionFK,
+        fk_id_actividad: actividadFK,
+        fk_id_variedad: variedadFK,
+        fk_id_cultivo: cultivoFK,
+        estado: estadoOp,
+      };
+      handleSubmit(formData, e);
     } catch (error) {
-      console.log('Error al conectar con el server ' + error);
+      console.log(error);
+      alert('Hay un error en el sistema ' + error);
     }
   };
 
-  const [usuario, setUsuarios] = useState([]);
-  useEffect(() => {
-    axios.get('http://localhost:3000/usuario/listarUsuarios', { headers: { token: token } }).then((response) => {
-      const usuarioFilter = response.data.filter(usuario => usuario.estado === 'activo');
-      setUsuarios(usuarioFilter);
-    });
-  }, [token]);
 
-  const [actividad, setActividad] = useState([]);
-  useEffect(() => {
-    axios.get('http://localhost:3000/listara', { headers: { token: token } }).then((response) => {
-      const actividadFilter = response.data.filter(actividad => actividad.estado === 'activo');
-      setActividad(actividadFilter);
-    });
-  }, [token]);
 
-  const [variedades, setVariedades] = useState([]);
-  useEffect(() => {
-    axios.get('http://localhost:3000/listarVariedades', { headers: { token: token } }).then((response) => {
-      const variedadFilter = response.data.filter(variedad => variedad.estado === 'activo');
-      setVariedades(variedadFilter);
-    });
-  }, [token]);
+
 
   return (
     <>
@@ -78,84 +104,111 @@ const FormProgramacion = ({ actionLabel, handleSubmit, initialdata, mode, onClos
         <div className='ml-5 align-items-center '>
           <div className='py-2'>
             <Input
-              className='w-80'
               type="date"
-              label='Ingrese la fecha inicial de la variable'
-              id='fecha_inicio'
-              name="fecha_inicio"
-              ref={fecha_inicio}
+              label="Fecha inicial"
+              className='w-80'
+              id='fecahinicio'
+              name="fecahincio"
+              value={fechaInicio}
+              onChange={(e) => setFechaInicio(e.target.value)}
               required={true}
             />
           </div>
           <div className='py-2'>
             <Input
-              className='w-80'
               type="date"
-              label='Ingrese la fecha final de la variable'
-              id='fecha_fin'
-              name="fecha_fin"
-              ref={fecha_fin}
+              label="Fecha inicial"
+              className='w-80'
+              id='fecahinicio'
+              name="fecahincio"
+              value={fechaFin}
+              onChange={(e) => setFechaFin(e.target.value)}
               required={true}
             />
           </div>
           <div className='py-2'>
-            <Select
-              label='Usuarios'
-              className="w-80"
+            <select
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               name="idusuario"
-              ref={fk_identificacion}
+              value={identificacionFK}
+              onChange={(e) => setIdentificacionFK(e.target.value)}
               required={true}
             >
+              <option value="" disabled hidden>Seleccionar usuario</option>
               {usuario.map(usua => (
-                <SelectItem key={usua.identificacion} value={usua.identificacion}>
+                <option key={usua.identificacion} value={usua.identificacion}>
                   {usua.nombre}
-                </SelectItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           <div className='py-2'>
-            <Select
-              label='Actividad'
-              className="w-80"
-              name="idactividad"
-              ref={fk_id_actividad}
+            <select
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              id='fk_id_actividad'
+              name='fk_id_actividad'
+              value={actividadFK}
+              onChange={(e) => setActividadFK(e.target.value)}
               required={true}
             >
+              <option value="" disabled hidden>Seleccionar actividad</option>
               {actividad.map(acti => (
-                <SelectItem key={acti.id_actividad} value={acti.id_actividad}>
+                <option key={acti.id_actividad} value={acti.id_actividad}>
                   {acti.nombre_actividad}
-                </SelectItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           <div className='py-2'>
-            <Select
-              label='Variedad'
-              name="idvariedad"
-              id=""
-              ref={fk_id_variedad}
+            <select
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              id='fk_id_actividad'
+              name='fk_id_actividad'
+              value={cultivoFK}
+              onChange={(e) => setCultivoFK(e.target.value)}
               required={true}
             >
-              {variedades.map(variedad => (
-                <SelectItem key={variedad.id_variedad} value={variedad.id_variedad}>
-                  {variedad.nombre_variedad}
-                </SelectItem>
+              <option value="" disabled hidden>Seleccionar cultivo</option>
+              {cultivos.map(culti => (
+                <option key={culti.id_cultivo} value={culti.id_cultivo}>
+                  {culti.cantidad_sembrada}
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           <div className='py-2'>
-            <Select
-              label='Estado'
-              className="w-80"
-              value={estado}
-              onChange={(e) => setEstado(e.target.value)}
+            <select
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              id='fk_id_variedad'
+              name='fk_id_variedad'
+              value={variedadFK}
+              onChange={(e) => setVariedadFK(e.target.value)}
+              required
             >
-              {EstadoProgramacion.map((estado) => (
-                <SelectItem key={estado.value} value={estado.value}>
-                  {estado.label}
-                </SelectItem>
+              <option value="" disabled hidden>Seleccionar variedad</option>
+              {variedades.map(variedad => (
+                <option key={variedad.id_variedad} value={variedad.id_variedad}>
+                  {variedad.nombre_variedad}
+                </option>
               ))}
-            </Select>
+            </select>
+          </div>
+          <div className='py-2'>
+            <select
+              label='Estado'
+
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              value={estadoOp}
+              onChange={(e) => setEstadoOp(e.target.value)}
+              required
+            >
+              <option value="" disabled hidden>Seleccionar estado</option>
+              {estado.map((item) => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
           </div>
           <ModalFooter>
             <Button color="danger" variant="flat" onPress={onClose}>

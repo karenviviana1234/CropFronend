@@ -5,6 +5,7 @@ import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import costosContext from '../../context/CostosContext.jsx';
+import Header from '../organismos/Header/Header.jsx';
 import {
     Table,
     TableHeader,
@@ -206,24 +207,24 @@ export function Costos() {
                                     </DropdownMenu>
                                 </Dropdown>
                                 <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
-                  Registrar
-                </Button>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-default-400 text-small">Total {costos.length} Resultados</span>
-              <label className="flex items-center text-default-400 text-small">
-                Columnas por página:
-                <select
-                  className="bg-transparent outline-none text-default-400 text-small"
-                  onChange={onRowsPerPageChange}
-                >
-                  <option value="10">10</option>
-                  <option value="15">15</option>
-                  <option value="20">20</option>
-                </select>
-              </label>
-            </div>
+                                    Registrar
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span className="text-default-400 text-small">Total {costos.length} Resultados</span>
+                            <label className="flex items-center text-default-400 text-small">
+                                Columnas por página:
+                                <select
+                                    className="bg-transparent outline-none text-default-400 text-small"
+                                    onChange={onRowsPerPageChange}
+                                >
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </label>
+                        </div>
                     </div>
                 </>
 
@@ -239,67 +240,67 @@ export function Costos() {
         const bottomContent = React.useMemo(() => {
             return (
                 <div className="py-2 px-2 flex justify-between items-center m-3">
-                  <Pagination
-                    showControls
-                    initialPage={1}
-                    color="success"
-                    page={page}
-                    total={pages}
-                    onChange={setPage}
-                  />
-                  <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                    <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
-                      Anterior
-                    </Button>
-                    <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
-                      Siguiente
-                    </Button>
-                  </div>
+                    <Pagination
+                        showControls
+                        initialPage={1}
+                        color="success"
+                        page={page}
+                        total={pages}
+                        onChange={setPage}
+                    />
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                            Anterior
+                        </Button>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                            Siguiente
+                        </Button>
+                    </div>
                 </div>
-              );
+            );
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
             <div className="flex items-center justify-center">
-              <Table
-                aria-label="Tabla"
-                isHeaderSticky
-                bottomContent={bottomContent}
-                bottomContentPlacement="outside"
-                classNames={{
-                  wrapper: "max-h-[100%] max-w-[100%]",
-                }}
-                className="flex"
-                selectedKeys={selectedKeys}
-                // selectionMode="multiple"
-                sortDescriptor={sortDescriptor}
-                topContent={topContent}
-                topContentPlacement="outside"
-                onSelectionChange={setSelectedKeys}
-                onSortChange={setSortDescriptor}
-              >
-                <TableHeader columns={data}>
-                  {(column) => (
-                    <TableColumn
-                      key={column.uid}
-                      align={column.uid === "actions" ? "center" : "start"}
-                      allowsSorting={column.sortable}
-                    >
-                      {column.name}
-                    </TableColumn>
-                  )}
-                </TableHeader>
-                <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
-                  {(item) => (
-                    <TableRow key={item.id_costos}>
-                      {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                <Table
+                    aria-label="Tabla"
+                    isHeaderSticky
+                    bottomContent={bottomContent}
+                    bottomContentPlacement="outside"
+                    classNames={{
+                        wrapper: "max-h-[100%] max-w-[100%]",
+                    }}
+                    className="flex"
+                    selectedKeys={selectedKeys}
+                    // selectionMode="multiple"
+                    sortDescriptor={sortDescriptor}
+                    topContent={topContent}
+                    topContentPlacement="outside"
+                    onSelectionChange={setSelectedKeys}
+                    onSortChange={setSortDescriptor}
+                >
+                    <TableHeader columns={data}>
+                        {(column) => (
+                            <TableColumn
+                                key={column.uid}
+                                align={column.uid === "actions" ? "center" : "start"}
+                                allowsSorting={column.sortable}
+                            >
+                                {column.name}
+                            </TableColumn>
+                        )}
+                    </TableHeader>
+                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                        {(item) => (
+                            <TableRow key={item.id_costos}>
+                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
             </div>
-      
-          );
+
+        );
     }
     /* Espacio 1 */
     const [modalOpen, setModalOpen] = useState(false);
@@ -308,7 +309,7 @@ export function Costos() {
     const [initialData, setInitialData] = useState(null);
     const [mensaje, setMensaje] = useState('')
     const [costos, setCostos] = useState([]);
-    const { idCostos, setCostoId } = useContext(costosContext)
+    const { idCosto, setCostoId } = useContext(costosContext)
 
 
     useEffect(() => {
@@ -432,7 +433,7 @@ export function Costos() {
                 })
             } else if (mode === 'update') {
 
-                await axiosClient.put(`/actualizarCostos/${idCostos.id_Costos}`, formData).then((response) => {
+                await axiosClient.put(`/actualizarCostos/${idCosto.id_costos}`, formData).then((response) => {
                     console.log(response);
                     if (response.status === 200) {
                         Swal.fire({
@@ -466,24 +467,27 @@ export function Costos() {
 
         <>
             <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <CostosModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar Costos' : 'Actualizar Costos'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    Costos={Costos}
-                />
+                <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+                    <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <CostosModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar Costos' : 'Actualizar Costos'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        Costos={Costos}
+                    />
+                </div>
             </div>
         </>
     )

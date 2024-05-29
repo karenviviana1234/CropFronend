@@ -84,39 +84,43 @@ const FormCultivos = ({ actionLabel, handleSubmit, initialdata, mode, onClose })
               value={cantidadSembrada}
               onChange={(e) => setCantidadSembrada(e.target.value)}
               required={true}
+              pattern="^\d+$"
+              title="La cantidad debe ser un número entero."
             />
           </div>
           {/*  */}
           <div className='py-2'>
-            <Select
+            <select
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               label='Lote'
               name="idCultivo"
-              className='w-80'
               value={loteFK}
-            onChange={(e) => setLoteFK(e.target.value)}
+              onChange={(e) => setLoteFK(e.target.value)}
             >
+              <option value="" disabled hidden>Seleccionar lote</option>
               {lote.map(lot => (
-                <SelectItem key={lot.id_lote} value={lot.id_lote}textValue={lot.id_lote}>
+                <option key={lot.id_lote} value={lot.id_lote} textValue={lot.id_lote}>
                   {lot.nombre}
-                </SelectItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           {/*  */}
           <div className='py-2'>
-            <Select
+            <select
+              className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               label='Viriedad'
               name="idvariedad"
-              className='w-80'
               value={variedadFK}
               onChange={(e) => setVariedadFK(e.target.value)}
             >
+              <option value="" disabled hidden>Seleccionar variedad</option>
               {variedad.map(vari => (
-                <SelectItem key={vari.id_variedad} value={vari.id_variedad} textValue={vari.id_variedad}>
+                <option key={vari.id_variedad} value={vari.id_variedad} textValue={vari.id_variedad}>
                   {vari.nombre_variedad}
-                </SelectItem>
+                </option>
               ))}
-            </Select>
+            </select>
           </div>
           {<ModalFooter>
             <Button color="danger" variant="flat" onPress={onClose}>

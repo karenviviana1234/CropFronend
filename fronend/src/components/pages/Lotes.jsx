@@ -5,6 +5,7 @@ import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import LotesContext from '../../context/LotesContext.jsx';
+import Header from '../organismos/Header/Header.jsx';
 import {
     Table,
     TableHeader,
@@ -458,6 +459,8 @@ export function Lotes() {
 
         <>
             <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}
@@ -476,6 +479,7 @@ export function Lotes() {
                     data={data}
                     lotes={lotes}
                 />
+            </div>
             </div>
         </>
     )
