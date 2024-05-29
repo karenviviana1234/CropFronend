@@ -1,114 +1,85 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { ModalFooter, Button, Input } from '@nextui-org/react';
-import axios from 'axios'
-//confirmacion yaa
+import FincasContext from './../../context/FincaContext';
 
-const FormFinca = ({ actionLabel, handleSubmit, initialdata, mode, onClose }) => {
-
-  const nombre_finca = useRef(null)
-  const longitud = useRef(null);
-  const latitud = useRef(null);
- 
-
-  const [errors, setErrors] = useState({
-    nombre_finca: '',
-    longitud: '',
-    latitud: '',
-   
-  })
+const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
+  const [nombreFinca, setNombreFinca] = useState('');
+  const [longitud, setLongitud] = useState('');
+  const [latitud, setLatitud] = useState('');
+  const { idFinca } = useContext(FincasContext);
 
   useEffect(() => {
-    if (mode == 'update' && initialdata) {
-      nombre_finca.current.value = initialdata.nombre_finca
-      longitud.current.value = initialdata.longitud
-      latitud.current.value = initialdata.latitud
-      
+    if (mode === 'update' && idFinca) {
+      setNombreFinca(idFinca.nombre_finca);
+      setLongitud(idFinca.longitud);
+      setLatitud(idFinca.latitud);
     }
-  }, [mode, initialdata])
+  }, [mode, idFinca]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-
-
-    const datosForm = {
-      nombre_finca: nombre_finca.current.value,
-      longitud: parseInt(longitud.current.value),
-      latitud: parseInt(latitud.current.value),
-      
-    }
-    let hasErrors = false;
-    const newErrors = { ...errors };
-
-    //Validación de Campos correctos 
-    if (!datosForm.nombre_finca || !/^[a-zA-Z\s]+$/.test(datosForm.nombre)) {
-      newErrors.nombre_finca = 'El nombre de la variable debe contener solo letras';
-      hasErrors = true
-    }
-    if (!datosForm.longitud || isNaN(datosForm.longitud) || datosForm.longitud <= 0) {
-      newErrors.longitud = 'El valor de longitud debe ser de numerico entero positivo';
-      hasErrors = true
-    }
-    if (!datosForm.latitud || isNaN(datosForm.latitud) || datosForm.latitud <= 0) {
-      newErrors.latitud = 'El valor de latitud debe ser de numerico entero positivo';
-      hasErrors = true
-    }
-   
-
-    setErrors(newErrors);
-    if (hasErrors) {
-      return;
-    }
     try {
-      handleSubmit(datosForm, e)
+      const formData = {
+        nombre_finca: nombreFinca,
+        longitud: parseFloat(longitud),
+        latitud: parseFloat(latitud)
+      };
+      handleSubmit(formData, e);
     } catch (error) {
-      console.log('Error al conectar con el server ' + error);
+      console.log(error);
+      alert('Hay un error en el sistema ' + error);
     }
-
   };
 
   return (
-    <>
-      <form method='post' onSubmit={handleFormSubmit}>
-      <div className='ml-5 align-items-center '>
-            <div className='py-2'>
-              <Input
-                className="w-80"
-                type="text"
-                label='Ingrese el nombre de la finca'
-                id='nombre_finca'
-                name="nombre finca"
-                ref={nombre_finca}
-                required={true}
-              />
-          {errors.nombre_finca && <span className='text-red-500'>{errors.nombre_finca}</span>}
-        </div>
-        {/*  */}
+    <form method='post' onSubmit={handleFormSubmit}>
+    <div className='ml-5 align-items-center '>
+      <div className='py-2'>
+        <Input
+          className="w-80"
+          type="text"
+          label='Ingrese el nombre de la finca'
+          id='nombreFinca'
+          name="nombre_finca"
+          value={nombreFinca}
+          onChange={(e) => setNombreFinca(e.target.value)}
+          required
+          pattern="^[a-zA-Z\s]{1,20}$"
+          title="El nombre de la finca debe tener máximo 20 caracteres, y solo puede contener letras y espacios"
+        />
+      </div>
         <div className='py-2'>
-                <Input
-                    className="w-80"
-                    type="number"
-                    label='Ingrese la longitud'
-                    id='longitud'
-                    name="longitud"
-                    ref={longitud}
-                    required={true}
-                />
-                {errors.longitud && <span className='text-red-500'>{errors.longitud}</span>}
-            </div>
-            <div className='py-2'>
-                <Input
-                     className='w-80'
-                    type="number"
-                    label='Ingrese la latitud'
-                    id='latitud'
-                    name="latitud"
-                    ref={latitud}
-                    required={true}
-                />
-                {errors.latitud && <span className='text-red-500'>{errors.latitud}</span>}
-            </div>
-        {/*  */}
-    
+          <Input
+            className="w-80"
+            type="number"
+            label='Ingrese la longitud'
+            id='longitud'
+            name="longitud"
+            value={longitud}
+            onChange={(e) => setLongitud(e.target.value)}
+            required
+            min="-180"
+            max="180"
+            step="any"
+            title="La longitud debe ser un número válido entre -180 y 180"
+          />
+        </div>
+        <div className='py-2'>
+          <Input
+            className='w-80'
+            type="number"
+            label='Ingrese la latitud'
+            id='latitud'
+            name="latitud"
+            value={latitud}
+            onChange={(e) => setLatitud(e.target.value)}
+            required
+            min="-90"
+            max="90"
+            step="any"
+            title="La latitud debe ser un número válido entre -90 y 90"
+          />
+        </div>
         <ModalFooter>
           <Button
             color='danger'
@@ -123,9 +94,8 @@ const FormFinca = ({ actionLabel, handleSubmit, initialdata, mode, onClose }) =>
             {actionLabel}
           </Button>
         </ModalFooter>
-        </div>
-      </form>
-    </>
+      </div>
+    </form>
   );
 };
 
