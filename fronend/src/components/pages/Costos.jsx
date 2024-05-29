@@ -470,9 +470,10 @@ export function Costos() {
     return (
 
         <>
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
                 <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
                     <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                    <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+
                     <AccionesModal
                         isOpen={modalAcciones}
                         onClose={() => setModalAcciones(false)}
