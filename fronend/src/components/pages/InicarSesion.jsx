@@ -59,6 +59,7 @@ export const InicioSesion = () => {
             setModalAcciones(true)
             setModalOpen(false)
             navigate('/usuario')
+
           }
         } else {
           console.log('Response', response)

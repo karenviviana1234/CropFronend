@@ -1,78 +1,105 @@
-import React, { useState } from 'react'
-<<<<<<< HEAD
-import './VistasCss.css'
-import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import ButtonDesactivar from "../atomos/ButtonDesactivar";
+import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
 
-function Empleado() {
+const Empleado = () => {
+  const [empleado, setEmpleado] = useState([]);
 
-   
+  useEffect(() => {
+    const ObtenerDatos = async () => {
+      try {
+        // Aquí deberías obtener el token de algún lugar, como el almacenamiento local
+        const token = localStorage.getItem("token");
+        const getURL = "http://localhost:3000/Listar";
+        const response = await axios.get(getURL, { headers: { token: token } });
+        console.log(response.data);
+        setEmpleado(response.data);
+      } catch (error) {
+        console.error("Error al obtener los datos:", error);
+      }
+    };
+    ObtenerDatos();
+  }, []);
+
+  const Desactivar = (id_actividad) => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡Esto podrá afectar a tus lotes!",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#006000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, estoy seguro!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios
+            .put(`http://localhost:3000/cambioestado/${id_actividad}`, null)
+            .then((response) => {
+              if (response.status === 200) {
+                const nuevoEstado = response.data.message;
+                fetchData();
+                Swal.fire({
+                  title: "¡Actualizado!",
+                  text: `${nuevoEstado}`,
+                  icon: "success",
+                });
+              }
+            });
+        } catch (error) {
+          console.error("Error al obtener los datos:", error);
+        }
+      } else {
+        Swal.fire({
+          title: "Cancelado",
+          text: "La operación ha sido cancelada",
+          icon: "info",
+        });
+      }
+    });
+  };
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  const [perfilVisible, setPerfilVisible] = useState(false);
-  
+
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
-    setPerfilVisible(false);
   };
   return (
-    <div className={`contenidos ${sidebarAbierto ? 'contenido-extendidos' : ''}`}>
-    <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />   
-       <div className='flex flex-col justify-center m-20 p-5 box-content w-40 h-40 p-4 border-4'>
-            <label className='text-lg'>Actividad: Fumigar </label>
-            <label className='text-lg'>Fecha Inicio:12/09/2024</label>
-            <label className='text-lg'>Fecha Fin:02/10/2024</label>
-            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 w-20 ml-20  mt-3 rounded'>Iniciar</button>
-        </div>
-        <div className='flex flex-col justify-center m-20 p-5 box-content w-40 h-40 p-4 border-4'>
-            <label className='text-lg'>Actividad: Sembrar Cebolla </label>
-            <label className='text-lg'>Fecha Inicio:12/08/2024</label>
-            <label className='text-lg'>Fecha Fin:02/08/2024</label>
-            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 w-20 ml-20  mt-3 rounded'>Iniciar</button>
-        </div>
-        <div className='flex flex-col justify-center m-20 p-5 box-content w-40 h-40 p-4 border-4'>
-            <label className='text-lg'>Actividad: Recoger cosecha </label>
-            <label className='text-lg'>Fecha Inicio:02/03/2024</label>
-            <label className='text-lg'>Fecha Fin:11/03/2024</label>
-            <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 w-20 ml-20  mt-3 rounded'>Iniciar</button>
-=======
-import './Empleado.css'
-import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
-import v from '../../styles/variables';
-
-function Empleado() {
-
-
-    const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  
-    const toggleSidebar = () => {
-      setSidebarAbierto(!sidebarAbierto);
-    };
-  return (
-    <div className={`contenid ${sidebarAbierto ? 'contenido-extendid' : ''}`}>
-      <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />  
-      <div style={{ backgroundImage: `url(${v.image12})`,display:"flex", justifyContent:"center", height: '100vh', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
-      >
-       <div className='flex flex-col justify-center m-20 p-5 box-content w-60 h-60 p-4 bg-slate-100 rounded-xl'>
-            <label className='text-lg'>Actividad: Fumigar </label>
-            <label className='text-lg'>Fecha Inicio:12/09/2024</label>
-            <label className='text-lg'>Fecha Fin:02/10/2024</label>
-            <button className=' px-4 py-2 mt-4 rounded text-white' style={{border: 'none', backgroundColor: 'green', boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>Iniciar</button>
-        </div>
-        <div className='flex flex-col justify-center m-20 p-5 box-content w-60 h-60 p-4 bg-slate-100 rounded-xl'>
-            <label className='text-lg'>Actividad: Sembrar  </label>
-            <label className='text-lg'>Fecha Inicio:10/10/2024</label>
-            <label className='text-lg'>Fecha Fin:07/12/2024</label>
-            <button className=' px-4 py-2 mt-4 rounded text-white' style={{border: 'none', backgroundColor: 'green', boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>Iniciar</button>
-        </div>
-        <div className='flex flex-col justify-center m-20 p-5 box-content w-60 h-60 p-4 bg-slate-100 rounded-xl'>
-            <label className='text-lg'>Actividad: Recoger  </label>
-            <label className='text-lg'>Fecha Inicio:01/09/2024</label>
-            <label className='text-lg'>Fecha Fin:12/09/2024</label>
-            <button className=' px-4 py-2 mt-4 rounded text-white' style={{border: 'none', backgroundColor: 'green', boxShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)'}}>Iniciar</button>
-        </div>
->>>>>>> 6361f2617b0cfd39da1e46087890e18f27e6606e
-        </div>
+    <div className={`contenido ${sidebarAbierto ? "contenido-extendido" : ""}`}>
+      <HeaderEmpleado
+        toggleSidebar={toggleSidebar}
+        sidebarAbierto={sidebarAbierto}
+      />
+      <h1 className="text-3xl font-bold mb-4">Listar Empleados</h1>
+      <div className="flex flex-wrap">
+        {empleado.map((empleado, index) => (
+          <div
+            key={index}
+            className="bg-white shadow-md rounded-lg overflow-hidden m-4 w-1/3"
+          >
+            <div className="p-6">
+              <p className="text-lg font-semibold">{empleado.nombre}</p>
+              <p className="text-gray-600">{empleado.identificacion}</p>
+              <p className="text-gray-600">{empleado.fecha_inicio}</p>
+              <p className="text-gray-600">{empleado.fecha_fin}</p>
+              <p className="text-gray-600">{empleado.nombre_variedad}</p>
+              <p className="text-gray-600">{empleado.nombre_actividad}</p>
+              <p className="text-gray-600">
+                Actividad: {empleado.id_actividad}
+              </p>
+              <p className="text-gray-600">{empleado.tiempo}</p>
+              <p className="text-gray-600">{empleado.observaciones}</p>
+              <ButtonDesactivar
+                onClick={() => Desactivar(empleado.id_actividad)}
+              />{" "}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Empleado
+export default Empleado;
+
