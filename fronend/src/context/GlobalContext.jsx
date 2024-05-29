@@ -7,6 +7,8 @@ import { FincasProvider } from './FincaContext'
 import { ProgramacionesProvider } from './ProgramacionesContext'
 import { TipoRecursosProvider } from './TipoRContext'
 import { VariedadesProvider } from './VariedadContext'
+import { UsuarioProvider } from './UsuariosContext'
+import { ProduccionProvider } from './ProduccionContext'
 // import { AuthProvider } from './authContext.jsx'
 
 
@@ -19,6 +21,7 @@ const GlobalProvider = ({ children }) => {
     return (
         <GlobalContext.Provider value={globalContextValue}>
             {/*  <AuthProvider> */}
+            <ProduccionProvider>
             <VariedadesProvider>
                 <TipoRecursosProvider>
                     <ProgramacionesProvider>
@@ -28,9 +31,10 @@ const GlobalProvider = ({ children }) => {
                                     <CostosProvider>
                                         <ActividadesProvider>
                                             <LotesProvider>
+                                                <UsuarioProvider>
 
                                                 {children}
-
+                                                </UsuarioProvider>
                                             </LotesProvider>
                                         </ActividadesProvider>
                                     </CostosProvider>
@@ -40,6 +44,7 @@ const GlobalProvider = ({ children }) => {
                     </ProgramacionesProvider>
                 </TipoRecursosProvider>
             </VariedadesProvider>
+            </ProduccionProvider>
             {/* </AuthProvider> */}
         </GlobalContext.Provider>
     )

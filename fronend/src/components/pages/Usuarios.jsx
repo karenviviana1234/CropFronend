@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import UsuarioModal from '../templates/UsuariosModal.jsx';
+import UsuarioModal from '../templates/UsuarioModal.jsx';
 import './CssTablas.css'
 import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
@@ -28,6 +28,7 @@ import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
+import Header from '../organismos/Header/Header.jsx';
 
 export function Usuarios() {
 
@@ -65,7 +66,7 @@ export function Usuarios() {
                     usuario.apellido.toLowerCase().includes(filterValue.toLowerCase()) ||
                     usuario.correo.toLowerCase().includes(filterValue.toLowerCase()) ||
                     usuario.password.toLowerCase().includes(filterValue.toLowerCase()) ||
-                    usuario.rol.toLowerCase().includes(filterValue.toLowerCase()) 
+                    usuario.rol.toLowerCase().includes(filterValue.toLowerCase())
                 );
             }
 
@@ -206,14 +207,14 @@ export function Usuarios() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex justify-between items-center z-10 mr-40  mt-2">
                             <span className="text-white text-small">Total {usuarios.length} Resultados</span>
-                            <label className="flex items-center text-white text-small">
+                            <label className="flex items-center text-white mr-30 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-white text-small"
@@ -237,23 +238,23 @@ export function Usuarios() {
             hasSearchFilter,
         ]);
 
+
         const bottomContent = React.useMemo(() => {
             return (
-                <div className="py-2 px-2 flex justify-between items-center m-4">
+                <div className="py-2 px-2 flex justify-between items-center m-3">
                     <Pagination
-                        isCompact
                         showControls
-                        showShadow
-                        color="primary"
+                        initialPage={1}
+                        color="success"
                         page={page}
                         total={pages}
                         onChange={setPage}
                     />
-                    <div className="hidden sm:flex w-[30%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="flat" className="text-black bg-[#f4f4f5]" onPress={onPreviousPage}>
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-black bg-[#f4f4f5]" variant="flat" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -269,7 +270,7 @@ export function Usuarios() {
                     bottomContent={bottomContent}
                     bottomContentPlacement="outside"
                     classNames={{
-                        wrapper: "max-h-[90%] max-w-[90%]",
+                        wrapper: "max-h-[100%] max-w-[100%]",
                     }}
                     className="flex"
                     sortDescriptor={sortDescriptor}
@@ -309,8 +310,12 @@ export function Usuarios() {
     const [initialData, setInitialData] = useState(null);
     const [mensaje, setMensaje] = useState('')
     const [usuarios, setusuarios] = useState([]);
-    const {   idUsuario, setUsuarioId } = useContext(UsuarioContext)
+    const { idUsuario, setUsuarioId } = useContext(UsuarioContext)
+    const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
+    const toggleSidebar = () => {
+        setSidebarAbierto(!sidebarAbierto);
+    };
 
     useEffect(() => {
         peticionGet()
@@ -461,25 +466,28 @@ export function Usuarios() {
     return (
 
         <>
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <UsuarioModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar usuario' : 'Actualizar usuario'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <EjemploUsuario
-                    data={data}
-                    usuarios={usuarios}
-                />
+            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <UsuarioModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar usuario' : 'Actualizar usuario'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <EjemploUsuario
+                        data={data}
+                        usuarios={usuarios}
+                    />
+                </div>
             </div>
         </>
     )

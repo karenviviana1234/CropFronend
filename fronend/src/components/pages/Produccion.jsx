@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ProduccionModal from '../templates/ProduccionModal.jsx';
+import ProduccionModal from '../templates/ProduccionTemplete.jsx';
 import './CssTablas.css'
 import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
@@ -27,6 +27,7 @@ import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
+import Header from '../organismos/Header/Header.jsx';
 
 export function Produccion() {
 
@@ -167,6 +168,7 @@ export function Produccion() {
         const topContent = React.useMemo(() => {
             return (
                 <>
+                <h1 className='justify-center text-white'>Producción</h1>
                     <div className="flex flex-col  mt-3" >
                         <div className="flex justify-between gap-3 items-end ">
                             <Input
@@ -181,8 +183,8 @@ export function Produccion() {
                             <div className="flex gap-3">
 
                                 <Dropdown>
-                                    <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
+                                    <DropdownTrigger className="hidden sm:flex mr-2  text-black cursor-pointer" variant='shadow'>
+                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700 cursor-pointer" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -202,14 +204,14 @@ export function Produccion() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex justify-between items-center z-10 mr-40  mt-2">
+                        <div className="flex justify-between items-center z-10 mr-30  mt-2">
                             <span className="text-white text-small">Total {producciones.length} Resultados</span>
-                            <label className="flex items-center text-white text-small">
+                            <label className="flex items-center text-white mr-30 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-white text-small"
@@ -233,23 +235,23 @@ export function Produccion() {
             hasSearchFilter,
         ]);
 
+       
         const bottomContent = React.useMemo(() => {
             return (
-                <div className="py-2 px-2 flex justify-between items-center m-4">
+                <div className="py-2 px-2 flex justify-between items-center m-3">
                     <Pagination
-                        isCompact
                         showControls
-                        showShadow
-                        color="primary"
+                        initialPage={1}
+                        color="success"
                         page={page}
                         total={pages}
                         onChange={setPage}
                     />
-                    <div className="hidden sm:flex w-[30%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="flat" className="text-black bg-[#f4f4f5]" onPress={onPreviousPage}>
+                    <div className="hidden sm:flex w-[10%] justify-end gap-2 ">
+                        <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-black bg-[#f4f4f5]" variant="flat" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black" variant="shadow" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -258,16 +260,18 @@ export function Produccion() {
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center p-5">
+            <div className="flex items-center justify-center">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
                     bottomContent={bottomContent}
                     bottomContentPlacement="outside"
                     classNames={{
-                        wrapper: "max-h-[90%] max-w-[90%]",
+                        wrapper: "max-h-[100%] max-w-[100%]",
                     }}
                     className="flex"
+                    selectedKeys={selectedKeys}
+                    /* selectionMode="multiple" */
                     sortDescriptor={sortDescriptor}
                     topContent={topContent}
                     topContentPlacement="outside"
@@ -285,19 +289,22 @@ export function Produccion() {
                             </TableColumn>
                         )}
                     </TableHeader>
-                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                    <TableBody
+                        emptyContent={"No hay Produccion registrados"}
+                        items={sortedItems}
+                    >
                         {(item) => (
                             <TableRow key={item.id_producccion}>
-                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                                {(columnKey) => (
+                                    <TableCell>{renderCell(item, columnKey)}</TableCell>
+                                )}
                             </TableRow>
                         )}
                     </TableBody>
                 </Table>
             </div>
-
         );
     }
-
     /* Espacio 1 */
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAcciones, setModalAcciones] = useState(false);
@@ -306,6 +313,11 @@ export function Produccion() {
     const [mensaje, setMensaje] = useState('')
     const [producciones, setProduccion] = useState([]);
     const { idProduccion, setProduccionId } = useContext(ProduccionContext)
+    const [sidebarAbierto, setSidebarAbierto] = useState(false);
+
+    const toggleSidebar = () => {
+        setSidebarAbierto(!sidebarAbierto);
+    };
 
 
     useEffect(() => {
@@ -452,8 +464,9 @@ export function Produccion() {
     return (
 
         <>
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-                <AccionesModal
+  <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+            <div className='w-full max-w-[90%] ml-28 items-center p-10'>                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}
                     label={mensaje}
@@ -471,6 +484,7 @@ export function Produccion() {
                     data={data}
                     producciones={producciones}
                 />
+            </div>
             </div>
         </>
     )

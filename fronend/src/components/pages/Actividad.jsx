@@ -203,7 +203,7 @@ export function Actividad() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700 cursor-pointer" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -261,10 +261,10 @@ export function Actividad() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="cursor-pointer text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>

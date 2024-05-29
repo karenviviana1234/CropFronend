@@ -206,7 +206,7 @@ export function Programaciones() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -226,14 +226,14 @@ export function Programaciones() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-30 text-white bg-[#006000] cursor-pointer" style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex justify-between items-center z-10 mr-40  mt-2">
                             <span className="text-white text-small">Total {programaciones.length} Resultados</span>
-                            <label className="flex items-center text-white text-small">
+                            <label className="flex items-center text-white mr-30 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-white text-small"
@@ -269,10 +269,10 @@ export function Programaciones() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="cursor-pointer text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
