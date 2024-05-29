@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import InicioF from "./components/pages/Inicio.jsx";
 import { InicioSesion } from "./components/pages/InicarSesion.jsx";
-/* import Registro from "./components/pages/Registro.jsx";
+import Registro from "./components/pages/Registro.jsx";
+/* 
 import CambiarContra from "./components/pages/cambiarcontra.jsx";
 import Recuperarcontra from "./components/pages/Recuperarcontra.jsx"; */
 import { Actividad } from './components/pages/Actividad.jsx'
@@ -38,9 +39,9 @@ function App() {
         {/* no pana */}
         <Route path="/" element={<InicioF />} />
 
-        <Route path="/iniciosesion" element={<InicioSesion />} />
 
-        {/*  <Route path="/registro" element={<Registro />} />
+        <Route path="/iniciosesion" element={<InicioSesion />} />
+        {/*  
           <Route path="/cambia" element={<CambiarContra />} />
           <Route path="/recuperar" element={<Recuperarcontra />} /> */}
         <Route element={<ProtectedRoute />} >
