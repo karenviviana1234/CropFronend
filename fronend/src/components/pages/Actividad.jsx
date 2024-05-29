@@ -29,7 +29,7 @@ import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx";
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx";
 
-export function Actividades() {
+export function Actividad() {
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
