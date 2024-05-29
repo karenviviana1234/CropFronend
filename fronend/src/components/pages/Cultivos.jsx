@@ -310,7 +310,11 @@ export function Cultivos() {
     const [mensaje, setMensaje] = useState('')
     const [cultivos, setCultivos] = useState([]);
     const { idCultivo, setCultivoId } = useContext(CultivosContext)
+    const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
+    const toggleSidebar = () => {
+        setSidebarAbierto(!sidebarAbierto);
+    };
 
 
     useEffect(() => {

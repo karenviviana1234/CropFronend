@@ -307,7 +307,11 @@ export function Lotes() {
     const [mensaje, setMensaje] = useState('')
     const [lotes, setLotes] = useState([]);
     const { idLote, setLoteId } = useContext(LotesContext)
+    const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
+    const toggleSidebar = () => {
+        setSidebarAbierto(!sidebarAbierto);
+    };
 
     useEffect(() => {
         peticionGet()

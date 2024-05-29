@@ -311,7 +311,11 @@ export function Costos() {
     const [costos, setCostos] = useState([]);
     const { idCosto, setCostoId } = useContext(costosContext)
 
+    const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
+    const toggleSidebar = () => {
+        setSidebarAbierto(!sidebarAbierto);
+    };
     useEffect(() => {
         peticionGet()
     }, []);

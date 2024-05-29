@@ -315,7 +315,12 @@ export function Variedades() {
     const [variedades, setVariedades] = useState([]);
     const { idVariedad, setVariedadId } = useContext(VariedadesContext)
 
+    const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
+    const toggleSidebar = () => {
+        setSidebarAbierto(!sidebarAbierto);
+    };
+    
     useEffect(() => {
         peticionGet()
     }, []);
