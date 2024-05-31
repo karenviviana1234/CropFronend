@@ -182,7 +182,7 @@ export function Lotes() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-black" />} variant="shadow">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -245,10 +245,10 @@ export function Lotes() {
                     onChange={setPage}
                   />
                   <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                    <Button isDisabled={pages === 1} size="md" variant="ghost" className="cursor-pointer text-slate-50" onPress={onPreviousPage}>
+                    <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
                       Anterior
                     </Button>
-                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
                       Siguiente
                     </Button>
                   </div>

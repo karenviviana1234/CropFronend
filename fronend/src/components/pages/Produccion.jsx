@@ -168,7 +168,6 @@ export function Produccion() {
         const topContent = React.useMemo(() => {
             return (
                 <>
-                <h1 className='justify-center text-white'>Producción</h1>
                     <div className="flex flex-col  mt-3" >
                         <div className="flex justify-between gap-3 items-end ">
                             <Input
@@ -184,7 +183,7 @@ export function Produccion() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black cursor-pointer" variant='shadow'>
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700 cursor-pointer" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>

@@ -212,7 +212,7 @@ export function Usuarios() {
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex justify-between items-center z-10 mr-40  mt-2">
+                        <div className="flex justify-between items-center z-10 mr-30  mt-2">
                             <span className="text-white text-small">Total {usuarios.length} Resultados</span>
                             <label className="flex items-center text-white mr-30 text-small">
                                 Columnas por página:
@@ -251,10 +251,10 @@ export function Usuarios() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="shadow" className="text-black" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="text-black mr-58" variant="shadow" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>

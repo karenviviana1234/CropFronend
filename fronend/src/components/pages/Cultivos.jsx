@@ -210,11 +210,11 @@ export function Cultivos() {
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
-                            <span className="text-default-400 text-small">Total {cultivos.length} Resultados</span>
-                            <label className="flex items-center text-default-400 mr-30 text-small">
+                            <span className="text-white text-small">Total {cultivos.length} Resultados</span>
+                            <label className="flex items-center text-white mr-30 text-small">
                                 Columnas por página:
                                 <select
-                                    className="bg-transparent outline-none text-default-400 text-small"
+                                    className="bg-transparent outline-none text-white text-small"
                                     onChange={onRowsPerPageChange}
                                 >
                                     <option value="10">10</option>
@@ -247,10 +247,10 @@ export function Cultivos() {
                     onChange={setPage}
                   />
                   <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                    <Button isDisabled={pages === 1} size="md" variant="ghost" className="cursor-pointer text-slate-50" onPress={onPreviousPage}>
+                    <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
                       Anterior
                     </Button>
-                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
                       Siguiente
                     </Button>
                   </div>

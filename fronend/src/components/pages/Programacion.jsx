@@ -206,7 +206,7 @@ export function Programaciones() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="shadow">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -231,7 +231,7 @@ export function Programaciones() {
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex justify-between items-center z-10 mr-40  mt-2">
+                        <div className="flex justify-between items-center z-10 mr-30  mt-2">
                             <span className="text-white text-small">Total {programaciones.length} Resultados</span>
                             <label className="flex items-center text-white mr-30 text-small">
                                 Columnas por página:
@@ -269,10 +269,10 @@ export function Programaciones() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="cursor-pointer text-slate-50" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
