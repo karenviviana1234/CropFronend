@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import InicioF from "./components/pages/Inicio.jsx";
 import { InicioSesion } from "./components/pages/InicarSesion.jsx";
-/* import Registro from "./components/pages/Registro.jsx";
- */import ProtectedRoute from "./ProtectedRoute.jsx";
+import Registro from "./components/pages/Registro.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
 import NotFoundPage from "./components/pages/NotFoundPage .jsx";
 import GlobalProvider from "./context/GlobalContext.jsx";
 
@@ -34,47 +34,47 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalProvider>
-      {/*   <Sidebar /> */}
-      <Routes>
+        {/*   <Sidebar /> */}
+        <Routes>
 
-        <Route path="/" element={<InicioF />} />
-        <Route path="/iniciosesion" element={<InicioSesion />} />
-{/*         <Route path="/registro" element={<Registro />} />
- */}        <Route path="/cambia" element={<CambiarContra />} />
-        <Route path="/recuperar" element={<Recuperarcontra />} />
-        
-      
-        <Route element={<ProtectedRoute />} >
+          <Route path="/" element={<InicioF />} />
+          <Route path="/iniciosesion" element={<InicioSesion />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/cambia" element={<CambiarContra />} />
+          <Route path="/recuperar" element={<Recuperarcontra />} />
 
-          {user && user.rol === 'administrador' && (
-            <>
-              {/*    <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route element={<ProtectedRoute />} >
+
+            {user && user.rol === 'administrador' && (
+              <>
+                {/*    <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/perfil" element={<PerfilUsuario />} />
             */}
-              <Route path="/usuario" element={<Usuarios />} />
-              <Route path="/actividad" element={<Actividad />} />
-              <Route path="/costos" element={<Costos />} />
-              <Route path="/cultivos" element={<Cultivos />} />
-              <Route path="/finca" element={<Fincas />} />
-              <Route path="/lote" element={<Lotes />} />
-              <Route path="/programacion" element={<Programaciones />} />
-              <Route path="/recursos" element={<TipoRecursos />} />
-              <Route path="/variedad" element={<Variedades />} />
-              <Route path="/produccion" element={<Produccion />} />
-        </>
-          )}
+                <Route path="/usuario" element={<Usuarios />} />
+                <Route path="/actividad" element={<Actividad />} />
+                <Route path="/costos" element={<Costos />} />
+                <Route path="/cultivos" element={<Cultivos />} />
+                <Route path="/finca" element={<Fincas />} />
+                <Route path="/lote" element={<Lotes />} />
+                <Route path="/programacion" element={<Programaciones />} />
+                <Route path="/recursos" element={<TipoRecursos />} />
+                <Route path="/variedad" element={<Variedades />} />
+                <Route path="/produccion" element={<Produccion />} />
+              </>
+            )}
 
-          {user && user.rol === 'empleado' && (
-            <>
-              <Route path="/empleado" element={<Empleado />} />
-              <Route path="/dashboarde" element={<DashboardEmpleado />} />
-            </>
-          )} 
+            {user && user.rol === 'empleado' && (
+              <>
+                <Route path="/empleado" element={<Empleado />} />
+                <Route path="/dashboarde" element={<DashboardEmpleado />} />
+              </>
+            )}
 
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </GlobalProvider>
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </GlobalProvider>
     </BrowserRouter >
   );
 }
