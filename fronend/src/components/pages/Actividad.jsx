@@ -406,7 +406,7 @@ export function Actividades() {
     const peticionDesactivar = (id_actividad) => {
         Swal.fire({
             title: "¿Estás seguro?",
-            text: "¡Esto podrá afectar a tus demas tablas!",
+            text: "¡Esto podrá afectar a tus demás tablas!",
             icon: "question",
             showCancelButton: true,
             confirmButtonColor: "#006000",
@@ -422,7 +422,7 @@ export function Actividades() {
                             const index = mensaje.indexOf('cambiado a');
                             if (index !== -1) {
                                 const nuevoEstado = mensaje.substring(index + 10); // 10 es la longitud de "cambiado a "
-
+    
                                 Swal.fire({
                                     position: "center", // Posición centrada
                                     icon: "success",
@@ -430,16 +430,55 @@ export function Actividades() {
                                     showConfirmButton: false,
                                     timer: 1400
                                 });
-                                peticionGet()
+                                peticionGet();
                             } else {
                                 alert('Error: El mensaje recibido no tiene el formato esperado');
                             }
                         } else {
                             alert('Error');
                         }
+                    }).catch((error) => {
+                        if (error.response && error.response.data && error.response.data.message) {
+                            const errorMessage = error.response.data.message;
+                            if (errorMessage.includes("La actividad no puede cambiar de estado porque la variedad asociada está inactiva")) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "La actividad no puede cambiar de estado porque la variedad asociada está inactiva",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                            } else {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "error",
+                                    title: "Error",
+                                    text: "Error al cambiar el estado de la actividad",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                            }
+                        } else {
+                            Swal.fire({
+                                position: "center",
+                                icon: "error",
+                                title: "Error",
+                                text: "Error del servidor. Por favor, inténtelo de nuevo más tarde.",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        }
                     });
                 } catch (error) {
-                    alert('Error del servidor ' + error);
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: "Error",
+                        text: "Error del servidor. Por favor, inténtelo de nuevo más tarde.",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                 }
             } else {
                 Swal.fire({
@@ -450,6 +489,7 @@ export function Actividades() {
             }
         });
     };
+    
     // registrar y actualizar actividad
     const handleSubmit = async (formData, e) => {
         console.log('Datos enviados:', formData);
