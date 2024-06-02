@@ -44,7 +44,7 @@ const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
           value={nombreFinca}
           onChange={(e) => setNombreFinca(e.target.value)}
           required
-          pattern="^[a-zA-Z\s]{1,20}$"
+          pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$"
           title="El nombre de la finca debe tener máximo 20 caracteres, y solo puede contener letras y espacios"
         />
       </div>
@@ -74,10 +74,10 @@ const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
             value={latitud}
             onChange={(e) => setLatitud(e.target.value)}
             required
-            min="-90"
-            max="90"
+            min="-190"
+            max="190"
             step="any"
-            title="La latitud debe ser un número válido entre -90 y 90"
+            title="La latitud debe ser un número válido entre -190 y 190"
           />
         </div>
         <ModalFooter>

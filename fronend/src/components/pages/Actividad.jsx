@@ -384,7 +384,7 @@ export function Actividades() {
         },
         {
             uid: 'nombre_recursos',
-            name: 'tipo_recursos',
+            name: 'herramientas',
             sortable: true
         },
         {
