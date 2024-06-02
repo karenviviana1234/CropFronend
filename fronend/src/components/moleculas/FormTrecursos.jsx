@@ -50,7 +50,7 @@ const FormTrecursos = ({ mode, initialData, handleSubmit, onClose, actionLabel }
   value={nombreRecursos}
   onChange={(e) => setNombreRecursos(e.target.value)}
   required={true}
-  pattern="[A-Za-z\s]+"
+  pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$"
   title="Ingrese un nombre válido"
 />
 
