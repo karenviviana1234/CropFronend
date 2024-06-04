@@ -3,7 +3,7 @@ import InicioF from "./components/pages/Inicio.jsx";
 import { InicioSesion } from "./components/pages/InicarSesion.jsx";
 import Registro from "./components/pages/Registro.jsx";
 import ProtectedRoute from "./ProtectedRoute.jsx";
-import NotFoundPage from "./components/pages/NotFoundPage .jsx";
+// import NotFoundPage from "./components/pages/NotFoundPage .jsx";
 import GlobalProvider from "./context/GlobalContext.jsx";
 
 import { Actividad } from './components/pages/Actividad.jsx'
@@ -72,7 +72,6 @@ function App() {
             )}
 
           </Route>
-          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </GlobalProvider>
     </BrowserRouter >
