@@ -4,6 +4,8 @@ import Select from 'react-select';
 import axiosClient from '../axiosClient';
 import ActividadesContext from './../../context/ActividadContext';
 
+// hoka
+
 export const FormActividad = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
   const [variedades, setVariedades] = useState([]);
   const [tipo_recursos, setTipo_Recursos] = useState([]);
