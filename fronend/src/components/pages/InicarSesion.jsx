@@ -8,6 +8,7 @@ import { EyeSlashFilledIcon } from "../NextUI/EyeSlashFilledIcon";
 import AccionesModal from '../organismos/ModalAcciones'
 import v from '../../styles/variables'
 import Icon from '../atomos/Sidebar/IconosSidebar.jsx';
+import Swal from 'sweetalert2';
 
 export const InicioSesion = () => {
   const [mensaje, setMensaje] = useState('')
@@ -57,7 +58,8 @@ export const InicioSesion = () => {
             setMensaje('Bienvenido Admin')
             setModalAcciones(true)
             setModalOpen(false)
-            navigate('/dashboard')
+            navigate('/usuario')
+
           }
         } else {
           console.log('Response', response)

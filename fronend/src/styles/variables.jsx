@@ -1,4 +1,4 @@
-import {faLock, faLeaf, faHouse, faUser, faFileAlt, faTimes,faArrowLeft ,faKey, faFile, faCircleUser, faMountainSun, faCircleChevronLeft, faSpa, faMapLocationDot, faCalendarPlus, faSackDollar, faSeedling, faListCheck, faTractor, faFileContract, faGear, faUserGroup, faRightFromBracket, faTrashCan, faSquareCheck, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import {faLock, faLeaf, faHouse, faUser, faFileAlt, faTimes,faArrowLeft ,faKey, faFile, faCircleUser, faMountainSun, faCircleChevronLeft, faSpa, faMapLocationDot, faCalendarPlus, faSackDollar, faSeedling, faListCheck, faTractor, faFileContract, faGear, faUserGroup, faRightFromBracket, faTrashCan, faSquareCheck, faPenToSquare, faCircleDollarToSlot } from '@fortawesome/free-solid-svg-icons';
 import Img1 from '../assets/imagen1.png'
 import Img2 from '../assets/FdGjFfBXgAIvsuN.jpg'
 import Img3 from '../assets/07.png'
@@ -39,6 +39,7 @@ iconoVolver: faArrowLeft,
 iconoDesactivar: faTrashCan,
 iconoActivar: faSquareCheck,
 iconoEditar: faPenToSquare,
+iconoCostos: faCircleDollarToSlot,
 
 
     /* Imagenes */

@@ -1,11 +1,10 @@
 .contenido {
-    margin-top: 45px; 
-    margin-left: 60px;
+
     padding-top: 30px;
-    background-image: url('../../assets/Ecos_del_campo_Colombiano.jpg');
+    background-image: url('../../assets/nuevofondo.png');
     background-repeat: no-repeat;
-    background-size: cover;  height: 100vh; 
-    
+    background-size: cover;  
+    height: 100vh; 
     overflow-x: hidden; 
   }
   .contenido-extendido {
