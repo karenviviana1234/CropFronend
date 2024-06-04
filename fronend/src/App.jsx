@@ -45,7 +45,7 @@ function App() {
 
 
           <Route element={<ProtectedRoute />} >
-
+{/* Cambios pana  */}
             {user && user.rol === 'administrador' && (
               <>
                 {/*    <Route path="/dashboard" element={<Dashboard />} />

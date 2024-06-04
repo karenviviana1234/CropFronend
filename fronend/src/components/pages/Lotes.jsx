@@ -33,44 +33,43 @@ export function Lotes() {
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
-        todos: "primary",
     };
 
     function Ejemplo() {
-
         const [filterValue, setFilterValue] = React.useState("");
         const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState("all");
+        const [statusFilter, setStatusFilter] = React.useState(new Set(["todos"]));
         const [rowsPerPage, setRowsPerPage] = React.useState(5);
         const [sortDescriptor, setSortDescriptor] = React.useState({
             column: "fecha",
             direction: "ascending",
         });
         const [page, setPage] = React.useState(1);
+
         const statusOptions = [
             { name: "Todos", uid: "todos" },
-            { name: "Activo", uid: "inactivo" },
-            { name: "Inactivo", uid: "activo" },
+            { name: "Activo", uid: "activo" },
+            { name: "Inactivo", uid: "inactivo" },
         ];
 
         const hasSearchFilter = Boolean(filterValue);
+
         const filteredItems = React.useMemo(() => {
-            let filteredlotes = lotes;
+            let filteredLotes = lotes;
 
             if (hasSearchFilter) {
-                filteredlotes = filteredlotes.filter(lote =>
+                filteredLotes = filteredLotes.filter(lote =>
                     String(lote.id_lote).toLowerCase().includes(filterValue.toLowerCase()) ||
-                    lote.nombre.toLowerCase().includes(filterValue.toLowerCase()) /* ||
-                    String(lote.fk_tipo_analisis).toLowerCase().includes(filterValue.toLowerCase()) */
+                    String(lote.nombre).toLowerCase().includes(filterValue.toLowerCase())
                 );
             }
 
-            if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
-                filteredlotes = filteredlotes.filter(lote =>
+            if (statusFilter.size !== statusOptions.length && !statusFilter.has("todos")) {
+                filteredLotes = filteredLotes.filter(lote =>
                     Array.from(statusFilter).includes(lote.estado)
                 );
             }
-            return filteredlotes;
+            return filteredLotes;
         }, [lotes, filterValue, statusFilter]);
 
         const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -95,11 +94,9 @@ export function Lotes() {
         const renderCell = React.useCallback((lote, columnKey) => {
             const cellValue = lote[columnKey];
 
-            const handleUpdateClick = (id_lote, lote) => {
-                localStorage.setItem('idUser', id_lote);
-                clickEditar(id_lote, lote);
-                console.log('ID del lote seleccionado:', id_lote);
-                console.log('Datos del lote seleccionado:', lote);
+            const handleUpdateClick = (id) => {
+                localStorage.setItem('idUser', id);
+                clickEditar(id);
             };
 
             switch (columnKey) {
@@ -109,12 +106,14 @@ export function Lotes() {
                             {cellValue}
                         </Chip>
                     );
-                case "actions": /*  */
+                case "actions":
                     return (
-                        <div className="relative flex justify-start  items-center gap-2">
+                        <div className="relative flex items-center justify-end gap-2">
                             <Dropdown>
                                 <div className="flex items-center gap-2">
-                                    <ButtonActualizar onClick={() => handleToggle('update', setLoteId(lote))} />
+                                    <ButtonActualizar
+                                        onClick={() => handleToggle('update', setLoteId(lote))}
+                                    />
                                     <ButtonDesactivar
                                         onClick={() => peticionDesactivar(lote.id_lote)}
                                         estado={lote.estado}
@@ -123,7 +122,6 @@ export function Lotes() {
                             </Dropdown>
                         </div>
                     );
-
                 default:
                     return cellValue;
             }
@@ -161,14 +159,14 @@ export function Lotes() {
         }, []);
 
         const onStatusFilter = (selectedKeys) => {
-            setStatusFilter(selectedKeys)
+            setStatusFilter(selectedKeys);
         }
 
         const topContent = React.useMemo(() => {
             return (
                 <>
-                    <div className="flex flex-col  mt-3" >
-                        <div className="flex justify-between gap-3 items-end ">
+                    <div className="flex flex-col mt-3">
+                        <div className="flex justify-between gap-3 items-end">
                             <Input
                                 isClearable
                                 className="w-full sm:max-w-[44%] bg-[#f4f4f5] rounded"
@@ -179,10 +177,9 @@ export function Lotes() {
                                 onValueChange={onSearchChange}
                             />
                             <div className="flex gap-3">
-
                                 <Dropdown>
-                                    <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-black" />} variant="shadow">
+                                    <DropdownTrigger className="hidden sm:flex mr-2 text-black bg-[#f4f4f5]">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700 cursor-pointer" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -196,7 +193,7 @@ export function Lotes() {
                                         onSelectionChange={onStatusFilter}
                                     >
                                         {statusOptions.map((status) => (
-                                            <DropdownItem key={status.uid} className="capitalize w-55">
+                                            <DropdownItem key={status.uid} className="capitalize">
                                                 {status.name}
                                             </DropdownItem>
                                         ))}
@@ -215,6 +212,7 @@ export function Lotes() {
                                     className="bg-transparent outline-none text-default-400 text-small"
                                     onChange={onRowsPerPageChange}
                                 >
+                                    <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
                                     <option value="20">20</option>
@@ -223,7 +221,6 @@ export function Lotes() {
                         </div>
                     </div>
                 </>
-
             );
         }, [
             filterValue,
@@ -236,67 +233,66 @@ export function Lotes() {
         const bottomContent = React.useMemo(() => {
             return (
                 <div className="py-2 px-2 flex justify-between items-center m-3">
-                  <Pagination
-                    showControls
-                    initialPage={1}
-                    color="success"
-                    page={page}
-                    total={pages}
-                    onChange={setPage}
-                  />
-                  <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                    <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
-                      Anterior
-                    </Button>
-                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
-                      Siguiente
-                    </Button>
-                  </div>
+                    <Pagination
+                        showControls
+                        initialPage={1}
+                        color="success"
+                        page={page}
+                        total={pages}
+                        onChange={setPage}
+                    />
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2">
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50 cursor-pointer" onPress={onPreviousPage}>
+                            Anterior
+                        </Button>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58 cursor-pointer" variant="ghost" onPress={onNextPage}>
+                            Siguiente
+                        </Button>
+                    </div>
                 </div>
-              );
+            );
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
             <div className="flex items-center justify-center">
-              <Table
-                aria-label="Tabla"
-                isHeaderSticky
-                bottomContent={bottomContent}
-                bottomContentPlacement="outside"
-                classNames={{
-                  wrapper: "max-h-[100%] max-w-[100%]",
-                }}
-                className="flex"
-                selectedKeys={selectedKeys}
-                // selectionMode="multiple"
-                sortDescriptor={sortDescriptor}
-                topContent={topContent}
-                topContentPlacement="outside"
-                onSelectionChange={setSelectedKeys}
-                onSortChange={setSortDescriptor}
-              >
-                <TableHeader columns={data}>
-                  {(column) => (
-                    <TableColumn
-                      key={column.uid}
-                      align={column.uid === "actions" ? "center" : "start"}
-                      allowsSorting={column.sortable}
-                    >
-                      {column.name}
-                    </TableColumn>
-                  )}
-                </TableHeader>
-                <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
-                  {(item) => (
-                    <TableRow key={item.id_lote}>
-                      {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                <Table
+                    aria-label="Tabla"
+                    isHeaderSticky
+                    bottomContent={bottomContent}
+                    bottomContentPlacement="outside"
+                    classNames={{
+                        wrapper: "max-h-[100%] max-w-[100%]",
+                    }}
+                    className="flex"
+                    selectedKeys={selectedKeys}
+                    // selectionMode="multiple"
+                    sortDescriptor={sortDescriptor}
+                    topContent={topContent}
+                    topContentPlacement="outside"
+                    onSelectionChange={setSelectedKeys}
+                    onSortChange={setSortDescriptor}
+                >
+                    <TableHeader columns={data}>
+                        {(column) => (
+                            <TableColumn
+                                key={column.uid}
+                                align={column.uid === "actions" ? "center" : "start"}
+                                allowsSorting={column.sortable}
+                            >
+                                {column.name}
+                            </TableColumn>
+                        )}
+                    </TableHeader>
+                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                        {(item) => (
+                            <TableRow key={item.id_lote}>
+                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
             </div>
-      
-          );
+        );
     }
 
     /* Espacio 1 */
@@ -463,28 +459,28 @@ export function Lotes() {
 
         <>
             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
 
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <LotesModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    lotes={lotes}
-                />
-            </div>
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <LotesModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        lotes={lotes}
+                    />
+                </div>
             </div>
         </>
     )
