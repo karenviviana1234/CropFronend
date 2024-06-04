@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
 import v from '../../styles/variables'
-import './VistasCss.css'
+//import './VistasCss.css'
 
 function DashboardEmpleado() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
