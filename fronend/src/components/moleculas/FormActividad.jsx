@@ -139,64 +139,60 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
             />
           </div>
           <div className='py-2'>
-            <select
-              className='w-[320px] rounded-xl bg-gray-100 h-[40px]'
-              label='Variedad'
-              id='fk_id_variedad'
-              name='fk_id_variedad'
-              value={variedadFK}
-              onChange={(e) => setVariedadFK(e.target.value)}
-              required
-            >
-               <option value="" hidden className="text-gray-600">
-              Seleccione la variedad
-            </option>
-              {variedades.map(variedad => (
-                <option key={variedad.id_variedad} value={variedad.id_variedad}>
-                  {variedad.nombre_variedad}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='py-2'>
-            <select
-              className='w-[320px] rounded-xl bg-gray-100 h-[40px]'
-              label='Tipo de Recursos'
-              id='fk_id_tipo_recursos'
-              name='fk_id_tipo_recursos'
-              value={tipoRecursosFK}
-              select= 'multiple'
-              onChange={(e) => setTipoRecursosFK(e.target.value)}
-              required
-            >
-               <option value="" hidden className="text-gray-600">
-              Seleccionar Recurso
-            </option>
-              {tipo_recursos.map(tipo_recursos => (
-                <option key={tipo_recursos.id_tipo_recursos} value={tipo_recursos.id_tipo_recursos}>
-                  {tipo_recursos.nombre_recursos}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className='py-2'>
-            <select
-              label='Estado'
-              className='w-[320px] rounded-xl bg-gray-100 h-[40px]'
-              value={estadoOp}
-              onChange={(e) => setEstadoOp(e.target.value)}
-              required
-            >
-               <option value="" hidden className="text-gray-600">
-              Seleccionar Estado
-            </option>
-              {estado.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-          </div>
+  <select
+    className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+    label='Variedad'
+    id='fk_id_variedad'
+    name='fk_id_variedad'
+    value={variedadFK}
+    onChange={(e) => setVariedadFK(e.target.value)}
+    required
+  >
+    <option value="" hidden className="text-gray-600">Seleccione la variedad</option>
+    {variedades.map(variedad => (
+      <option key={variedad.id_variedad} value={variedad.id_variedad}>
+        {variedad.nombre_variedad}
+      </option>
+    ))}
+  </select>
+</div>
+
+<div className='py-2'>
+  <select
+    className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+    label='Tipo de Recursos'
+    id='fk_id_tipo_recursos'
+    name='fk_id_tipo_recursos'
+    value={tipoRecursosFK}
+    multiple
+    onChange={(e) => setTipoRecursosFK(e.target.value)}
+    required
+  >
+    <option value="" hidden className="text-gray-600">Seleccionar Recurso</option>
+    {tipo_recursos.map(tipo_recurso => (
+      <option key={tipo_recurso.id_tipo_recursos} value={tipo_recurso.id_tipo_recursos}>
+        {tipo_recurso.nombre_recursos}
+      </option>
+    ))}
+  </select>
+</div>
+
+<div className='py-2'>
+  <select
+    className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+    label='Estado'
+    value={estadoOp}
+    onChange={(e) => setEstadoOp(e.target.value)}
+    required
+  >
+    <option value="" hidden className="text-gray-600">Seleccionar Estado</option>
+    {estado.map(item => (
+      <option key={item.value} value={item.value}>
+        {item.label}
+      </option>
+    ))}
+  </select>
+</div>
           <ModalFooter>
             <Button color='danger' variant='flat' onClick={onClose}>
               Cerrar
