@@ -33,43 +33,44 @@ export function Lotes() {
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
+        todos: "primary",
     };
 
     function Ejemplo() {
+
         const [filterValue, setFilterValue] = React.useState("");
         const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState(new Set(["todos"]));
+        const [statusFilter, setStatusFilter] = React.useState("all");
         const [rowsPerPage, setRowsPerPage] = React.useState(5);
         const [sortDescriptor, setSortDescriptor] = React.useState({
             column: "fecha",
             direction: "ascending",
         });
         const [page, setPage] = React.useState(1);
-
         const statusOptions = [
             { name: "Todos", uid: "todos" },
-            { name: "Activo", uid: "activo" },
-            { name: "Inactivo", uid: "inactivo" },
+            { name: "Activo", uid: "inactivo" },
+            { name: "Inactivo", uid: "activo" },
         ];
 
         const hasSearchFilter = Boolean(filterValue);
-
         const filteredItems = React.useMemo(() => {
-            let filteredLotes = lotes;
+            let filteredlotes = lotes;
 
             if (hasSearchFilter) {
-                filteredLotes = filteredLotes.filter(lote =>
+                filteredlotes = filteredlotes.filter(lote =>
                     String(lote.id_lote).toLowerCase().includes(filterValue.toLowerCase()) ||
-                    String(lote.nombre).toLowerCase().includes(filterValue.toLowerCase())
+                    lote.nombre.toLowerCase().includes(filterValue.toLowerCase()) /* ||
+                    String(lote.fk_tipo_analisis).toLowerCase().includes(filterValue.toLowerCase()) */
                 );
             }
 
-            if (statusFilter.size !== statusOptions.length && !statusFilter.has("todos")) {
-                filteredLotes = filteredLotes.filter(lote =>
+            if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+                filteredlotes = filteredlotes.filter(lote =>
                     Array.from(statusFilter).includes(lote.estado)
                 );
             }
-            return filteredLotes;
+            return filteredlotes;
         }, [lotes, filterValue, statusFilter]);
 
         const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -94,9 +95,11 @@ export function Lotes() {
         const renderCell = React.useCallback((lote, columnKey) => {
             const cellValue = lote[columnKey];
 
-            const handleUpdateClick = (id) => {
-                localStorage.setItem('idUser', id);
-                clickEditar(id);
+            const handleUpdateClick = (id_lote, lote) => {
+                localStorage.setItem('idUser', id_lote);
+                clickEditar(id_lote, lote);
+                console.log('ID del lote seleccionado:', id_lote);
+                console.log('Datos del lote seleccionado:', lote);
             };
 
             switch (columnKey) {
@@ -106,14 +109,12 @@ export function Lotes() {
                             {cellValue}
                         </Chip>
                     );
-                case "actions":
+                case "actions": /*  */
                     return (
-                        <div className="relative flex items-center justify-end gap-2">
+                        <div className="relative flex justify-start  items-center gap-2">
                             <Dropdown>
                                 <div className="flex items-center gap-2">
-                                    <ButtonActualizar
-                                        onClick={() => handleToggle('update', setLoteId(lote))}
-                                    />
+                                    <ButtonActualizar onClick={() => handleToggle('update', setLoteId(lote))} />
                                     <ButtonDesactivar
                                         onClick={() => peticionDesactivar(lote.id_lote)}
                                         estado={lote.estado}
@@ -122,6 +123,7 @@ export function Lotes() {
                             </Dropdown>
                         </div>
                     );
+
                 default:
                     return cellValue;
             }
@@ -159,14 +161,14 @@ export function Lotes() {
         }, []);
 
         const onStatusFilter = (selectedKeys) => {
-            setStatusFilter(selectedKeys);
+            setStatusFilter(selectedKeys)
         }
 
         const topContent = React.useMemo(() => {
             return (
                 <>
-                    <div className="flex flex-col mt-3">
-                        <div className="flex justify-between gap-3 items-end">
+                    <div className="flex flex-col  mt-3" >
+                        <div className="flex justify-between gap-3 items-end ">
                             <Input
                                 isClearable
                                 className="w-full sm:max-w-[44%] bg-[#f4f4f5] rounded"
@@ -177,9 +179,10 @@ export function Lotes() {
                                 onValueChange={onSearchChange}
                             />
                             <div className="flex gap-3">
+
                                 <Dropdown>
-                                    <DropdownTrigger className="hidden sm:flex mr-2 text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700 cursor-pointer" />} variant="flat">
+                                    <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -193,26 +196,25 @@ export function Lotes() {
                                         onSelectionChange={onStatusFilter}
                                     >
                                         {statusOptions.map((status) => (
-                                            <DropdownItem key={status.uid} className="capitalize">
+                                            <DropdownItem key={status.uid} className="capitalize w-55">
                                                 {status.name}
                                             </DropdownItem>
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] cursor-pointer" style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-default-400 text-small">Total {lotes.length} Resultados</span>
-                            <label className="flex items-center text-default-400 mr-30 text-small">
+                            <label className="flex items-center text-default-400 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-default-400 text-small"
                                     onChange={onRowsPerPageChange}
                                 >
-                                    <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="15">15</option>
                                     <option value="20">20</option>
@@ -221,6 +223,7 @@ export function Lotes() {
                         </div>
                     </div>
                 </>
+
             );
         }, [
             filterValue,
@@ -241,11 +244,11 @@ export function Lotes() {
                         total={pages}
                         onChange={setPage}
                     />
-                    <div className="hidden sm:flex w-[40%] justify-end gap-2">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50 cursor-pointer" onPress={onPreviousPage}>
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58 cursor-pointer" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -292,6 +295,7 @@ export function Lotes() {
                     </TableBody>
                 </Table>
             </div>
+
         );
     }
 
@@ -304,10 +308,10 @@ export function Lotes() {
     const [lotes, setLotes] = useState([]);
     const { idLote, setLoteId } = useContext(LotesContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
-
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
     };
+
 
     useEffect(() => {
         peticionGet()
@@ -366,41 +370,67 @@ export function Lotes() {
 
     // desactivar lote
     const peticionDesactivar = async (id_lote) => {
-
-        // console.log("ID del lotes a desactivar:", id_lote);
         try {
-            axiosClient.put(`/desactivarlote/${id_lote}`, null).then((response) => {
-                console.log(response.data)
-                if (response.status == 200) {
-                    const nuevoEstado = response.data.message;
-                    /* fetchData() */
-                    Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¡Esto podra afectar a tus lotes!",
-                        icon: "question",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Si, estoy seguro!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                title: "¡Actualizado!",
-                                text: `${nuevoEstado}`,
-                                icon: "success"
-                            });
-                            peticionGet()
-                        }
-                    });
-                } else {
-                    alert('Error')
-                }
-            });
+            const response = await axiosClient.put(`/desactivarlote/${id_lote}`, null);
+            console.log(response.data);
+            
+            if (response.status === 200) {
+                const nuevoEstado = response.data.message;
+                
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "¡Esto podrá afectar a tus lotes!",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, estoy seguro!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "¡Actualizado!",
+                            text: `${nuevoEstado}`,
+                            icon: "success"
+                        });
+                        peticionGet();
+                    } else {
+                        // Si el usuario cancela, mostrar el mensaje de cancelación
+                        Swal.fire({
+                            title: "Cancelado",
+                            text: "La operación ha sido cancelada",
+                            icon: "info"
+                        });
+                    }
+                });
+            } else {
+                throw new Error('Error, el mensaje recibido no tiene el formato esperado');
+            }
         } catch (error) {
-            alert('Error del servidor ' + error)
+            console.log(error.response.data.message); // Imprimir el mensaje de error en la consola
+            if (error.response && error.response.data && error.response.data.message) {
+                const errorMessage = error.response.data.message;
+                if (errorMessage === "No se puede activar el lote porque la finca está inactiva") {
+                    mostrarAlertaError(errorMessage);
+                } else {
+                    mostrarAlertaError("Error al cambiar el estado del lote");
+                }
+            } else {
+                mostrarAlertaError("Error del servidor. Por favor, inténtelo de nuevo más tarde.");
+            }
         }
-    }
-
+    };
+    
+    const mostrarAlertaError = (mensaje) => {
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error",
+            text: mensaje,
+            showConfirmButton: false,
+            timer: 2000
+        });
+    };
+    
     // registrar y actualizar lote
     const handleSubmit = async (formData, e) => {
         console.log('Datos enviados:', formData);
@@ -458,29 +488,29 @@ export function Lotes() {
     return (
 
         <>
-            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+      
+               <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
                 <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
                 <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-
-                    <AccionesModal
-                        isOpen={modalAcciones}
-                        onClose={() => setModalAcciones(false)}
-                        label={mensaje}
-                    />
-                    <LotesModal
-                        open={modalOpen}
-                        onClose={() => setModalOpen(false)}
-                        title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
-                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                        initialData={initialData}
-                        handleSubmit={handleSubmit}
-                        mode={mode}
-                    />
-                    <Ejemplo
-                        data={data}
-                        lotes={lotes}
-                    />
-                </div>
+                <AccionesModal
+                    isOpen={modalAcciones}
+                    onClose={() => setModalAcciones(false)}
+                    label={mensaje}
+                />
+                <LotesModal
+                    open={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
+                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                    initialData={initialData}
+                    handleSubmit={handleSubmit}
+                    mode={mode}
+                />
+                <Ejemplo
+                    data={data}
+                    lotes={lotes}
+                />
+            </div>
             </div>
         </>
     )

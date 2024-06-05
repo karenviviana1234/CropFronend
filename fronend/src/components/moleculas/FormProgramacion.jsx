@@ -5,9 +5,8 @@ import axiosClient from '../axiosClient'; // Asegúrate de importar axiosClient 
 import ProgramacionesContext from './../../context/ProgramacionesContext';
 
 const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
-
   const [variedades, setVariedades] = useState([]);
-  const [cultivos, setCultivos] = useState([]);
+  const [lotes, setLotes] = useState([]);
   const [actividad, setActividad] = useState([]);
   const [usuario, setUsuarios] = useState([]);
   const [estado, setEstado] = useState([]);
@@ -18,7 +17,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
   const [identificacionFK, setIdentificacionFK] = useState('');
   const [actividadFK, setActividadFK] = useState('');
   const [variedadFK, setVariedadFK] = useState('');
-  const [cultivoFK, setCultivoFK] = useState('');
+  const [loteFK, setLoteFK] = useState('');
   const { idProgramacion } = useContext(ProgramacionesContext);
 
   useEffect(() => {
@@ -33,44 +32,51 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
 
   useEffect(() => {
     axiosClient.get('/usuario/listarUsuarios').then((response) => {
-      const usuarioFilter = response.data.filter(usuario => usuario.estado === 'activo');
-      console.log(response.data)
+      const usuarioFilter = response.data.filter((usuario) => usuario.estado === 'activo');
       setUsuarios(usuarioFilter);
     });
   }, []);
 
   useEffect(() => {
     axiosClient.get('/listara').then((response) => {
-      const actividadFilter = response.data.filter(actividad => actividad.estado === 'activo');
-      console.log(response.data)
+      const actividadFilter = response.data.filter((actividad) => actividad.estado === 'activo');
       setActividad(actividadFilter);
     });
   }, []);
 
   useEffect(() => {
     axiosClient.get('/listarVariedades').then((response) => {
-      const variedadFilter = response.data.filter(variedad => variedad.estado === 'activo');
-      console.log(response.data)
+      const variedadFilter = response.data.filter((variedad) => variedad.estado === 'activo');
       setVariedades(variedadFilter);
     });
   }, []);
 
   useEffect(() => {
-    axiosClient.get('/listarCultivos').then((response) => {
-      const cultivoFilter = response.data.filter(cultivo => cultivo.estado === 'activo');
-      console.log('API Cultivo:', response.data);
-      setCultivos(cultivoFilter);
+    axiosClient.get('/listarlote').then((response) => {
+      const loteFilter = response.data.filter((lote) => lote.estado === 'activo');
+      setLotes(loteFilter);
     });
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return ''; // Devuelve una cadena vacía si la fecha es inválida
+    }
+    return date.toISOString().split('T')[0];
+  };
+
   useEffect(() => {
     if (mode === 'update' && idProgramacion) {
-      setFechaFin(idProgramacion.fecha_inicio);
-      setFechaFin(idProgramacion.fecha_fin);
+      const formattedFechaInicio = formatDate(idProgramacion.fecha_inicio);
+      const formattedFechaFin = formatDate(idProgramacion.fecha_fin);
+
+      setFechaInicio(formattedFechaInicio);
+      setFechaFin(formattedFechaFin);
       setIdentificacionFK(idProgramacion.fk_identificacion);
       setActividadFK(idProgramacion.fk_id_actividad);
       setVariedadFK(idProgramacion.fk_id_variedad);
-      setCultivoFK(idProgramacion.fk_id_cultivo);
+      setLoteFK(idProgramacion.fk_id_lote);
       setEstadoOp(idProgramacion.estado);
     }
   }, [mode, idProgramacion]);
@@ -84,7 +90,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
         fk_identificacion: identificacionFK,
         fk_id_actividad: actividadFK,
         fk_id_variedad: variedadFK,
-        fk_id_cultivo: cultivoFK,
+        fk_id_lote: loteFK,
         estado: estadoOp,
       };
       handleSubmit(formData, e);
@@ -93,40 +99,35 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
       alert('Hay un error en el sistema ' + error);
     }
   };
-
-
-
-
-
   return (
     <>
-      <form method='post' onSubmit={handleFormSubmit}>
-        <div className='ml-5 align-items-center '>
-          <div className='py-2'>
+      <form method="post" onSubmit={handleFormSubmit}>
+        <div className="ml-5 align-items-center ">
+          <div className="py-2">
             <Input
               type="date"
               label="Fecha inicial"
-              className='w-80'
-              id='fecahinicio'
+              className="w-80"
+              id="fecahinicio"
               name="fecahincio"
               value={fechaInicio}
               onChange={(e) => setFechaInicio(e.target.value)}
               required={true}
             />
           </div>
-          <div className='py-2'>
+          <div className="py-2">
             <Input
               type="date"
               label="Fecha inicial"
-              className='w-80'
-              id='fecahinicio'
+              className="w-80"
+              id="fecahinicio"
               name="fecahincio"
               value={fechaFin}
               onChange={(e) => setFechaFin(e.target.value)}
               required={true}
             />
           </div>
-          <div className='py-2'>
+          <div className="py-2">
             <select
               className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               name="idusuario"
@@ -134,75 +135,84 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
               onChange={(e) => setIdentificacionFK(e.target.value)}
               required={true}
             >
-              <option value="" disabled hidden>Seleccionar usuario</option>
-              {usuario.map(usua => (
+              <option value="" disabled hidden>
+                Seleccionar usuario
+              </option>
+              {usuario.map((usua) => (
                 <option key={usua.identificacion} value={usua.identificacion}>
                   {usua.nombre}
                 </option>
               ))}
             </select>
           </div>
-          <div className='py-2'>
+          <div className="py-2">
             <select
               className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-              id='fk_id_actividad'
-              name='fk_id_actividad'
+              id="fk_id_actividad"
+              name="fk_id_actividad"
               value={actividadFK}
               onChange={(e) => setActividadFK(e.target.value)}
               required={true}
             >
-              <option value="" disabled hidden>Seleccionar actividad</option>
-              {actividad.map(acti => (
+              <option value="" disabled hidden>
+                Seleccionar actividad
+              </option>
+              {actividad.map((acti) => (
                 <option key={acti.id_actividad} value={acti.id_actividad}>
                   {acti.nombre_actividad}
                 </option>
               ))}
             </select>
           </div>
-          <div className='py-2'>
+          <div className="py-2">
             <select
               className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-              id='fk_id_actividad'
-              name='fk_id_actividad'
-              value={cultivoFK}
-              onChange={(e) => setCultivoFK(e.target.value)}
+              id="fk_id_lote"
+              name="fk_id_lote"
+              value={loteFK}
+              onChange={(e) => setLoteFK(e.target.value)}
               required={true}
             >
-              <option value="" disabled hidden>Seleccionar cultivo</option>
-              {cultivos.map(culti => (
-                <option key={culti.id_cultivo} value={culti.id_cultivo}>
-                  {culti.cantidad_sembrada}
+              <option value="" disabled hidden>
+                Seleccionar lote
+              </option>
+              {lotes.map((lot) => (
+                <option key={lot.id_lote} value={lot.id_lote}>
+                  {lot.nombre}
                 </option>
               ))}
             </select>
           </div>
-          <div className='py-2'>
+          <div className="py-2">
             <select
               className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-              id='fk_id_variedad'
-              name='fk_id_variedad'
+              id="fk_id_variedad"
+              name="fk_id_variedad"
               value={variedadFK}
               onChange={(e) => setVariedadFK(e.target.value)}
               required
             >
-              <option value="" disabled hidden>Seleccionar variedad</option>
-              {variedades.map(variedad => (
+              <option value="" disabled hidden>
+                Seleccionar variedad
+              </option>
+              {variedades.map((variedad) => (
                 <option key={variedad.id_variedad} value={variedad.id_variedad}>
                   {variedad.nombre_variedad}
                 </option>
               ))}
             </select>
           </div>
-          <div className='py-2'>
+          <div className="py-2">
             <select
-              label='Estado'
-
+              label="Estado"
               className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               value={estadoOp}
               onChange={(e) => setEstadoOp(e.target.value)}
               required
             >
-              <option value="" disabled hidden>Seleccionar estado</option>
+              <option value="" disabled hidden>
+                Seleccionar estado
+              </option>
               {estado.map((item) => (
                 <option key={item.value} value={item.value}>
                   {item.label}
@@ -214,7 +224,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
             <Button color="danger" variant="flat" onPress={onClose}>
               Close
             </Button>
-            <Button type='submit' className='text-white bg-[#006000]'>
+            <Button type="submit" className="text-white bg-[#006000]">
               {actionLabel}
             </Button>
           </ModalFooter>
