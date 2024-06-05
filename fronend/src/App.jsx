@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import InicioF from "./components/pages/Inicio.jsx";
 import { InicioSesion } from "./components/pages/InicarSesion.jsx";
 import Registro from "./components/pages/Registro.jsx";
-import ProtectedRoute from "./ProtectedRoute.jsx";
+// import ProtectedRoute from "./ProtectedRoute.jsx";
 // import NotFoundPage from "./components/pages/NotFoundPage .jsx";
 import GlobalProvider from "./context/GlobalContext.jsx";
 
@@ -44,7 +44,6 @@ function App() {
           <Route path="/recuperar" element={<Recuperarcontra />} />
 
 
-          <Route element={<ProtectedRoute />} >
 
             {user && user.rol === 'administrador' && (
               <>
@@ -71,7 +70,7 @@ function App() {
               </>
             )}
 
-          </Route>
+          
         </Routes>
       </GlobalProvider>
     </BrowserRouter >

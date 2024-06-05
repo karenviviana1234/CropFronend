@@ -11,6 +11,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
   const [cantidad_produccion, setcantidad_produccion] = useState('')
   const [precio, setPrecio] = useState('')
   const [programacionFk, setProgramacionFk] = useState('')
+  const [inversionFk, setInversionFk] = useState('')
   const { idProduccion } = useContext(ProduccionContext)
 
 
@@ -27,6 +28,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
       setcantidad_produccion(idProduccion.cantidad_produccion)
       setPrecio(idProduccion.precio)
       setProgramacionFk(idProduccion.fk_id_programacion)
+      setInversionFK(idProduccion.fk_id_inversione)
     }
   }, [mode, idProduccion])
 
@@ -36,7 +38,8 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
       const formData = {
         cantidad_produccion: cantidad_produccion,
         precio: parseInt(precio),
-        fk_id_programacion: parseInt(programacionFk)
+        fk_id_programacion: parseInt(programacionFk),
+        fk_id_inversiones: parseInt(inversionFk)
       }
       handleSubmit(formData, e)
     } catch (error) {
@@ -83,7 +86,22 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
           >
             {programaciones.map(programacion => (
               <SelectItem key={programacion.id_programacion} value={programacion.id_programacion} textValue={programacion.id_programacion}>
-                {programacion.id_programacion}
+                {programacion.nom}
+              </SelectItem>
+            ))}
+          </Select>
+        </div>
+        <div className='py-2'>
+          <Select
+            label='Inversiones'
+            name="fk_id_inversiones"
+            className='w-80'
+            value={inversionFk}
+            onChange={(e) => setInversionFk(e.target.value)}
+          >
+            {programaciones.map(programacion => (
+              <SelectItem key={programacion.fk_id_inversiones} value={programacion.fk_id_inversiones} textValue={programacion.fk_id_inversiones}>
+                {programacion.fk_id_inversiones}
               </SelectItem>
             ))}
           </Select>

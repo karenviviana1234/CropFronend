@@ -356,6 +356,11 @@ export function Produccion() {
             sortable: true
         },
         {
+            uid: 'id_inversiones',
+            name: 'fk Id Inversion',
+            sortable: true
+        },
+        {
             uid: 'estado',
             name: 'Estado',
             sortable: true
