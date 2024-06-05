@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ModalFooter, Button, Input } from "@nextui-org/react";
+import Select from 'react-select';
 import axiosClient from '../axiosClient';
 import ActividadesContext from './../../context/ActividadContext';
 
@@ -14,7 +15,7 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
   const [observaciones, setObservaciones] = useState('');
   const [valorActividad, setValorActividad] = useState('');
   const [variedadFK, setVariedadFK] = useState('');
-  const [tipoRecursosFK, setTipoRecursosFK] = useState('');
+  const [tipoRecursosFK, setTipoRecursosFK] = useState([]);
   const { idActividad } = useContext(ActividadesContext);
 
   useEffect(() => {
@@ -45,13 +46,15 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
 
   useEffect(() => {
     if (mode === 'update' && idActividad) {
-      setNombreActividad(idActividad.nombre_actividad);
-      setTiempo(idActividad.tiempo);
-      setObservaciones(idActividad.observaciones);
-      setValorActividad(idActividad.valor_actividad);
-      setVariedadFK(idActividad.fk_id_variedad);
-      setTipoRecursosFK(idActividad.fk_id_tipo_recursos);
-      setEstadoOp(idActividad.estado);
+      setNombreActividad(idActividad.nombre_actividad || '');
+      setTiempo(idActividad.tiempo || '');
+      setObservaciones(idActividad.observaciones || '');
+      setValorActividad(idActividad.valor_actividad || '');
+      setVariedadFK(idActividad.fk_id_variedad || '');
+      if (idActividad.fk_id_tipo_recursos) {
+        setTipoRecursosFK(idActividad.fk_id_tipo_recursos.split(','));
+      }
+      setEstadoOp(idActividad.estado || '');
     }
   }, [mode, idActividad]);
 
@@ -64,7 +67,7 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
         observaciones: observaciones,
         valor_actividad: valorActividad,
         fk_id_variedad: variedadFK,
-        fk_id_tipo_recursos: tipoRecursosFK,
+        fk_id_tipo_recursos: tipoRecursosFK, // Deja como array
         estado: estadoOp,
       };
       handleSubmit(formData, e);
@@ -72,6 +75,28 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
       console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
+  };
+
+  const handleRecursosChange = (selectedOptions) => {
+    setTipoRecursosFK(selectedOptions ? selectedOptions.map(option => option.value) : []);
+  };
+
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      maxHeight: '50px', // Ajusta la altura máxima del control
+      overflowY: 'auto', // Agrega desplazamiento vertical
+      width: '303px', // Alarga hacia los lados
+      marginTop: '-8px', // Subir 4px hacia arriba
+      padding: '0 2px' // Agrega padding horizontal
+    }),
+    multiValue: (provided, state) => ({
+      ...provided,
+      maxWidth: '100px', // Ajusta el ancho máximo de cada valor seleccionado
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    }),
   };
 
   return (
@@ -139,60 +164,56 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
             />
           </div>
           <div className='py-2'>
-  <select
-    className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-    label='Variedad'
-    id='fk_id_variedad'
-    name='fk_id_variedad'
-    value={variedadFK}
-    onChange={(e) => setVariedadFK(e.target.value)}
-    required
-  >
-    <option value="" hidden className="text-gray-600">Seleccione la variedad</option>
-    {variedades.map(variedad => (
-      <option key={variedad.id_variedad} value={variedad.id_variedad}>
-        {variedad.nombre_variedad}
-      </option>
-    ))}
-  </select>
-</div>
+            <select
+              className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              label='Variedad'
+              id='fk_id_variedad'
+              name='fk_id_variedad'
+              value={variedadFK}
+              onChange={(e) => setVariedadFK(e.target.value)}
+              required
+            >
+              <option value="" hidden className="text-gray-600">Seleccione la variedad</option>
+              {variedades.map(variedad => (
+                <option key={variedad.id_variedad} value={variedad.id_variedad}>
+                  {variedad.nombre_variedad}
+                </option>
+              ))}
+            </select>
+          </div>
 
-<div className='py-2'>
-  <select
-    className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-    label='Tipo de Recursos'
-    id='fk_id_tipo_recursos'
-    name='fk_id_tipo_recursos'
-    value={tipoRecursosFK}
-    multiple
-    onChange={(e) => setTipoRecursosFK(e.target.value)}
-    required
-  >
-    <option value="" hidden className="text-gray-600">Seleccionar Recurso</option>
-    {tipo_recursos.map(tipo_recurso => (
-      <option key={tipo_recurso.id_tipo_recursos} value={tipo_recurso.id_tipo_recursos}>
-        {tipo_recurso.nombre_recursos}
-      </option>
-    ))}
-  </select>
-</div>
+          <div className='py-2'>
+            <Select
+              className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              label='Tipo de Recursos'
+              id='fk_id_tipo_recursos'
+              name='fk_id_tipo_recursos'
+              value={tipo_recursos.filter(tipo_recurso => tipoRecursosFK.includes(tipo_recurso.id_tipo_recursos)).map(tipo_recurso => ({ value: tipo_recurso.id_tipo_recursos, label: tipo_recurso.nombre_recursos }))}
+              isMulti
+              onChange={handleRecursosChange}
+              options={tipo_recursos.map(tipo_recurso => ({ value: tipo_recurso.id_tipo_recursos, label: tipo_recurso.nombre_recursos }))}
+              placeholder='Seleccionar Recurso'
+              required
+              styles={customStyles}
+            />
+          </div>
 
-<div className='py-2'>
-  <select
-    className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-    label='Estado'
-    value={estadoOp}
-    onChange={(e) => setEstadoOp(e.target.value)}
-    required
-  >
-    <option value="" hidden className="text-gray-600">Seleccionar Estado</option>
-    {estado.map(item => (
-      <option key={item.value} value={item.value}>
-        {item.label}
-      </option>
-    ))}
-  </select>
-</div>
+          <div className='py-2'>
+            <select
+              className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+              label='Estado'
+              value={estadoOp}
+              onChange={(e) => setEstadoOp(e.target.value)}
+              required
+            >
+              <option value="" hidden className="text-gray-600">Seleccionar Estado</option>
+              {estado.map(item => (
+                <option key={item.value} value={item.value}>
+                  {item.label}
+                </option>
+              ))}
+            </select>
+          </div>
           <ModalFooter>
             <Button color='danger' variant='flat' onClick={onClose}>
               Cerrar
