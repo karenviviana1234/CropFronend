@@ -3,7 +3,7 @@ import v from '../../../../styles/variables';
 import Icon from '../../../atomos/Sidebar/IconosSidebar';
 import Image from '../../../atomos/Logo';
 
-function Sidebar() {
+function SidebarEmple() {
    
    const [bgColor, setBgColor] = useState('green');
   return (
@@ -33,4 +33,4 @@ function Sidebar() {
   )
 }
 
-export default Sidebar;
+export default SidebarEmple;

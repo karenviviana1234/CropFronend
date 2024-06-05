@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import v from '../../../styles/variables';
 import Perfil from '../../organismos/Perfil/Perfil'; 
 
-function NavbarHeader({ toggleSidebar, sidebarAbierto }) {
+function NavbarHeaderEmple({ toggleSidebar, sidebarAbierto }) {
   const [perfilVisible, setPerfilVisible] = useState(false); 
 
   const togglePerfil = () => {
@@ -31,4 +31,4 @@ function NavbarHeader({ toggleSidebar, sidebarAbierto }) {
   );
 }
 
-export default NavbarHeader;
+export default NavbarHeaderEmple;

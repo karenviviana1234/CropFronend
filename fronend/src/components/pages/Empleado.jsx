@@ -6,20 +6,25 @@ import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
 
 const Empleado = () => {
   const [empleado, setEmpleado] = useState([]);
+  const [sidebarAbierto, setSidebarAbierto] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarAbierto(!sidebarAbierto);
+  };
+
+  const ObtenerDatos = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const getURL = "http://localhost:3000/Listar";
+      const response = await axios.get(getURL, { headers: { token: token } });
+      console.log(response.data);
+      setEmpleado(response.data);
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+    }
+  };
 
   useEffect(() => {
-    const ObtenerDatos = async () => {
-      try {
-        // Aquí deberías obtener el token de algún lugar, como el almacenamiento local
-        const token = localStorage.getItem("token");
-        const getURL = "http://localhost:3000/Listar";
-        const response = await axios.get(getURL, { headers: { token: token } });
-        console.log(response.data);
-        setEmpleado(response.data);
-      } catch (error) {
-        console.error("Error al obtener los datos:", error);
-      }
-    };
     ObtenerDatos();
   }, []);
 
@@ -40,7 +45,7 @@ const Empleado = () => {
             .then((response) => {
               if (response.status === 200) {
                 const nuevoEstado = response.data.message;
-                fetchData();
+                ObtenerDatos();
                 Swal.fire({
                   title: "¡Actualizado!",
                   text: `${nuevoEstado}`,
@@ -60,36 +65,30 @@ const Empleado = () => {
       }
     });
   };
-  const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarAbierto(!sidebarAbierto);
-  };
   return (
     <div className={`contenido ${sidebarAbierto ? "contenido-extendido" : ""}`}>
       <HeaderEmpleado
         toggleSidebar={toggleSidebar}
         sidebarAbierto={sidebarAbierto}
       />
-      <h1 className="text-3xl font-bold mb-4">Listar Empleados</h1>
-      <div className="flex flex-wrap">
+      <h1 className="text-3xl font-bold mb-5 mt-5 text-center text-white">Listar Empleados</h1>
+      <div className="flex flex-wrap ml-36">
         {empleado.map((empleado, index) => (
           <div
             key={index}
-            className="bg-white shadow-md rounded-lg overflow-hidden m-4 w-1/3"
+            className="bg-white shadow-md rounded-lg overflow-hidden m-4 w-72  flex justify-center"
           >
             <div className="p-6">
-              <p className="text-lg font-semibold">{empleado.nombre}</p>
-              <p className="text-gray-600">{empleado.identificacion}</p>
-              <p className="text-gray-600">{empleado.fecha_inicio}</p>
-              <p className="text-gray-600">{empleado.fecha_fin}</p>
-              <p className="text-gray-600">{empleado.nombre_variedad}</p>
-              <p className="text-gray-600">{empleado.nombre_actividad}</p>
-              <p className="text-gray-600">
-                Actividad: {empleado.id_actividad}
-              </p>
-              <p className="text-gray-600">{empleado.tiempo}</p>
-              <p className="text-gray-600">{empleado.observaciones}</p>
+              <p className="text-lg font-semibold">{empleado.identificacion}</p><br />
+              <p className="text-lg font-medium mb-1" style={{fontSize:'23px'}}>{empleado.nombre}</p>
+              <p className="text-lg font-medium">{empleado.fecha_inicio}</p>
+              <p className="text-lg font-medium">{empleado.fecha_fin}</p>
+              <p className="text-lg font-medium">{empleado.nombre_variedad}</p>
+              <p className="text-lg font-medium">{empleado.nombre_actividad}</p>
+              <p className="text-lg font-medium">{empleado.id_actividad} </p>
+              <p className="text-lg font-medium">{empleado.tiempo}</p>
+              <p className="text-lg font-medium">{empleado.observaciones}</p>
               <ButtonDesactivar
                 onClick={() => Desactivar(empleado.id_actividad)}
               />{" "}
@@ -102,4 +101,3 @@ const Empleado = () => {
 };
 
 export default Empleado;
-
