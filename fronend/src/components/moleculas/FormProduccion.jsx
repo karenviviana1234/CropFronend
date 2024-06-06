@@ -21,9 +21,9 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
       const programacionFilter = response.data.filter(programacion => programacion.estado == 'activo')
       setProgramacion(programacionFilter)
     }),
-    axiosClient.get('/listarInversion').then((response) => {
+    axiosClient.get('/listarinversion').then((response) => {
       console.log(response.data)
-      const inversionFilter = response.data.filter(inversiones => inversiones  .estado == 'activo')
+      const inversionFilter = response.data.filter(inversiones => inversiones.estado == 'activo')
       setProgramacion(inversionFilter)
     })
   }, [])
