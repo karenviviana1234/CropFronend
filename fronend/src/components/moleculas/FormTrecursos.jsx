@@ -26,7 +26,7 @@ const FormTrecursos = ({ mode, initialData, handleSubmit, onClose, actionLabel }
       const formData = {
         nombre_recursos: nombreRecursos,
         cantidad_medida: parseInt(cantidadMedida),
-        unidades_medida:unidadesMedida,
+        unidades_medida: unidadesMedida,
         extras: extras
       }
       handleSubmit(formData, e)
@@ -41,37 +41,37 @@ const FormTrecursos = ({ mode, initialData, handleSubmit, onClose, actionLabel }
       <form method='post' onSubmit={handleFormSubmit}>
         <div className='ml-5 align-items-center'>
           <div className='py-2'>
-          <Input
-  className="w-80"
-  type="text"
-  label='Nombre Recurso'
-  id='nombre_recursos'
-  name="nombre_recursos"
-  value={nombreRecursos}
-  onChange={(e) => setNombreRecursos(e.target.value)}
-  required={true}
-  pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$"
-  title="Ingrese un nombre válido"
-/>
+            <Input
+              className="w-80"
+              type="text"
+              label='Nombre Recurso'
+              id='nombre_recursos'
+              name="nombre_recursos"
+              value={nombreRecursos}
+              onChange={(e) => setNombreRecursos(e.target.value)}
+              required={true}
+              pattern="^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{1,30}$"
+              title="Ingrese un nombre válido"
+            />
 
           </div>
           <div className='py-2'>
-          <Input
-  className="w-80"
-  type="number"
-  label='Cantidad Medida'
-  id='cantidad_medida'
-  name="cantidad_medida"
-  value={cantidadMedida}
-  onChange={(e) => setCantidadMedida(e.target.value)}
-  required={true}
-  pattern="\d+(\.\d+)?"
-  title="Ingrese un número válido"
-/>
+            <Input
+              className="w-80"
+              type="number"
+              label='Cantidad Medida'
+              id='cantidad_medida'
+              name="cantidad_medida"
+              value={cantidadMedida}
+              onChange={(e) => setCantidadMedida(e.target.value)}
+              required={true}
+              pattern="\d+(\.\d+)?"
+              title="Ingrese un número válido"
+            />
           </div>
           <div className='py-2'>
             <select
-              className='p-2 rounded-lg w-80 h-12'
+              className='p-2 rounded-lg w-80 h-12 border '
               id='unidades_medida'
               name='unidades_medida'
               value={unidadesMedida}

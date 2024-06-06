@@ -266,7 +266,7 @@ export function Lotes() {
                     classNames={{
                         wrapper: "max-h-[100%] max-w-[100%]",
                     }}
-                    className="flex"
+                    className="flex mt-16 mr-10"
                     selectedKeys={selectedKeys}
                     // selectionMode="multiple"
                     sortDescriptor={sortDescriptor}

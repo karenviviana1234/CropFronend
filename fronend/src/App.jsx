@@ -50,23 +50,23 @@ function App() {
                 {/*    <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/perfil" element={<PerfilUsuario />} />
             */}
-                <Route path="/usuario" element={<Usuarios />} />
-                <Route path="/actividad" element={<Actividad />} />
-                <Route path="/costos" element={<Costos />} />
-                <Route path="/cultivos" element={<Cultivos />} />
-                <Route path="/finca" element={<Fincas />} />
-                <Route path="/lote" element={<Lotes />} />
-                <Route path="/programacion" element={<Programaciones />} />
-                <Route path="/recursos" element={<TipoRecursos />} />
-                <Route path="/variedad" element={<Variedades />} />
-                <Route path="/produccion" element={<Produccion />} />
+                <Route path="/Usuario" element={<Usuarios />} />
+                <Route path="/Actividad" element={<Actividad />} />
+                <Route path="/Costos" element={<Costos />} />
+                <Route path="/Cultivos" element={<Cultivos />} />
+                <Route path="/Finca" element={<Fincas />} />
+                <Route path="/Lote" element={<Lotes />} />
+                <Route path="/Programacion" element={<Programaciones />} />
+                <Route path="/Recursos" element={<TipoRecursos />} />
+                <Route path="/Variedad" element={<Variedades />} />
+                <Route path="/Produccion" element={<Produccion />} />
               </>
             )}
 
             {user && user.rol === 'empleado' && (
               <>
-                <Route path="/empleado" element={<Empleado />} />
-                <Route path="/dashboarde" element={<DashboardEmpleado />} />
+                <Route path="/Empleado" element={<Empleado />} />
+                <Route path="/Dashboarde" element={<DashboardEmpleado />} />
               </>
             )}
 
