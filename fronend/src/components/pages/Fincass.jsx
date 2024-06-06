@@ -28,6 +28,7 @@ import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
+import DescargarPDF from '../organismos/DescargarPDF.jsx';
 export function Fincas() {
 
   const statusColorMap = {
@@ -120,6 +121,7 @@ export function Fincas() {
                     onClick={() => peticionDesactivar(finca.id_finca)}
                     estado={finca.estado}
                   />
+                  <DescargarPDF/>
                 </div>
               </Dropdown>
             </div>

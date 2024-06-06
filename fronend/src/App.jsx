@@ -14,9 +14,9 @@ import { Lotes } from "./components/pages/Lotes.jsx";
 import { Programaciones } from './components/pages/Programacion.jsx'
 import TipoRecursos from "./components/pages/TipoRecursos.jsx";
 import { Variedades } from "./components/pages/Variedades.jsx";
-// import Dashboard from "./components/pages/Dashboard.jsx";
-// import PerfilUsuario from "./components/pages/PefilUsuario.jsx";
-
+import Dashboard from "./components/pages/Dashboard.jsx";
+import PerfilUsuario from "./components/pages/Perfil.jsx";
+import Soporte from "./components/pages/Soporte.jsx";
 import CambiarContra from "./components/pages/cambiarcontra.jsx";
 import Recuperarcontra from "./components/pages/Recuperacontra.jsx";
 import { Usuarios } from "./components/pages/Usuarios.jsx";
@@ -47,16 +47,17 @@ function App() {
 
             {user && user.rol === 'administrador' && (
               <>
-                {/*    <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/perfil" element={<PerfilUsuario />} />
-            */}
+              <Route path="/soporte" element={<Soporte />} />
+      
                 <Route path="/Usuario" element={<Usuarios />} />
                 <Route path="/Actividad" element={<Actividad />} />
                 <Route path="/Costos" element={<Costos />} />
                 <Route path="/Cultivos" element={<Cultivos />} />
                 <Route path="/Finca" element={<Fincas />} />
                 <Route path="/Lote" element={<Lotes />} />
-                <Route path="/Programacion" element={<Programaciones />} />
+                <Route path="/Asignación" element={<Programaciones />} />
                 <Route path="/Recursos" element={<TipoRecursos />} />
                 <Route path="/Variedad" element={<Variedades />} />
                 <Route path="/Produccion" element={<Produccion />} />

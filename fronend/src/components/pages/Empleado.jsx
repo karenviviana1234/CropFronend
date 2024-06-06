@@ -99,6 +99,7 @@ const Empleado = () => {
               <p className="text-lg font-normal">Variedad: {empleado.nombre_variedad}</p>
               <p className="text-lg font-normal">Actividad: {empleado.nombre_actividad}</p>
               <p className="text-lg font-normal">Tiempo: {empleado.tiempo}</p>
+              <p className="text-lg font-normal">Estado: {empleado.estado}</p>
 
               <form onSubmit={(e) => handleSubmit(e, empleado.id_actividad)}>
                 <div className="mb-4">

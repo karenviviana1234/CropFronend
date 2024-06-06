@@ -50,7 +50,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
       setcantidad_produccion(idProduccion.cantidad_produccion || '');
       setPrecio(idProduccion.precio || '');
       setProgramacionFk(idProduccion.fk_id_programacion || '');
-      setInversionFk(idProduccion.fk_id_costos || '');
+      setInversionFk(idProduccion.fk_id_inversiones || '');
     }
   }, [mode, idProduccion]);
 
@@ -61,7 +61,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
         cantidad_produccion: cantidad_produccion,
         precio: parseInt(precio),
         fk_id_programacion: parseInt(programacionFk),
-        fk_id_costos: parseInt(inversionFk)
+        fk_id_inversiones: parseInt(inversionFk)
       };
       handleSubmit(formData, e);
     } catch (error) {

@@ -53,12 +53,12 @@ export const InicioSesion = () => {
           if (userRol === 'empleado') {
             setMensaje('Bienvenido empleado')
             setModalAcciones(true)
-            navigate('/empleado')
+            navigate('/Empleado')
           } else if (userRol === 'administrador') {
             setMensaje('Bienvenido Admin')
             setModalAcciones(true)
             setModalOpen(false)
-            navigate('/Usuario')
+            navigate('/dashboard')
 
           }
         } else {

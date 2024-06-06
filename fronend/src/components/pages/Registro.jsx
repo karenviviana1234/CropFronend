@@ -34,7 +34,7 @@ export const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const baseURL = 'http://localhost:3000/usuarios/registrarUsuario';
+      const baseURL = 'http://localhost:3000/usuario/registrarUsuario';
       await axios.post(baseURL, formData);
       setMensaje('Usuario Registrado exitosamente')
       setModalAcciones(true)

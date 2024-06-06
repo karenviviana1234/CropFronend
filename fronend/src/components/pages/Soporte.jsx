@@ -16,7 +16,7 @@ function Soporte() {
       className={`contenidos ${sidebarAbierto ? "contenido-extendidos" : ""}`}
     >
       <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-      <div className='bg-cover bg-center mt-16 mb-16' style={{ backgroundImage: `url(${v.Image13})`, height: '480px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
+      <div className='bg-cover bg-center mt-16 mb-16' style={{ backgroundImage: `url(${v.image13})`, height: '480px', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>
     <div className=" overflowY: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none'">
       <h3 className=' text-custom-white text-center' style={{fontSize: '24px', paddingTop: '150px'}}>Estamos para ayudarte</h3>
       <h1 className='text-center text-custom-white' style={{fontSize: '70px'}}>Bienvenidos a Soporte de CropLink</h1>
@@ -38,7 +38,7 @@ function Soporte() {
     </div>
     
     <div className="cursor-pointer w-36 mx-10 rounded-2xl py-2 hover:shadow-2xl hover:text-green" >
-    <Icon icon={v.iconoPDF} className="mx-5 w-12 h-14 text-center" />
+    <Icon icon={v.iconoDescargar} className="mx-5 w-12 h-14 text-center" />
     <h1 className="text-center" style={{ fontSize: '18px' }}>Descarga</h1>
     <h1 className="text-center" style={{ fontSize: '18px' }}>Reportes</h1>
     </div>    
@@ -57,26 +57,22 @@ function Soporte() {
     <h1 className="text-center" style={{ fontSize: '18px' }}>Preguntas<br />Frecuentes</h1>
     </div>
     </div>
-    <div>
+{/*     <div>
       <h1 className="text-center mt-16 mb-5" style={{ fontSize: '30px', fontWeight: 'bold' }}>Sobre Nosotros</h1>
       <div className="flex justify-start items-center">
     <div className="rounded-xl" style={{height: '400px', width: '400px'}}>
     <img
-                src={v.Image16}
+                src={v.image14}
                 className="mx-20 my-5"
                 style={{width: "300px", height: "300px"}}
                 alt="Graph"
-
               />
               <h1 className="" style={{fontSize: '20px', fontWeight: 'bold'}}>Sharit Daniela Vargas Almario</h1>
               <span></span>
-
-
-              
 </div>
 
     </div>
-    </div>
+    </div> */}
   </div>
       
 {/* 
@@ -103,7 +99,7 @@ function Soporte() {
           </div>
         </section> */}
         {/* Footer */}
-{/*         <section className="flex flex-wrap justify-around gap-4 mb-3">
+{/* <section className="flex flex-wrap justify-around gap-4 mb-3">
   <div className="flex flex-col items-start">
     <h3 className="font-bold text-lg">Servicios</h3>
     <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Mapa</button>

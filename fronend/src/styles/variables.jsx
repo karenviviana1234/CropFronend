@@ -1,4 +1,4 @@
-import {faLock, faLeaf, faHouse, faUser, faFileAlt, faTimes,faArrowLeft ,faKey, faFile, faCircleUser, faMountainSun, faCircleChevronLeft, faSpa, faMapLocationDot, faCalendarPlus, faSackDollar, faSeedling, faListCheck, faTractor, faFileContract, faGear, faUserGroup, faRightFromBracket, faTrashCan, faSquareCheck, faPenToSquare, faCircleDollarToSlot } from '@fortawesome/free-solid-svg-icons';
+import {faLock, faLeaf, faHouse, faUser, faFileAlt, faTimes,faArrowLeft ,faKey, faFile, faCircleUser, faMountainSun, faCircleChevronLeft, faSpa, faMapLocationDot, faCalendarPlus, faSackDollar, faSeedling, faListCheck, faTractor, faFileContract, faGear, faUserGroup, faRightFromBracket, faTrashCan, faSquareCheck, faPenToSquare, faCircleDollarToSlot, faUserPlus, faPieChart, faDownload, faQuestion} from '@fortawesome/free-solid-svg-icons';
 import Img1 from '../assets/imagen1.png'
 import Img2 from '../assets/FdGjFfBXgAIvsuN.jpg'
 import Img3 from '../assets/07.png'
@@ -8,6 +8,9 @@ import Img9 from '../assets/pexels2.jpg'
 import Img10 from '../assets/campesinas.jpeg'
 import Img11 from '../assets/plantita.jpg'
 import Img12 from '../assets/pexels-mark-stebnicki-2889442.jpg'
+import Img13 from '../assets/soporte.png'
+import Img14 from '../assets/ImagenS-Photoroom.jpg'
+import Img17 from '../assets/dashboardDos.jpg'
 import Logo from '../assets/Diseño_sin_título-removebg-preview.png'
 import LogoVerde from '../assets/logoverde.png'
 
@@ -39,6 +42,10 @@ iconoVolver: faArrowLeft,
 iconoDesactivar: faTrashCan,
 iconoActivar: faSquareCheck,
 iconoEditar: faPenToSquare,
+iconoAgregarUsuario: faUserPlus,
+iconoGrafica: faPieChart,
+iconoDescargar: faDownload,
+iconoPregunta: faQuestion,
 iconoCostos: faCircleDollarToSlot,
 
 
@@ -52,6 +59,9 @@ iconoCostos: faCircleDollarToSlot,
     image10:Img10,
     image11:Img11,
     image12:Img12,
+    image13:Img13,
+    image14:Img14,
+    image17:Img17,
      imageLogo: Logo,
      imageLogoV: LogoVerde,
 }

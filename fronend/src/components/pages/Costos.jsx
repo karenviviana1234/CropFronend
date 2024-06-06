@@ -270,7 +270,7 @@ export function Costos() {
                     classNames={{
                         wrapper: "max-h-[100%] max-w-[100%]",
                     }}
-                    className="flex"
+                    className="flex mt-24"
                     selectedKeys={selectedKeys}
                     // selectionMode="multiple"
                     sortDescriptor={sortDescriptor}
