@@ -182,7 +182,7 @@ export function Lotes() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-black" />} variant="shadow">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -202,14 +202,14 @@ export function Lotes() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] cursor-pointer" style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-default-400 text-small">Total {lotes.length} Resultados</span>
-                            <label className="flex items-center text-default-400 mr-30 text-small">
+                            <label className="flex items-center text-default-400 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-default-400 text-small"
@@ -236,67 +236,67 @@ export function Lotes() {
         const bottomContent = React.useMemo(() => {
             return (
                 <div className="py-2 px-2 flex justify-between items-center m-3">
-                  <Pagination
-                    showControls
-                    initialPage={1}
-                    color="success"
-                    page={page}
-                    total={pages}
-                    onChange={setPage}
-                  />
-                  <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                    <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
-                      Anterior
-                    </Button>
-                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
-                      Siguiente
-                    </Button>
-                  </div>
+                    <Pagination
+                        showControls
+                        initialPage={1}
+                        color="success"
+                        page={page}
+                        total={pages}
+                        onChange={setPage}
+                    />
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                            Anterior
+                        </Button>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                            Siguiente
+                        </Button>
+                    </div>
                 </div>
-              );
+            );
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
             <div className="flex items-center justify-center">
-              <Table
-                aria-label="Tabla"
-                isHeaderSticky
-                bottomContent={bottomContent}
-                bottomContentPlacement="outside"
-                classNames={{
-                  wrapper: "max-h-[100%] max-w-[100%]",
-                }}
-                className="flex"
-                selectedKeys={selectedKeys}
-                // selectionMode="multiple"
-                sortDescriptor={sortDescriptor}
-                topContent={topContent}
-                topContentPlacement="outside"
-                onSelectionChange={setSelectedKeys}
-                onSortChange={setSortDescriptor}
-              >
-                <TableHeader columns={data}>
-                  {(column) => (
-                    <TableColumn
-                      key={column.uid}
-                      align={column.uid === "actions" ? "center" : "start"}
-                      allowsSorting={column.sortable}
-                    >
-                      {column.name}
-                    </TableColumn>
-                  )}
-                </TableHeader>
-                <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
-                  {(item) => (
-                    <TableRow key={item.id_lote}>
-                      {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                <Table
+                    aria-label="Tabla"
+                    isHeaderSticky
+                    bottomContent={bottomContent}
+                    bottomContentPlacement="outside"
+                    classNames={{
+                        wrapper: "max-h-[100%] max-w-[100%]",
+                    }}
+                    className="flex"
+                    selectedKeys={selectedKeys}
+                    // selectionMode="multiple"
+                    sortDescriptor={sortDescriptor}
+                    topContent={topContent}
+                    topContentPlacement="outside"
+                    onSelectionChange={setSelectedKeys}
+                    onSortChange={setSortDescriptor}
+                >
+                    <TableHeader columns={data}>
+                        {(column) => (
+                            <TableColumn
+                                key={column.uid}
+                                align={column.uid === "actions" ? "center" : "start"}
+                                allowsSorting={column.sortable}
+                            >
+                                {column.name}
+                            </TableColumn>
+                        )}
+                    </TableHeader>
+                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                        {(item) => (
+                            <TableRow key={item.id_lote}>
+                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
             </div>
-      
-          );
+
+        );
     }
 
     /* Espacio 1 */
@@ -308,10 +308,10 @@ export function Lotes() {
     const [lotes, setLotes] = useState([]);
     const { idLote, setLoteId } = useContext(LotesContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
-
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
     };
+
 
     useEffect(() => {
         peticionGet()
@@ -370,41 +370,67 @@ export function Lotes() {
 
     // desactivar lote
     const peticionDesactivar = async (id_lote) => {
-
-        // console.log("ID del lotes a desactivar:", id_lote);
         try {
-            axiosClient.put(`/desactivarlote/${id_lote}`, null).then((response) => {
-                console.log(response.data)
-                if (response.status == 200) {
-                    const nuevoEstado = response.data.message;
-                    /* fetchData() */
-                    Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¡Esto podra afectar a tus lotes!",
-                        icon: "question",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Si, estoy seguro!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                title: "¡Actualizado!",
-                                text: `${nuevoEstado}`,
-                                icon: "success"
-                            });
-                            peticionGet()
-                        }
-                    });
-                } else {
-                    alert('Error')
-                }
-            });
+            const response = await axiosClient.put(`/desactivarlote/${id_lote}`, null);
+            console.log(response.data);
+            
+            if (response.status === 200) {
+                const nuevoEstado = response.data.message;
+                
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "¡Esto podrá afectar a tus lotes!",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, estoy seguro!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "¡Actualizado!",
+                            text: `${nuevoEstado}`,
+                            icon: "success"
+                        });
+                        peticionGet();
+                    } else {
+                        // Si el usuario cancela, mostrar el mensaje de cancelación
+                        Swal.fire({
+                            title: "Cancelado",
+                            text: "La operación ha sido cancelada",
+                            icon: "info"
+                        });
+                    }
+                });
+            } else {
+                throw new Error('Error, el mensaje recibido no tiene el formato esperado');
+            }
         } catch (error) {
-            alert('Error del servidor ' + error)
+            console.log(error.response.data.message); // Imprimir el mensaje de error en la consola
+            if (error.response && error.response.data && error.response.data.message) {
+                const errorMessage = error.response.data.message;
+                if (errorMessage === "No se puede activar el lote porque la finca está inactiva") {
+                    mostrarAlertaError(errorMessage);
+                } else {
+                    mostrarAlertaError("Error al cambiar el estado del lote");
+                }
+            } else {
+                mostrarAlertaError("Error del servidor. Por favor, inténtelo de nuevo más tarde.");
+            }
         }
-    }
-
+    };
+    
+    const mostrarAlertaError = (mensaje) => {
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error",
+            text: mensaje,
+            showConfirmButton: false,
+            timer: 2000
+        });
+    };
+    
     // registrar y actualizar lote
     const handleSubmit = async (formData, e) => {
         console.log('Datos enviados:', formData);
@@ -462,10 +488,10 @@ export function Lotes() {
     return (
 
         <>
-            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-
+      
+               <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}

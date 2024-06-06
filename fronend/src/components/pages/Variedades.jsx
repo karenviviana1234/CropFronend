@@ -209,14 +209,14 @@ export function Variedades() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-default-400 text-small">Total {variedades.length} Resultados</span>
-                            <label className="flex items-center text-default-400 mr-30 text-small">
+                            <label className="flex items-center text-default-400 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-default-400 text-small"
@@ -252,10 +252,10 @@ export function Variedades() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50 cursor-pointer" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -314,13 +314,12 @@ export function Variedades() {
     const [mensaje, setMensaje] = useState('')
     const [variedades, setVariedades] = useState([]);
     const { idVariedad, setVariedadId } = useContext(VariedadesContext)
-
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
     };
-    
+
     useEffect(() => {
         peticionGet()
     }, []);
@@ -367,40 +366,44 @@ export function Variedades() {
     ];
     // desactivar variedad
     const peticionDesactivar = async (id_variedad) => {
-
-        // console.log("ID del variedades a desactivar:", id_lote);
         try {
-            axiosClient.put(`/desactivarvariedad/${id_variedad}`, null).then((response) => {
-                console.log(response.data)
-                if (response.status == 200) {
-                    const nuevoEstado = response.data.message;
-                    /* fetchData() */
-                    Swal.fire({
-                        title: "¿Estás seguro?",
-                        text: "¡Esto podra afectar a tus variedades!",
-                        icon: "question",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Si, estoy seguro!"
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            Swal.fire({
-                                title: "¡Actualizado!",
-                                text: `${nuevoEstado}`,
-                                icon: "success"
-                            });
-                            peticionGet()
-                        }
-                    });
-                } else {
-                    alert('Error')
-                }
-            });
+            const response = await axiosClient.put(`/desactivarvariedad/${id_variedad}`, null);
+            console.log(response.data);
+            if (response.status === 200) {
+                const nuevoEstado = response.data.message;
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "¡Esto podrá afectar a tus variedades!",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, estoy seguro!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "¡Actualizado!",
+                            text: `${nuevoEstado}`,
+                            icon: "success"
+                        });
+                        peticionGet();
+                    } else {
+                        // Si el usuario cancela, mostrar el mensaje de cancelación
+                        Swal.fire({
+                            title: "Cancelado",
+                            text: "La operación ha sido cancelada",
+                            icon: "info"
+                        });
+                    }
+                });
+            } else {
+                alert('Error, el mensaje recibido no tiene el formato esperado');
+            }
         } catch (error) {
-            alert('Error del servidor ' + error)
+            alert('Error del servidor ' + error);
         }
-    }
+    };
+
 
     // registrar y actualizar variedad
     const handleSubmit = async (formData, e) => {
@@ -460,29 +463,30 @@ export function Variedades() {
     return (
 
         <>
-            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <VariedadesModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar variedades' : 'Actualizar variedades'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    variedades={variedades}
-                />
-            </div>
+             
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+                    
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <VariedadesModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar variedades' : 'Actualizar variedades'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        variedades={variedades}
+                    />
+                </div>
             </div>
         </>
     )

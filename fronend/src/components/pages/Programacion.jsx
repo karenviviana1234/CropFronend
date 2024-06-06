@@ -206,7 +206,7 @@ export function Programaciones() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="shadow">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -226,14 +226,14 @@ export function Programaciones() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] cursor-pointer" style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex justify-between items-center z-10 mr-30  mt-2">
+                        <div className="flex justify-between items-center z-10 mr-40  mt-2">
                             <span className="text-white text-small">Total {programaciones.length} Resultados</span>
-                            <label className="flex items-center text-white mr-30 text-small">
+                            <label className="flex items-center text-white text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-white text-small"
@@ -269,10 +269,10 @@ export function Programaciones() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -282,7 +282,7 @@ export function Programaciones() {
 
         return (
             <div className="flex items-center justify-center p-5">
-             <Table
+                <Table
                     aria-label="Tabla"
                     isHeaderSticky
                     bottomContent={bottomContent}
@@ -347,31 +347,49 @@ export function Programaciones() {
     }, []);
 
     // Trae los datos a la tabla actividad
-    const peticionGet = async () => {
-        try {
-            await axiosClient.get('/listarProgramacion').then((response) => {
-                console.log(response.data)
-                setProgramaciones(response.data)
-            })
-        } catch (error) {
-            console.log('Error en el servidor ' + error)
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) {
+          return ''; // Devuelve una cadena vacía si la fecha es inválida
         }
-    };
-    const data = [
+        return date.toISOString().split('T')[0];
+      };
+    
+      const peticionGet = async () => {
+        try {
+          const response = await axiosClient.get('/listarProgramacion');
+          const formattedData = response.data.map((item) => ({
+            ...item,
+            fecha_inicio: formatDate(item.fecha_inicio),
+            fecha_fin: formatDate(item.fecha_fin),
+          }));
+          setProgramaciones(formattedData);
+        } catch (error) {
+          console.log('Error en el servidor ' + error);
+        }
+      };
+    
+      useEffect(() => {
+        peticionGet();
+      }, []);
+    
+      const data = [
         {
-            uid: 'id_programacion',
-            name: 'Id',
-            sortable: true
+          uid: 'id_programacion',
+          name: 'Id',
+          sortable: true,
         },
         {
-            uid: 'fecha_inicio',
-            name: 'Fecha Inicio',
-            sortable: true
+          uid: 'fecha_inicio',
+          name: 'Fecha Inicio',
+          sortable: true,
+          render: (row) => row.fecha_inicio, // Ya formateado en peticionGet
         },
         {
-            uid: 'fecha_fin',
-            name: 'Fecha Fin',
-            sortable: true
+          uid: 'fecha_fin',
+          name: 'Fecha Fin',
+          sortable: true,
+          render: (row) => row.fecha_fin, // Ya formateado en peticionGet
         },
         {
             uid: 'usuario',
@@ -406,54 +424,75 @@ export function Programaciones() {
     ];
 
 
-    const peticionDesactivar = (id_programacion) => {
-        Swal.fire({
-            title: "¿Estás seguro?",
-            text: "¡Esto podrá afectar a tus demas tablas!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#006000",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí, estoy seguro!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    axiosClient.put(`/estadoProgramacion/${id_programacion}`, null).then((response) => {
-                        console.log(response.data);
-                        const mensaje = response.data.message;
-                        if (response.status === 200) {
-                            const index = mensaje.indexOf('cambiado a');
-                            if (index !== -1) {
-                                const nuevoEstado = mensaje.substring(index + 10); // 10 es la longitud de "cambiado a "
-
-                                Swal.fire({
-                                    position: "center", // Posición centrada
-                                    icon: "success",
-                                    title: `Estado de la actividad cambiado a ${nuevoEstado}`,
-                                    showConfirmButton: false,
-                                    timer: 1400
-                                });
-                                peticionGet()
-                            } else {
-                                alert('Error: El mensaje recibido no tiene el formato esperado');
-                            }
-                        } else {
-                            alert('Error');
-                        }
-                    });
-                } catch (error) {
-                    alert('Error del servidor ' + error);
+    const peticionDesactivar = async (id_programacion) => {
+        try {
+            const response = await axiosClient.put(`/estadoProgramacion/${id_programacion}`, null);
+            console.log(response.data);
+    
+            if (response.status === 200) {
+                const nuevoEstado = response.data.message;
+    
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "¡Esto podrá afectar a tus programaciones!",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Sí, estoy seguro!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "¡Actualizado!",
+                            text: `${nuevoEstado}`,
+                            icon: "success"
+                        });
+                        peticionGet();
+                    } else {
+                        // Si el usuario cancela, mostrar el mensaje de cancelación
+                        Swal.fire({
+                            title: "Cancelado",
+                            text: "La operación ha sido cancelada",
+                            icon: "info"
+                        });
+                    }
+                });
+            } else {
+                throw new Error('Error, el mensaje recibido no tiene el formato esperado');
+            }
+        } catch (error) {
+            console.log(error.response.data.message); // Imprimir el mensaje de error en la consola
+            if (error.response && error.response.data && error.response.data.message) {
+                const errorMessage = error.response.data.message;
+                if (errorMessage === "No se puede cambiar el estado de la programación porque el lote asociado está inactivo") {
+                    mostrarAlertaError(errorMessage);
+                } else if (errorMessage === "No se puede cambiar el estado de la programación porque la actividad asociada está inactiva") {
+                    mostrarAlertaError(errorMessage);
+                } else {
+                    mostrarAlertaError("Error al cambiar el estado de la programación");
                 }
             } else {
-                Swal.fire({
-                    title: "Cancelado",
-                    text: "La operación ha sido cancelada",
-                    icon: "info"
-                });
+                mostrarAlertaError("Error del servidor. Por favor, inténtelo de nuevo más tarde.");
             }
+        }
+    };
+    
+    const mostrarAlertaError = (mensaje) => {
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error",
+            text: mensaje,
+            showConfirmButton: false,
+            timer: 2000
         });
     };
-    // registrar y actualizar actividad
+    
+
+
+
+
+    // registrar y actualizar programacion
     const handleSubmit = async (formData, e) => {
         console.log('Datos enviados:', formData);
         e.preventDefault()
@@ -507,11 +546,10 @@ export function Programaciones() {
     return (
 
         <>
-            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+      
+                <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-
             <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-
                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}

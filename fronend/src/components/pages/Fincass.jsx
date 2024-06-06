@@ -46,13 +46,11 @@ export function Fincas() {
       direction: "ascending",
     });
     const [page, setPage] = React.useState(1);
-
     const statusOptions = [
       { name: "Todos", uid: "todos" },
-      { name: "Activo", uid: "inactivo" },
-      { name: "Inactivo", uid: "activo" },
-    ];
-
+      { name: "Activo", uid: "activo" },
+      { name: "Inactivo", uid: "inactivo" },
+  ];
 
     const hasSearchFilter = Boolean(filterValue);
 
