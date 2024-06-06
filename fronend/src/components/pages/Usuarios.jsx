@@ -272,7 +272,7 @@ export function Usuarios() {
                     classNames={{
                         wrapper: "max-h-[100%] max-w-[100%]",
                     }}
-                    className="flex"
+                    className="flex mr-16"
                     sortDescriptor={sortDescriptor}
                     topContent={topContent}
                     topContentPlacement="outside"
@@ -384,7 +384,7 @@ export function Usuarios() {
                         text: "¡Esto podra afectar a tus usuarios!",
                         icon: "question",
                         showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
+                        confirmButtonColor: "#006000",
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Si, estoy seguro!"
                     }).then((result) => {

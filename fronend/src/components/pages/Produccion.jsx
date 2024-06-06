@@ -203,14 +203,14 @@ export function Produccion() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-10 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex justify-between items-center z-10 mr-30  mt-2">
                             <span className="text-white text-small">Total {producciones.length} Resultados</span>
-                            <label className="flex items-center text-white mr-30 text-small">
+                            <label className="flex items-center text-white mr-10 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-white text-small"
@@ -266,9 +266,9 @@ export function Produccion() {
                     bottomContent={bottomContent}
                     bottomContentPlacement="outside"
                     classNames={{
-                        wrapper: "max-h-[100%] max-w-[100%]",
+                        wrapper: "max-h-[97%] max-w-[97%]",
                     }}
-                    className="flex"
+                    className="flex mr-16 mt-16"
                     selectedKeys={selectedKeys}
                     /* selectionMode="multiple" */
                     sortDescriptor={sortDescriptor}
@@ -386,7 +386,7 @@ export function Produccion() {
                         text: "¡Esto podra afectar a tus Producción!",
                         icon: "question",
                         showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
+                        confirmButtonColor: "#006000",
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Si, estoy seguro!"
                     }).then((result) => {

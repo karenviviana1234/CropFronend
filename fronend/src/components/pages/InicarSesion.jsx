@@ -58,7 +58,7 @@ export const InicioSesion = () => {
             setMensaje('Bienvenido Admin')
             setModalAcciones(true)
             setModalOpen(false)
-            navigate('/dashboard')
+            navigate('/Inicio')
 
           }
         } else {
