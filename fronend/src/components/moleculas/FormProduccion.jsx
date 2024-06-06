@@ -7,7 +7,7 @@ import ProduccionContext from '../../context/ProduccionContext.jsx';
 export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
 
   const [programaciones, setProgramacion] = useState([])
-  const [inversiones, setInversion] = useState([])
+  const [inversion, setInversion] = useState([])
 
   const [cantidad_produccion, setcantidad_produccion] = useState('')
   const [precio, setPrecio] = useState('')
@@ -105,7 +105,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
             value={inversionFk}
             onChange={(e) => setInversionFk(e.target.value)}
           >
-            {inversiones.map(inversiones => (
+            {inversion.map(inversiones => (
               <SelectItem key={inversiones.valor_inversion} value={inversiones.valor_inversion} textValue={inversiones.valor_inversion}>
                 {inversiones.valor_inversion}
               </SelectItem>
