@@ -258,9 +258,11 @@ export function TipoRecursos() {
                 </div>
             );
         }, [items.length, page, pages, hasSearchFilter]);
-
+//
+//
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-4 w-full">
+                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
@@ -297,6 +299,7 @@ export function TipoRecursos() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
             </div>
 
         );
@@ -476,7 +479,7 @@ export function TipoRecursos() {
                 <TipoRModal
                     open={modalOpen}
                     onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
+                    title={mode === 'create' ? 'Registrar Herramienta' : 'Actualizar Herramienta'}
                     actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
                     initialData={initialData}
                     handleSubmit={handleSubmit}

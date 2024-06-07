@@ -209,7 +209,7 @@ export function Variedades() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
@@ -264,7 +264,8 @@ export function Variedades() {
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-4 w-full">
+                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-8/12 overflow-x-auto">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
@@ -301,6 +302,7 @@ export function Variedades() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
             </div>
 
         );

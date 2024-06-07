@@ -272,7 +272,8 @@ export function Actividad() {
             );
         }, [items.length, page, pages, hasSearchFilter]);
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-4 w-full">
+                <div className="w-auto overflow-x-auto">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
@@ -314,6 +315,7 @@ export function Actividad() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
             </div>
         );
     }

@@ -112,7 +112,7 @@ export function Fincas() {
           );
         case "actions":
           return (
-            <div className="relative flex items-center justify-end gap-2">
+            <div className="relative flex items-center justify-start gap-2">
               <Dropdown>
                 <div className="flex items-center gap-2">
                   <ButtonActualizar
@@ -204,7 +204,7 @@ export function Fincas() {
                     ))}
                   </DropdownMenu>
                 </Dropdown>
-                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                   Registrar
                 </Button>
               </div>
@@ -257,9 +257,11 @@ export function Fincas() {
         </div>
       );
     }, [items.length, page, pages, hasSearchFilter]);
+    
     return (
-      <div className="flex items-center justify-center">
-        <Table
+      <div className="flex items-center justify-center p-4 w-full">
+                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
+                <Table
           aria-label="Tabla"
           isHeaderSticky
           bottomContent={bottomContent}
@@ -295,6 +297,7 @@ export function Fincas() {
             )}
           </TableBody>
         </Table>
+      </div>
       </div>
 
     );
@@ -468,7 +471,7 @@ export function Fincas() {
        
         <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+            <div className='w-full max-w-[90%] ml-32 items-center p-10'>
 
             <AccionesModal
                 isOpen={modalAcciones}
@@ -478,7 +481,7 @@ export function Fincas() {
             <FincasModal
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
-                title={mode === 'create' ? 'Registrar actividades' : 'Actualizar actividades'}
+                title={mode === 'create' ? 'Registrar Finca' : 'Actualizar Finca'}
                 actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
                 initialData={initialData}
                 handleSubmit={handleSubmit}

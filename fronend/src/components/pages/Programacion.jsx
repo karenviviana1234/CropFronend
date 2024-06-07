@@ -226,7 +226,7 @@ export function Programaciones() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
@@ -281,7 +281,8 @@ export function Programaciones() {
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center p-5">
+            <div className="flex items-center justify-center p-4 w-full">
+                <div className="w-auto overflow-x-auto">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
@@ -323,6 +324,7 @@ export function Programaciones() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
             </div>
 
         );
@@ -558,7 +560,7 @@ export function Programaciones() {
                 <ProgramacionModal
                     open={modalOpen}
                     onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar programaciones' : 'Actualizar programaciones'}
+                    title={mode === 'create' ? 'Registrar Asignaciones' : 'Actualizar Asignaciones'}
                     actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
                     initialData={initialData}
                     handleSubmit={handleSubmit}
