@@ -258,7 +258,7 @@ export function TipoRecursos() {
                 </div>
             );
         }, [items.length, page, pages, hasSearchFilter]);
-
+//
         return (
             <div className="flex items-center justify-center p-4 w-full">
                 <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
