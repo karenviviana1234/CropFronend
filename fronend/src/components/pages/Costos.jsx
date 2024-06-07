@@ -261,7 +261,9 @@ export function Costos() {
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-4 w-full">
+
+            <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
@@ -298,6 +300,7 @@ export function Costos() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
             </div>
 
         );

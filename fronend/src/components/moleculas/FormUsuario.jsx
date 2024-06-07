@@ -11,14 +11,14 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
   const apellidoRef = useRef(null);
   const correoRef = useRef(null);
   const passwordRef = useRef(null);
-  const rolRef = useRef(null);
+  const rolRef = useRef([]);
 
   const [identificacion, setIdentificacion] = useState('');
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
-  const [rol, setRol] = useState('');
+  const [rol, setRol] = useState('Empleado');
   const { idUsuario } = useContext(UsuarioContext);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
       setApellido('');
       setCorreo('');
       setPassword('');
-      setRol('');
+      setRol('Empleado');
     }
   }, [mode, idUsuario]);
 
@@ -140,19 +140,17 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
         </div>
         <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4 py-2">
           <Select
-            label='Rol'
-            name="rol"
-            id=""
+            variant="bordered"
+            label="Empleado"
             className="max-w-xs"
-            ref={rolRef}
-            value={rol}
-            onChange={(e) => setRol(e.target.value)}
-            required={true}
+            isDisabled
           >
-            <SelectItem value='administrador'>Adminstrador</SelectItem>
-            <SelectItem value='empleado'>Empleado</SelectItem>
           </Select>
+
         </div>
+
+
+
       </div>
       <ModalFooter>
         <Button

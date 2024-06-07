@@ -259,14 +259,16 @@ export function Produccion() {
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-4 w-full">
+
+            <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 ">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
                     bottomContent={bottomContent}
                     bottomContentPlacement="outside"
                     classNames={{
-                        wrapper: "max-h-[97%] max-w-[97%]",
+                        wrapper: "max-h-[100%] max-w-[100%]",
                     }}
                     className="flex mr-16 mt-16"
                     selectedKeys={selectedKeys}
@@ -301,6 +303,7 @@ export function Produccion() {
                         )}
                     </TableBody>
                 </Table>
+            </div>
             </div>
         );
     }

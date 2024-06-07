@@ -48,8 +48,8 @@ export const Registro = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
-    <div className='flex items-center justify-center bg-[#EDEBDE] min-h-screen' >
-      <div className='relative flex flex-col m-2 space-y-5 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0'>
+    <div className='flex items-center justify-center bg-[#EDEBDE] min-h-screen  p-4 w-full' >
+      <div className='relative flex flex-col m-2 space-y-5 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12"'>
 
         <div className='flex flex-col p-5 m-4  md:p-5'>
           <Link className='mb-2' to='/'>

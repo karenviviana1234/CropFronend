@@ -238,67 +238,70 @@ export function Cultivos() {
         const bottomContent = React.useMemo(() => {
             return (
                 <div className="py-2 px-2 flex justify-between items-center m-3">
-                  <Pagination
-                    showControls
-                    initialPage={1}
-                    color="success"
-                    page={page}
-                    total={pages}
-                    onChange={setPage}
-                  />
-                  <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                    <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
-                      Anterior
-                    </Button>
-                    <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
-                      Siguiente
-                    </Button>
-                  </div>
+                    <Pagination
+                        showControls
+                        initialPage={1}
+                        color="success"
+                        page={page}
+                        total={pages}
+                        onChange={setPage}
+                    />
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
+                        <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
+                            Anterior
+                        </Button>
+                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
+                            Siguiente
+                        </Button>
+                    </div>
                 </div>
-              );
+            );
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center">
-              <Table
-                aria-label="Tabla"
-                isHeaderSticky
-                bottomContent={bottomContent}
-                bottomContentPlacement="outside"
-                classNames={{
-                  wrapper: "max-h-[100%] max-w-[100%]",
-                }}
-                className="flex"
-                selectedKeys={selectedKeys}
-                // selectionMode="multiple"
-                sortDescriptor={sortDescriptor}
-                topContent={topContent}
-                topContentPlacement="outside"
-                onSelectionChange={setSelectedKeys}
-                onSortChange={setSortDescriptor}
-              >
-                <TableHeader columns={data}>
-                  {(column) => (
-                    <TableColumn
-                      key={column.uid}
-                      align={column.uid === "actions" ? "center" : "start"}
-                      allowsSorting={column.sortable}
+            <div className="flex items-center justify-center p-4 w-full">
+
+                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 ">
+                    <Table
+                        aria-label="Tabla"
+                        isHeaderSticky
+                        bottomContent={bottomContent}
+                        bottomContentPlacement="outside"
+                        classNames={{
+                            wrapper: "max-h-[100%] max-w-[100%]",
+                        }}
+                        className="flex"
+                        selectedKeys={selectedKeys}
+                        // selectionMode="multiple"
+                        sortDescriptor={sortDescriptor}
+                        topContent={topContent}
+                        topContentPlacement="outside"
+                        onSelectionChange={setSelectedKeys}
+                        onSortChange={setSortDescriptor}
                     >
-                      {column.name}
-                    </TableColumn>
-                  )}
-                </TableHeader>
-                <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
-                  {(item) => (
-                    <TableRow key={item.id_cultivo}>
-                      {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                        <TableHeader columns={data}>
+                            {(column) => (
+                                <TableColumn
+                                    key={column.uid}
+                                    align={column.uid === "actions" ? "center" : "start"}
+                                    allowsSorting={column.sortable}
+                                >
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                            {(item) => (
+                                <TableRow key={item.id_cultivo}>
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
-      
-          );
+
+        );
     }
 
 
@@ -471,28 +474,28 @@ export function Cultivos() {
 
         <>
             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
 
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <CultivosModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar cultivos' : 'Actualizar cultivos'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    cultivos={cultivos}
-                />
-            </div>
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <CultivosModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar cultivos' : 'Actualizar cultivos'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        cultivos={cultivos}
+                    />
+                </div>
             </div>
         </>
     )
