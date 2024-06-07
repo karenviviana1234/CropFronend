@@ -9,18 +9,15 @@
     margin-left: 220px; 
     width: calc(100% - 220px); 
   }
-  
  */
-  .contenido {
-
+  .contenidos {
     padding-top: 30px;
-    background-image: url('../../assets/nuevofondo.png');
     background-repeat: no-repeat;
     background-size: cover;  
     height: 100vh; 
     overflow-x: hidden; 
   }
-  .contenido-extendido {
+  .contenido-extendidos {
     margin-left: 220px; 
     width: calc(100% - 220px);
   }

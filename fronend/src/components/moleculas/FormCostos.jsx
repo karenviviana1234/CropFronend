@@ -76,7 +76,7 @@ const Formcostostos = ({ mode, initialData, handleSubmit, onClose, actionLabel }
                         <Button color="danger" variant="flat" onPress={onClose}>
                             Close
                         </Button>
-                        <Button type='submit' color="primary">
+                        <Button type='submit' className=' text-white bg-[#006000] '>
                             {actionLabel}
                         </Button>
                     </ModalFooter>
