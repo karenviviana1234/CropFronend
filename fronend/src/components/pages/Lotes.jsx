@@ -202,7 +202,7 @@ export function Lotes() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1  text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
@@ -257,7 +257,8 @@ export function Lotes() {
         }, [items.length, page, pages, hasSearchFilter]);
 
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center p-4 w-full">
+                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
                 <Table
                     aria-label="Tabla"
                     isHeaderSticky
@@ -266,7 +267,7 @@ export function Lotes() {
                     classNames={{
                         wrapper: "max-h-[100%] max-w-[100%]",
                     }}
-                    className="flex mt-16 mr-10"
+                    className="flex"
                     selectedKeys={selectedKeys}
                     // selectionMode="multiple"
                     sortDescriptor={sortDescriptor}
@@ -295,6 +296,7 @@ export function Lotes() {
                     </TableBody>
                 </Table>
             </div>
+            </div>
 
         );
     }
@@ -308,10 +310,10 @@ export function Lotes() {
     const [lotes, setLotes] = useState([]);
     const { idLote, setLoteId } = useContext(LotesContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
+
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
     };
-
 
     useEffect(() => {
         peticionGet()
@@ -488,10 +490,9 @@ export function Lotes() {
     return (
 
         <>
-      
-               <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+            <div className='w-full max-w-[90%] ml-32 items-center p-10'>
                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}
@@ -511,7 +512,7 @@ export function Lotes() {
                     lotes={lotes}
                 />
             </div>
-            </div>
+             </div> 
         </>
     )
 }
