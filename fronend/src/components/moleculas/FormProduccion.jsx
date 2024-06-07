@@ -6,10 +6,13 @@ import ProduccionContext from '../../context/ProduccionContext.jsx';
 export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
   const [inversion, setInversion] = useState([]);
   const [programaciones, setProgramacion] = useState([]);
-  const [inversionFk, setInversionFk] = useState('');
+
   const [cantidad_produccion, setcantidad_produccion] = useState('');
   const [precio, setPrecio] = useState('');
+  
   const [programacionFk, setProgramacionFk] = useState('');
+  const [inversionFk, setInversionFk] = useState('');
+
   const { idProduccion } = useContext(ProduccionContext);
 
   useEffect(() => {
@@ -139,7 +142,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
           <Button color="danger" variant="flat" onPress={onClose}>
             Close
           </Button>
-          <Button type='submit' color="primary">
+          <Button type='submit' className='bg-[#006000] text-white'>
             {actionLabel}
           </Button>
         </ModalFooter>
