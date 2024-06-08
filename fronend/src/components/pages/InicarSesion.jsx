@@ -78,7 +78,7 @@ export const InicioSesion = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#EDEBDE]  p-4 w-full">
-      <div className="relative flex flex-col bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12">
+      <div className="relative flex flex-col bg-white shadow-2xl rounded-2xl md:flex-row">
 
 
         <div className="flex flex-col justify-center p-8 md:p-20">
