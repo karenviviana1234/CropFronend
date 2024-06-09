@@ -107,7 +107,7 @@ const Empleado = () => {
                     Observación:
                   </label>
                   <div className='py-2'>
-                    <Input
+                    <InputS
                       className='w-60'
                       type="float"
                       label='Ingrese la observacion'
