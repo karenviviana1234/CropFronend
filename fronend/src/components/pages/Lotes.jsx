@@ -385,7 +385,7 @@ export function Lotes() {
                     text: "¡Esto podrá afectar a tus lotes!",
                     icon: "question",
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
+                    confirmButtonColor: "#006000",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Sí, estoy seguro!"
                 }).then((result) => {
