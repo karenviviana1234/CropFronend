@@ -439,7 +439,7 @@ export function Programaciones() {
                     text: "¡Esto podrá afectar a tus programaciones!",
                     icon: "question",
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
+                    confirmButtonColor: "#006000",
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Sí, estoy seguro!"
                 }).then((result) => {
@@ -470,6 +470,8 @@ export function Programaciones() {
                     mostrarAlertaError(errorMessage);
                 } else if (errorMessage === "No se puede cambiar el estado de la programación porque la actividad asociada está inactiva") {
                     mostrarAlertaError(errorMessage);
+                } else if (errorMessage === "No se puede cambiar el estado de la programación porque el usuario asociado está inactivo") {
+                    mostrarAlertaError(errorMessage);
                 } else {
                     mostrarAlertaError("Error al cambiar el estado de la programación");
                 }
@@ -489,6 +491,7 @@ export function Programaciones() {
             timer: 2000
         });
     };
+    
     
 
 
