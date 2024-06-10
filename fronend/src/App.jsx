@@ -43,6 +43,7 @@ function App() {
           <Route path="/cambia" element={<CambiarContra />} />
           <Route path="/recuperar" element={<Recuperarcontra />} />
 
+          <Route path="/perfil" element={<PerfilUsuario />} />
 
 
             {user && user.rol === 'administrador' && (
