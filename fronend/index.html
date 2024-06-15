@@ -5,11 +5,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
     <link rel="icon" href="./src/assets/logoprueba-removebg-preview (1).png">
+    <!-- Incluye el archivo CSS de Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="Leaflet-MiniMap-master/dist/Control.MiniMap.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crop Link</title>
   </head>
   <body>
     <div id="root"></div>
+    <!-- Incluye el archivo JavaScript de Leaflet después del CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
     <script type="module" src="/src/main.jsx"></script>
+    <script src="Leaflet-MiniMap-master/dist/Control.MiniMap.min.js"></script>
   </body>
 </html>

@@ -24,6 +24,8 @@ import { Produccion } from "./components/pages/Produccion.jsx";
 import Empleado from "./components/pages/Empleado.jsx";
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 
+import  Map  from "./components/pages/Map.jsx";
+
 
 
 const stored = localStorage.getItem('user')
@@ -62,6 +64,8 @@ function App() {
                 <Route path="/Recursos" element={<TipoRecursos />} />
                 <Route path="/Variedad" element={<Variedades />} />
                 <Route path="/Produccion" element={<Produccion />} />
+
+                <Route path="/Mapaa" element={<Map />} />
               </>
             )}
 
