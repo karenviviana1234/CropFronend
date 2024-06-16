@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Input } from "@nextui-org/react";
 import ButtonDesactivar from "../atomos/ButtonDesactivar";
 import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
+import { FaSistrix } from "react-icons/fa6";
 
 const Empleado = () => {
+  const [filterValue, setFilterValue] = React.useState("");
   const [mensaje, setMensaje] = useState('');
   const [modalAcciones, setModalAcciones] = useState(false);
   const [empleado, setEmpleado] = useState([]);
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [formData, setFormData] = useState({ observacion: '' });
+  const [filteredData, setFilteredData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
@@ -23,10 +27,25 @@ const Empleado = () => {
       const response = await axios.get(getURL, { headers: { token: token } });
       console.log(response.data);
       setEmpleado(response.data);
+      setOriginalData(response.data);
+      setFilteredData(response.data);
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
   };
+
+  const handleFilter = (event) => {
+    const filterValue = event.target.value.toLowerCase();
+    const newData = originalData.filter(row => {
+      return row.nombre_actividad.toLowerCase().includes(filterValue);
+    });
+    setFilteredData(newData);
+  };
+  useEffect(() => {
+    setOriginalData(empleado);
+  }, [empleado]);
+
+
 
   useEffect(() => {
     ObtenerDatos();
@@ -84,13 +103,30 @@ const Empleado = () => {
     });
   };
 
+
   return (
     <div className={`contenido ${sidebarAbierto ? "contenido-extendido" : ""}`}>
       <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-      <h1 className="text-3xl font-bold mb-5 mt-5 text-center text-white">Listar Empleados</h1>
+
+      {/* hola */}
+      <div className="mt-20 ml-40">
+        <div className='w-50 bg-[#E5E5E5] flex items-center rounded-lg'>
+          <input
+            className='w-full p-2 bg-[#E5E5E5] text-black rounded-lg border'
+            type="text"
+            onChange={handleFilter}
+            placeholder='Buscar'
+          />
+          <FaSistrix size={25} style={{ marginRight: 10 }} />
+        </div>
+      </div>
+
       <div className="flex flex-wrap ml-36">
+
         {empleado.map((empleado, index) => (
+
           <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden m-4 w-90 flex justify-center">
+
             <div className="p-6">
               <p className="text-lg font-normal">Identificación: {empleado.identificacion}</p><br />
               <p className="text-lg font-normal mb-1">Nombre: {empleado.nombre}</p>
@@ -107,9 +143,9 @@ const Empleado = () => {
                     Observación:
                   </label>
                   <div className='py-2'>
-                    <Input
-                      className='w-60'
-                      type="float"
+                    <input
+                      className='w-60 border'
+                      type="text"
                       label='Ingrese la observacion'
                       id='observacion'
                       name="observacion"
@@ -122,19 +158,21 @@ const Empleado = () => {
                 <div className="flex col">
                   <button
                     type="submit"
-                    className="mr-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="mr-5 bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   >
                     Enviar
                   </button>
                   <br />
                   <button
                     onClick={() => Desactivar(empleado.id_actividad)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   >
                     Estado
                   </button>
                 </div>
               </form>
+
+              
             </div>
           </div>
         ))}
