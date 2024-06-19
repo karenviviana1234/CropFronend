@@ -4,14 +4,12 @@ import { ModalFooter, Button, Input } from "@nextui-org/react";
 import ProduccionContext from '../../context/ProduccionContext.jsx';
 
 export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
-  const [inversion, setInversion] = useState([]);
   const [programaciones, setProgramacion] = useState([]);
 
   const [cantidad_produccion, setcantidad_produccion] = useState('');
   const [precio, setPrecio] = useState('');
   
   const [programacionFk, setProgramacionFk] = useState('');
-  const [inversionFk, setInversionFk] = useState('');
 
   const { idProduccion } = useContext(ProduccionContext);
 
@@ -30,22 +28,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
       }
     };
 
-    const obtenerInversiones = async () => {
-      try {
-        const response = await axiosClient.get('/listarinversion');
-        console.log(response.data);
-        if (Array.isArray(response.data)) {
-          setInversion(response.data);
-        } else {
-          console.error('La respuesta no es un array', response.data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     obtenerProgramacion();
-    obtenerInversiones();
   }, []);
 
   useEffect(() => {
@@ -53,7 +36,6 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
       setcantidad_produccion(idProduccion.cantidad_produccion || '');
       setPrecio(idProduccion.precio || '');
       setProgramacionFk(idProduccion.fk_id_programacion || '');
-      setInversionFk(idProduccion.fk_id_inversiones || '');
     }
   }, [mode, idProduccion]);
 
@@ -64,7 +46,6 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
         cantidad_produccion: cantidad_produccion,
         precio: parseInt(precio),
         fk_id_programacion: parseInt(programacionFk),
-        fk_id_inversiones: parseInt(inversionFk)
       };
       handleSubmit(formData, e);
     } catch (error) {
@@ -119,25 +100,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
             ))}
           </select>
         </div>
-        <div className="py-2">
-          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-800"></span>
-          <select
-            className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-            name="idInversion"
-            value={inversionFk}
-            onChange={(e) => setInversionFk(e.target.value)}
-            required
-          >
-            <option value="" hidden className="text-gray-600">
-              Seleccionar Inversiones
-            </option>
-            {inversion.map(inv => (
-              <option key={inv.id_inversiones} value={inv.id_inversiones}>
-                {inv.valor_inversion}
-              </option>
-            ))}
-          </select>
-        </div>
+       
         <ModalFooter>
           <Button color="danger" variant="flat" onPress={onClose}>
             Close

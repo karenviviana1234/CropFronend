@@ -65,7 +65,7 @@ function App() {
                 <Route path="/Variedad" element={<Variedades />} />
                 <Route path="/Produccion" element={<Produccion />} />
 
-                <Route path="/Mapaa" element={<Map />} />
+                <Route path="/Mapa" element={<Map />} />
               </>
             )}
 
