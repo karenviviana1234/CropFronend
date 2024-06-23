@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Swal from "sweetalert2";
-import { Input } from "@nextui-org/react";
-import ButtonDesactivar from "../atomos/ButtonDesactivar";
-import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Alert
+} from 'react-native';
+import axiosClient from './Cultivos' // Ajusta la ruta según tu estructura de proyecto
 
-const Empleado = () => {
-  const [mensaje, setMensaje] = useState('');
-  const [modalAcciones, setModalAcciones] = useState(false);
+const ListarEmpleados = () => {
   const [empleado, setEmpleado] = useState([]);
-  const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [formData, setFormData] = useState({ observacion: '' });
-
-  const toggleSidebar = () => {
-    setSidebarAbierto(!sidebarAbierto);
-  };
 
   const ObtenerDatos = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const getURL = "http://localhost:3000/Listar";
-      const response = await axios.get(getURL, { headers: { token: token } });
-      console.log(response.data);
+      const response = await axiosClient.get('/Listar');
+      console.log('Datos obtenidos:', response.data);
       setEmpleado(response.data);
     } catch (error) {
-      console.error("Error al obtener los datos:", error);
+      console.error('Error al obtener los datos:', error);
+      Alert.alert('Error', 'Error al obtener los datos');
     }
   };
 
@@ -32,115 +29,98 @@ const Empleado = () => {
     ObtenerDatos();
   }, []);
 
-  const handleSubmit = async (e, id_actividad) => {
-    e.preventDefault();
+  const handleSubmit = async (id_actividad) => {
     try {
-      const token = localStorage.getItem("token");
-      const baseURL = `http://localhost:3000/EmpleadoMood/Registrar/${id_actividad}`;
-      await axios.put(baseURL, formData, { headers: { token: token } });
-      setMensaje('Observación Registrada exitosamente');
-      setModalAcciones(true);
+      await axiosClient.put(`/EmpleadoMood/Registrar/${id_actividad}`, formData);
+      Alert.alert('Éxito', 'Observación Registrada exitosamente');
     } catch (error) {
       console.error('Error al procesar la solicitud:', error);
+      Alert.alert('Error', 'Error al registrar la observación');
     }
   };
 
-  const Desactivar = (id_actividad) => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "¡Esto podrá afectar a tus lotes!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#006000",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, estoy seguro!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        try {
-          const token = localStorage.getItem("token");
-          axios
-            .put(`http://localhost:3000/cambioestado/${id_actividad}`, null, { headers: { token: token } })
-            .then((response) => {
-              if (response.status === 200) {
-                const nuevoEstado = response.data.message;
-                ObtenerDatos();
-                Swal.fire({
-                  title: "¡Actualizado!",
-                  text: `${nuevoEstado}`,
-                  icon: "success",
-                });
-              }
-            });
-        } catch (error) {
-          console.error("Error al obtener los datos:", error);
-        }
-      } else {
-        Swal.fire({
-          title: "Cancelado",
-          text: "La operación ha sido cancelada",
-          icon: "info",
-        });
-      }
-    });
+  const Desactivar = async (id_actividad) => {
+    try {
+      await axiosClient.put(`/cambioestado/${id_actividad}`);
+      ObtenerDatos(); // Refrescar los datos después de desactivar
+    } catch (error) {
+      console.error('Error al cambiar el estado:', error);
+      Alert.alert('Error', 'Error al cambiar el estado');
+    }
   };
 
   return (
-    <div className={`contenido ${sidebarAbierto ? "contenido-extendido" : ""}`}>
-      <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-      <h1 className="text-3xl font-bold mb-5 mt-5 text-center text-white">Listar Empleados</h1>
-      <div className="flex flex-wrap ml-36">
+    <View style={{ flex: 1 }}>
+      <Text style={styles.header}>Listar Empleados</Text>
+      <ScrollView>
         {empleado.map((empleado, index) => (
-          <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden m-4 w-90 flex justify-center">
-            <div className="p-6">
-              <p className="text-lg font-normal">Identificación: {empleado.identificacion}</p><br />
-              <p className="text-lg font-normal mb-1">Nombre: {empleado.nombre}</p>
-              <p className="text-lg font-normal">Fecha Inicio: {empleado.fecha_inicio}</p>
-              <p className="text-lg font-normal">Fecha Fin: {empleado.fecha_fin}</p>
-              <p className="text-lg font-normal">Variedad: {empleado.nombre_variedad}</p>
-              <p className="text-lg font-normal">Actividad: {empleado.nombre_actividad}</p>
-              <p className="text-lg font-normal">Tiempo: {empleado.tiempo}</p>
-              <p className="text-lg font-normal">Estado: {empleado.estado}</p>
+          <View key={index} style={styles.card}>
+            <Text style={styles.text}>Identificación: {empleado.identificacion}</Text>
+            <Text style={styles.text}>Nombre: {empleado.nombre}</Text>
+            <Text style={styles.text}>Fecha Inicio: {new Date(empleado.fecha_inicio).toLocaleDateString()}</Text>
+            <Text style={styles.text}>Fecha Fin: {new Date(empleado.fecha_fin).toLocaleDateString()}</Text>
+            <Text style={styles.text}>Variedad: {empleado.nombre_variedad}</Text>
+            <Text style={styles.text}>Actividad: {empleado.nombre_actividad}</Text>
+            <Text style={styles.text}>Tiempo: {empleado.tiempo}</Text>
+            <Text style={styles.text}>Estado: {empleado.estado}</Text>
 
-              <form onSubmit={(e) => handleSubmit(e, empleado.id_actividad)}>
-                <div className="mb-4">
-                  <label htmlFor="observacion" className="font-normal mb-1">
-                    Observación:
-                  </label>
-                  <div className='py-2'>
-                    <Input
-                      className='w-60'
-                      type="float"
-                      label='Ingrese la observacion'
-                      id='observacion'
-                      name="observacion"
-                      value={formData.observacion}
-                      onChange={(e) => setFormData({ ...formData, observacion: e.target.value })}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex col">
-                  <button
-                    type="submit"
-                    className="mr-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    Enviar
-                  </button>
-                  <br />
-                  <button
-                    onClick={() => Desactivar(empleado.id_actividad)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    Estado
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
+            <TextInput
+              style={styles.input}
+              placeholder="Ingrese la observación"
+              value={formData.observacion}
+              onChangeText={(text) => setFormData({ ...formData, observacion: text })}
+            />
+
+            <TouchableOpacity style={styles.button} onPress={() => handleSubmit(empleado.id_actividad)}>
+              <Text style={styles.buttonText}>Enviar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={() => Desactivar(empleado.id_actividad)}>
+              <Text style={styles.buttonText}>Estado</Text>
+            </TouchableOpacity>
+          </View>
         ))}
-      </div>
-    </div>
+      </ScrollView>
+    </View>
   );
 };
 
-export default Empleado;
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    overflow: 'hidden',
+    margin: 10,
+    padding: 10,
+  },
+  text: {
+    fontSize: 18,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    marginTop: 10,
+    padding: 5,
+  },
+  button: {
+    backgroundColor: 'blue',
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});
+
+export default ListarEmpleados;
