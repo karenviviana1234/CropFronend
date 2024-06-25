@@ -37,11 +37,10 @@ export function Programaciones() {
         todos: "primary",
     };
 
-    function Ejemplo() { /*  */
-
+    function Ejemplo() {
         const [filterValue, setFilterValue] = React.useState("");
         const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState("all");
+        const [statusFilter, setStatusFilter] = React.useState(new Set(["todos"]));
         const [rowsPerPage, setRowsPerPage] = React.useState(5);
         const [sortDescriptor, setSortDescriptor] = React.useState({
             column: "fecha",
@@ -70,27 +69,12 @@ export function Programaciones() {
                 );
             }
 
-            if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+            if (statusFilter !== "todos" && Array.from(statusFilter).length !== statusOptions.length) {
                 filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-                    Array.from(statusFilter).includes(programacion.estado)
+                    statusFilter.has("todos") || statusFilter.has(programacion.estado)
                 );
-            } /* else if (statusFilter === "activo") {
-      filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-        programacion.estado === "activo"
-      );
-    } else if (statusFilter === "inactivo") {
-      filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-        programacion.estado === "inactivo"
-      );
-    } else if (statusFilter === "proceso") {
-      filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-        programacion.estado === "proceso"
-      );
-    } else if (statusFilter === "terminado") {
-      filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-        programacion.estado === "terminado"
-      );
-    } */
+            }
+
 
             return filteredprogramaciones;
         }, [programaciones, filterValue, statusFilter]);
@@ -117,14 +101,13 @@ export function Programaciones() {
         const renderCell = React.useCallback((programacion, columnKey) => {
             const cellValue = programacion[columnKey];
 
-
-
             const handleUpdateClick = (id_programacion, programacion) => {
                 localStorage.setItem('idUser', id_programacion);
                 clickEditar(id_programacion, programacion);
                 console.log('ID del programacion seleccionado:', id_programacion);
                 console.log('Datos del programacion seleccionado:', programacion);
             };
+
             switch (columnKey) {
                 case "estado":
                     return (
@@ -132,22 +115,25 @@ export function Programaciones() {
                             {cellValue}
                         </Chip>
                     );
-                case "actions": /*  */
-                    return (
-                        <div className="relative flex justify-end items-center gap-2">
-                            <Dropdown>
-                                <div className="flex items-center gap-2">
-                                    <ButtonActualizar
-                                        onClick={() => handleToggle('update', setProgramacionId(programacion))} />
-                                    <ButtonDesactivar
-                                        onClick={() => peticionDesactivar(programacion.id_programacion)}
-                                        estado={programacion.estado}
-                                    />
-                                </div>
-                            </Dropdown>
-                        </div>
-                    );
-
+                case "actions":
+                    if (programacion.nombre !== "terminado" && programacion.estado !== "terminado") {
+                        return (
+                            <div className="relative flex justify-end items-center gap-2">
+                                <Dropdown>
+                                    <div className="flex items-center gap-2">
+                                        <ButtonActualizar
+                                            onClick={() => handleToggle('update', setProgramacionId(programacion))} />
+                                        <ButtonDesactivar
+                                            onClick={() => peticionDesactivar(programacion.id_programacion)}
+                                            estado={programacion.estado}
+                                        />
+                                    </div>
+                                </Dropdown>
+                            </div>
+                        );
+                    } else {
+                        return null; // No renderizar nada si el nombre o el estado es "terminado"
+                    }
                 default:
                     return cellValue;
             }
@@ -184,15 +170,24 @@ export function Programaciones() {
             setPage(1);
         }, []);
 
-        const onStatusFilter = (selectedKeys) => {
-            setStatusFilter(selectedKeys)
-        }
+        const onStatusFilter = React.useCallback((keys) => {
+            if (keys.size === 0) {
+                setStatusFilter(new Set(["todos"]));
+                console.log("Has seleccionado: Todos");
+            } else {
+                if (keys.has("todos")) {
+                    keys.delete("todos");
+                }
+                setStatusFilter(keys);
+                console.log("Has seleccionado:", Array.from(keys));
+            }
+        }, []);
 
         const topContent = React.useMemo(() => {
             return (
                 <>
-                    <div className="flex flex-col  mt-3" >
-                        <div className="flex justify-between gap-3 items-end ">
+                    <div className="flex flex-col mt-3">
+                        <div className="flex justify-between gap-3 items-end">
                             <Input
                                 isClearable
                                 className="w-full sm:max-w-[44%] bg-[#f4f4f5] rounded"
@@ -203,9 +198,8 @@ export function Programaciones() {
                                 onValueChange={onSearchChange}
                             />
                             <div className="flex gap-3">
-
                                 <Dropdown>
-                                    <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
+                                    <DropdownTrigger className="hidden sm:flex mr-2 text-black bg-[#f4f4f5]">
                                         <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
@@ -226,12 +220,12 @@ export function Programaciones() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 text-white bg-[#006000]" style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
-                        <div className="flex justify-between items-center z-10 mr-40  mt-2">
+                        <div className="flex justify-between items-center z-10 mr-40 mt-2">
                             <span className="text-white text-small">Total {programaciones.length} Resultados</span>
                             <label className="flex items-center text-white text-small">
                                 Columnas por página:
@@ -247,7 +241,6 @@ export function Programaciones() {
                         </div>
                     </div>
                 </>
-
             );
         }, [
             filterValue,
@@ -268,7 +261,7 @@ export function Programaciones() {
                         total={pages}
                         onChange={setPage}
                     />
-                    <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
+                    <div className="hidden sm:flex w-[40%] justify-end gap-2">
                         <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
@@ -283,52 +276,49 @@ export function Programaciones() {
         return (
             <div className="flex items-center justify-center p-4 w-full">
                 <div className="w-auto overflow-x-auto">
-                <Table
-                    aria-label="Tabla"
-                    isHeaderSticky
-                    bottomContent={bottomContent}
-                    bottomContentPlacement="outside"
-                    classNames={{
-                        wrapper: "max-h-[100%] max-w-[100%]",
-                    }}
-                    className="flex"
-                    selectedKeys={selectedKeys}
-                    /* selectionMode="multiple" */
-                    sortDescriptor={sortDescriptor}
-                    topContent={topContent}
-                    topContentPlacement="outside"
-                    onSelectionChange={setSelectedKeys}
-                    onSortChange={setSortDescriptor}
-                >
-                    <TableHeader columns={data}>
-                        {(column) => (
-                            <TableColumn
-                                key={column.uid}
-                                align={column.uid === "actions" ? "center" : "start"}
-                                allowsSorting={column.sortable}
-                            >
-                                {column.name}
-                            </TableColumn>
-                        )}
-                    </TableHeader>
-                    <TableBody
-                        emptyContent={"No hay actividad registrados"}
-                        items={sortedItems}
+                    <Table
+                        aria-label="Tabla"
+                        isHeaderSticky
+                        bottomContent={bottomContent}
+                        bottomContentPlacement="outside"
+                        classNames={{
+                            wrapper: "max-h-[100%] max-w-[100%]",
+                        }}
+                        className="flex"
+                        selectedKeys={selectedKeys}
+                        sortDescriptor={sortDescriptor}
+                        topContent={topContent}
+                        topContentPlacement="outside"
+                        onSelectionChange={setSelectedKeys}
+                        onSortChange={setSortDescriptor}
                     >
-                        {(item) => (
-                            <TableRow key={item.id_programacion}>
-                                {(columnKey) => (
-                                    <TableCell>{renderCell(item, columnKey)}</TableCell>
-                                )}
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
+                        <TableHeader columns={data}>
+                            {(column) => (
+                                <TableColumn
+                                    key={column.uid}
+                                    align={column.uid === "actions" ? "center" : "start"}
+                                    allowsSorting={column.sortable}
+                                >
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody
+                            emptyContent={"No hay actividad registrados"}
+                            items={sortedItems}
+                        >
+                            {(item) => (
+                                <TableRow key={item.id_programacion}>
+                                    {(columnKey) => (
+                                        <TableCell>{renderCell(item, columnKey)}</TableCell>
+                                    )}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
-            </div>
-
         );
-
     }
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAcciones, setModalAcciones] = useState(false);
