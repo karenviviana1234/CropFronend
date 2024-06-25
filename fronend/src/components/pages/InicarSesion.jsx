@@ -15,7 +15,7 @@ export const InicioSesion = () => {
   const [modalAcciones, setModalAcciones] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
-  const baseURL = "http://localhost:3000/validacion"
+  const baseURL = "http://10.193.144.37:4000/validacion"
 
   const correo = useRef(null)
   const password = useRef(null)
