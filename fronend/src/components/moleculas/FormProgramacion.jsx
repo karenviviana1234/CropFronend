@@ -5,7 +5,7 @@ import axiosClient from '../axiosClient'; // Asegúrate de importar axiosClient 
 import ProgramacionesContext from './../../context/ProgramacionesContext';
 
 const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
-  const [variedades, setVariedades] = useState([]);
+ /*  const [variedades, setVariedades] = useState([]); */
   const [lotes, setLotes] = useState([]);
   const [actividad, setActividad] = useState([]);
   const [usuario, setUsuarios] = useState([]);
@@ -16,7 +16,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
   const [fechaFin, setFechaFin] = useState('');
   const [identificacionFK, setIdentificacionFK] = useState('');
   const [actividadFK, setActividadFK] = useState('');
-  const [variedadFK, setVariedadFK] = useState('');
+ /*  const [variedadFK, setVariedadFK] = useState(''); */
   const [loteFK, setLoteFK] = useState('');
   const { idProgramacion } = useContext(ProgramacionesContext);
 
@@ -44,12 +44,12 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
     });
   }, []);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     axiosClient.get('/listarVariedades').then((response) => {
       const variedadFilter = response.data.filter((variedad) => variedad.estado === 'activo');
       setVariedades(variedadFilter);
     });
-  }, []);
+  }, []); */
 
   useEffect(() => {
     axiosClient.get('/listarlote').then((response) => {
@@ -75,7 +75,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
       setFechaFin(formattedFechaFin);
       setIdentificacionFK(idProgramacion.fk_identificacion);
       setActividadFK(idProgramacion.fk_id_actividad);
-      setVariedadFK(idProgramacion.fk_id_variedad);
+     /*  setVariedadFK(idProgramacion.fk_id_variedad); */
       setLoteFK(idProgramacion.fk_id_lote);
       setEstadoOp(idProgramacion.estado);
     }
@@ -89,7 +89,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
         fecha_fin: fechaFin,
         fk_identificacion: identificacionFK,
         fk_id_actividad: actividadFK,
-        fk_id_variedad: variedadFK,
+       /*  fk_id_variedad: variedadFK, */
         fk_id_lote: loteFK,
         estado: estadoOp,
       };
@@ -183,7 +183,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
               ))}
             </select>
           </div>
-          <div className="py-2">
+          {/* <div className="py-2">
             <select
               className="pl-2 pr-4 py-2 w-11/12 h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
               id="fk_id_variedad"
@@ -201,7 +201,7 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <div className="py-2">
             <select
               label="Estado"
