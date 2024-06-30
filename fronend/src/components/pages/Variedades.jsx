@@ -294,7 +294,7 @@ export function Variedades() {
                             </TableColumn>
                         )}
                     </TableHeader>
-                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                    <TableBody emptyContent={"No hay variedades registradas"} items={sortedItems}>
                         {(item) => (
                             <TableRow key={item.id_variedad}>
                                 {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

@@ -288,7 +288,7 @@ export function Lotes() {
                             </TableColumn>
                         )}
                     </TableHeader>
-                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                    <TableBody emptyContent={"No hay lotes registrados"} items={sortedItems}>
                         {(item) => (
                             <TableRow key={item.id_lote}>
                                 {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}

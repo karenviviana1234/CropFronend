@@ -304,7 +304,7 @@ export function Programaciones() {
                             )}
                         </TableHeader>
                         <TableBody
-                            emptyContent={"No hay actividad registrados"}
+                            emptyContent={"No hay asignaciones registradas"}
                             items={sortedItems}
                         >
                             {(item) => (
