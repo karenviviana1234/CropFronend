@@ -14,7 +14,7 @@ const Empleado = () => {
   const [formData, setFormData] = useState({ observacion: '' });
   const [filteredData, setFilteredData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
-
+//gfdrt
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
