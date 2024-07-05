@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import CultivosContext from '../../context/CultivosContext.jsx';
 import Header from '../organismos/Header/Header.jsx';
+import { format } from 'date-fns';
 import {
     Table,
     TableHeader,
@@ -96,22 +97,19 @@ export function Cultivos() {
 
         const renderCell = React.useCallback((cultivo, columnKey) => {
             const cellValue = cultivo[columnKey];
-
-
-            const handleUpdateClick = (id) => {
-
-                localStorage.setItem('idUser', id)
-                clickEditar(id)
-            };
-
+        
             switch (columnKey) {
+                case "fecha_inicio":
+                    // Formatear la fecha para que solo muestre la fecha sin la hora
+                    const formattedDate = format(new Date(cellValue), 'dd-MM-yyyy');
+                    return formattedDate;
                 case "estado":
                     return (
                         <Chip className="capitalize" color={statusColorMap[cultivo.estado]} size="sm" variant="flat">
                             {cellValue}
                         </Chip>
                     );
-                case "actions": /*  */
+                case "actions":
                     return (
                         <div className="relative flex justify-end items-center gap-2">
                             <Dropdown>
@@ -125,11 +123,12 @@ export function Cultivos() {
                             </Dropdown>
                         </div>
                     );
-
                 default:
                     return cellValue;
             }
         }, []);
+        
+        
 
         const onNextPage = React.useCallback(() => {
             if (page < pages) {
@@ -261,7 +260,7 @@ export function Cultivos() {
         return (
             <div className="flex items-center justify-center p-4 w-full">
 
-                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 ">
+                <div > {/* w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 */}
                     <Table
                         aria-label="Tabla"
                         isHeaderSticky
@@ -500,213 +499,3 @@ export function Cultivos() {
         </>
     )
 }
-
-
-/* import React, { useEffect, useState } from 'react'
-import './CssTablas.css'
-import Header from '../organismos/Header/Header.jsx';
-import CultivosModal from '../templates/CultivosModal.jsx';
-import AccionesModal from '../organismos/ModalAcciones.jsx';
-import axios from 'axios';
-import Ejemplo from '../organismos/TableCultivos.jsx';
-import Swal from 'sweetalert2';
-
-export function Cultivos() {
-    const [sidebarAbierto, setSidebarAbierto] = useState(false);
-
-    const toggleSidebar = () => {
-        setSidebarAbierto(!sidebarAbierto);
-    };
-
-    const [modalOpen, setModalOpen] = useState(false)
-    const [modalAcciones, setModalAcciones] = useState(false)
-    const [mode, setMode] = useState('create')
-    const [initialData, setInitialData] = useState(null)
-    const [mensaje, setMensaje] = useState('')
-    const [cultivos, setCultivos] = useState([]);
-    const [idCultivo, setIdCultivo] = useState(null); 
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    const token = localStorage.getItem('token')
-
-    const fetchData = async () => {
-        try {
-            const getURL = 'http://localhost:3000/listarCultivos'
-            axios.get(getURL, { headers: { token: token } }).then((response) => {
-                console.log(response.data)
-                setCultivos(response.data)
-            })
-
-        } catch (error) {
-            console.log('Error en el servidor' + error);
-        }
-    }
-
-    const data = [
-        {
-            uid: 'id_cultivo',
-            name: 'Id Cultivo',
-            sortable: true
-        },
-        {
-            uid: 'fecha_inicio',
-            name: 'Fecha de Inicio',
-            sortable: true
-        },
-        {
-            uid: 'nombre_finca',
-            name: 'Nombre Finca',
-            sortable: true
-        },
-        {
-            uid: 'nombre_cultivo',
-            name: 'Nombre cultivo',
-            sortable: true
-        },
-        {
-            uid: 'cantidad_sembrada',
-            name: 'Cantidad Sembrada',
-            sortable: true
-        },
-        {
-            uid: 'nombre_variedad',
-            name: 'Nombre Variedad',
-            sortable: true
-        },
-        {
-            uid: 'estado',
-            name: 'Estado',
-            sortable: true
-        },
-        {
-            uid: 'actions',
-            name: "Acciones",
-            sortable: true
-        }
-    ];
-    const handleDesactivar = (id_cultivo) => {
-        Swal.fire({
-            title: "¿Estás seguro?",
-            text: "¡Esto podrá afectar a tus cultivos!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí, estoy seguro!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    axios.put(`http://localhost:3000/desactivarCultivos/${id_cultivo}`, null, { headers: { token: token } })
-                    .then((response) => {
-                        if (response.status === 200) {
-                            const nuevoEstado = response.data.message;
-                            fetchData();
-                            Swal.fire({
-                                title: "¡Actualizado!",
-                                text: `${nuevoEstado}`,
-                                icon: "success"
-                            });
-                        } else {
-                            alert('Error al actualizar');
-                        }
-                    });
-                } catch (error) {
-                    alert('Error con el servidor');
-                }
-            } else {
-                Swal.fire({
-                    title: "Cancelado",
-                    text: "La operación ha sido cancelada",
-                    icon: "info"
-                });
-            }
-        });
-    };
-    
-    const handleSubmit = async (datosForm, e) => {
-        e.preventDefault();
-
-        try {
-            if (mode === 'create') {
-                const postURL = 'http://localhost:3000/registrarCultivos'
-
-                await axios.post(postURL, datosForm, { headers: { token: token } }).then((response) => {
-                    console.log(response)
-                    if (response.status == 200) {
-                        fetchData()
-                        Swal.fire({
-                            position: "center", 
-                            icon: "success",
-                            title: "Cultivo registrada con éxito",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                })
-            }
-            else if (mode === 'update') {
-                const updateURL = `http://localhost:3000/actualizarCultivos/${idCultivo}`;
-                axios.put(updateURL, datosForm, { headers: { token: token } }).then((response) => {
-                    if (response.status === 200) {
-                        fetchData();
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Se actualizó con éxito",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    } else {
-                        alert('Error al actualizar');
-                    }
-                });
-            }
-            setModalOpen(false);
-        } catch (error) {
-            console.log('Error en el servidor ' + error);
-            alert('Error, intente de nuevo');
-        }
-    };
-
-
-    const handleToggle = (mode, initialData, id_cultivo) => {
-        setInitialData(initialData);
-        setModalOpen(true);
-        setMode(mode);
-        setIdCultivo(id_cultivo);
-    };
-
-    return (
-        <>
-            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <CultivosModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar cultivo' : 'Actualizar cultivo'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    className=''
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                    setModalOpen={setModalOpen}
-                />
-                <Ejemplo
-                    clickDesactivar={handleDesactivar}
-                    clickEditar={(id_cultivo) => handleToggle('update', null, id_cultivo)}
-                    clickRegistrar={() => handleToggle('create', null, null)}
-                    data={data}
-                    cultivos={cultivos}
-                />
-            </div>
-        </>
-    )
-}
- */

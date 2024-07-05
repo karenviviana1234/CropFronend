@@ -1,15 +1,15 @@
+/* Por favor no modificar el codigo altera todas las tablas */
 .contenido {
-
-    padding-top: 30px;
-    background-image: url('../../assets/nuevofondo.png');
-    background-repeat: no-repeat;
-    background-size: cover;  
-    height: 100vh; 
-    overflow-x: hidden; 
-  }
-  .contenido-extendido {
-    margin-left: 220px; 
-    width: calc(100% - 220px);
-  }
-
-  
+  padding-top: 40px;
+  background-image: url('../../assets/nuevofondo.png');
+  background-repeat: no-repeat;
+  background-size: cover;  
+  height: 100vh; 
+  overflow-x: hidden;
+  margin-left: 60px; 
+  width: calc(100% - 60px);
+}
+.contenido-extendido {
+  margin-left: 220px; 
+  width: calc(100% - 220px);
+}

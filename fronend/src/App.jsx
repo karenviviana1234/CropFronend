@@ -23,7 +23,6 @@ import { Usuarios } from "./components/pages/Usuarios.jsx";
 import { Produccion } from "./components/pages/Produccion.jsx";
 import Empleado from "./components/pages/Empleado.jsx";
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
-
 import  Map  from "./components/pages/Map.jsx";
 
 

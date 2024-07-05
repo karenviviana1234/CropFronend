@@ -1,23 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'; // Importar Link y useLocation desde react-router-dom
 import Icon from '../../atomos/Navbar/IconosNavbar';
 import v from '../../../styles/variables';
-import Perfil from '../../pages/Perfil';
 
 function NavbarHeader({ toggleSidebar, sidebarAbierto }) {
-  const [perfilVisible, setPerfilVisible] = useState(false);
-
+  const [user, setUser] = useState(null);
   const location = useLocation();
   const vistaActual = location.pathname.split('/').filter(Boolean).pop() || 'Inicio'; // Obtener el último segmento de la ruta como nombre de la vista actual
 
   const navbarWidth = sidebarAbierto ? 'calc(100% - 220px)' : 'calc(100% - 60px)'; // Ajustar el ancho del navbar según el estado del sidebar
 
-  const stored = localStorage.getItem('user');
-  const user = stored ? JSON.parse(stored) : null;
+  useEffect(() => {
+    // Función para obtener el usuario del localStorage
+    const getUserFromLocalStorage = () => {
+      const stored = localStorage.getItem('user');
+      return stored ? JSON.parse(stored) : null;
+    };
+
+    // Inicializar el usuario
+    setUser(getUserFromLocalStorage());
+
+    // Listener para actualizar el usuario cuando cambie el localStorage
+    const handleStorageChange = () => {
+      setUser(getUserFromLocalStorage());
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Cleanup del listener
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   return (
     <>
-      <div className={` w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '60px', width: navbarWidth, zIndex:100 }}>
+      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '', width: navbarWidth, zIndex: 100 }}>
         <div className="mt-1 flex items-center justify-between">
           <div className="w-1/7 text-left">
             <div className={`text-custom-white relative z-1 ${sidebarAbierto ? '' : 'transform rotate-180'}`} onClick={toggleSidebar}>
@@ -33,8 +51,8 @@ function NavbarHeader({ toggleSidebar, sidebarAbierto }) {
               <Link to="/perfil" className="flex items-center">
                 <Icon icon={v.iconoPerfilUsuario} />
                 <div>
-                  <h2 className="text-custom-white ml-3 font-bold">{user.nombre}</h2>
-                  <h2 className="text-custom-white ml-3">{user.rol}</h2>
+                  <h2 className="text-custom-white ml-3 font-bold">{user?.nombre}</h2>
+                  <h2 className="text-custom-white ml-3">{user?.rol}</h2>
                 </div>
               </Link>
             </div>

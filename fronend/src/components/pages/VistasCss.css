@@ -10,18 +10,19 @@
     width: calc(100% - 220px); 
   }
  */
-  .contenidos {
-    padding-top: 30px;
-    background-repeat: no-repeat;
-    background-size: cover;  
-    height: 100vh; 
-    overflow-x: hidden; 
-  }
-  .contenido-extendidos {
-    margin-left: 220px; 
-    width: calc(100% - 220px);
-  }
-  
-  
-  
-  
+ .contenidos {
+  padding-top: 40px;
+  background-repeat: no-repeat;
+  background-size: cover;  
+  height: auto; 
+  overflow-x: hidden;
+  margin-left: 60px; 
+  width: calc(100% - 60px);
+}
+.contenido-extendidos {
+  margin-left: 220px; 
+  width: calc(100% - 220px);
+}
+
+
+
