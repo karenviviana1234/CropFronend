@@ -26,6 +26,7 @@ import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import  Map  from "./components/pages/Map.jsx";
 import Graficas from './components/pages/Graficas.jsx'
 
+import PerfilEmpleado from "./components/pages/PerfilEmpleado.jsx";
 
 
 const stored = localStorage.getItem('user')
@@ -46,6 +47,8 @@ function App() {
           <Route path="/recuperar" element={<Recuperarcontra />} />
 
           <Route path="/perfil" element={<PerfilUsuario />} />
+          <Route path="/Perfil" element={<PerfilEmpleado />} />
+
 
 
             {user && user.rol === 'administrador' && (

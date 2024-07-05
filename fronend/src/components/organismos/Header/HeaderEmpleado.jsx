@@ -1,17 +1,18 @@
 import React from 'react';
-import NavbarHeader from '../../moleculas/Header/NavbarHeader';
 import SidebarOriginEmpleado from '../Sidebar/SidebarActive/SiderEmpleado';
 import SidebarEmple from '../Sidebar/SidebarInactive/Sidebarempleadoica';
 import Perfil from '../Perfil/Perfil';
+import NavbarHeaderEmpleado from '../../moleculas/Header/NavEmpleado';
+import PerfilEmpleado from '../../pages/PerfilEmpleado';
 
-function Header({ toggleSidebar, sidebarAbierto }) {
+function HeaderEmpleado({ toggleSidebar, sidebarAbierto }) {
   return (
     <>
-      <NavbarHeader toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+      <NavbarHeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
       {sidebarAbierto ? <SidebarOriginEmpleado /> : <SidebarEmple />}
-      <Perfil/>
+      <PerfilEmpleado/>
     </>
   );
 }
 
-export default Header;
+export default HeaderEmpleado;
