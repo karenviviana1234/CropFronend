@@ -328,7 +328,7 @@ export function Produccion() {
 
     const peticionGet = async () => {
         try {
-            await axiosClient.get('/listarProduccion').then((response) => {
+            await axiosClient.get('/listarProduccion:identificacion').then((response) => {
                 console.log(response.data)
                 setProduccion(response.data)
             })
