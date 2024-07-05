@@ -24,6 +24,7 @@ import { Produccion } from "./components/pages/Produccion.jsx";
 import Empleado from "./components/pages/Empleado.jsx";
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import  Map  from "./components/pages/Map.jsx";
+import Graficas from './components/pages/Graficas.jsx'
 
 
 
@@ -65,6 +66,7 @@ function App() {
                 <Route path="/Produccion" element={<Produccion />} />
 
                 <Route path="/Mapa" element={<Map />} />
+                <Route path="/Graficas" element={<Graficas />} />
               </>
             )}
 
