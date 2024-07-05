@@ -4,17 +4,24 @@ import HeaderPDF from '../moleculas/PDF/HeaderPDF';
 
 const styles = StyleSheet.create({
     page: {
-        flexDirection: 'row'
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: 20,
     },
     section: {
-        margin: '5px',
-        marginTop: '80px',
+        width: '100%',
         padding: 10,
-        flexGrow: 1,
-        textAlign: 'center'
+        textAlign: 'center',
+    },
+    container: {
+        flexDirection: 'column',
+        width: '100%',
+        alignItems: 'center',
     },
     tituloUno: {
-        margin: 30,
+        marginTop: '120px',
+        marginBottom: '30px',
+        marginHorizontal: '30px',
         fontSize: '35px',
         color: '#006000',
         fontWeight: 'bold'
@@ -29,10 +36,11 @@ const styles = StyleSheet.create({
     line: {
         borderBottomWidth: 1,
         borderBottomColor: 'yellow',
+        marginBottom: 10,
     },
     table: {
-        marginTop: '20px',
-        marginBottom: '20px',
+        width: '90%',
+        marginVertical: 20,
     },
     tableRow: {
         flexDirection: 'row',
@@ -57,8 +65,9 @@ const styles = StyleSheet.create({
         color: '#000000',
         backgroundColor: '#E5EAEE',
         fontSize: '11px',
-    }, tableCellTotal: {
-        flex: 4, // Ajusta el ancho de la celda "Total"
+    },
+    tableCellTotal: {
+        flex: 5, // Ajusta el ancho de la celda "Total"
         justifyContent: 'center', // Centra verticalmente el contenido
         borderStyle: 'solid',
         borderWidth: 1,
@@ -91,58 +100,58 @@ const styles = StyleSheet.create({
 });
 
 const PDF = () => (
-
-
-
-
     <Document>
         <Page size="A4" style={styles.page}>
             <HeaderPDF />
-            <View style={styles.section}>
-                <Text style={styles.tituloUno}>REPORTE GENERAL</Text>
-                <Text style={styles.text}>INVERSIONES Y PRODUCCIONES</Text>
-                <View style={styles.line} />
-                <View style={styles.table}>
-                    <View style={styles.tableRow}>
-                    <View style={styles.tableCell}><Text>Numero</Text></View>
-                        <View style={styles.tableCell}><Text>Lote</Text></View>
-                        <View style={styles.tableCell}><Text>Tipo de Cultivo</Text></View>
-                        <View style={styles.tableCell}><Text>Cultivo</Text></View>
-                        <View style={styles.tableCell}><Text>Cantidad</Text><Text>Sembrada</Text></View>
-                        <View style={styles.tableCell}><Text>Inversión</Text></View>
-                        <View style={styles.tableCell}><Text>Producción</Text></View>
+            <View style={styles.container}>
+                <View style={styles.section}>
+                    <Text style={styles.tituloUno}>REPORTE GENERAL</Text>
+                    <Text style={styles.text}>INVERSIONES</Text>
+                    <View style={styles.line} />
+                    <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCell}><Text>Numero</Text></View>
+                            <View style={styles.tableCell}><Text>Lote</Text></View>
+                            <View style={styles.tableCell}><Text>Cultivo</Text></View>
+                            <View style={styles.tableCell}><Text>Cantidad Sembrada</Text></View>
+                            <View style={styles.tableCell}><Text>Asignacion</Text></View>
+                            <View style={styles.tableCell}><Text>Valor Inversion</Text></View>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableData}><Text>1</Text></View>
+                            <View style={styles.tableData}><Text>B</Text></View>
+                            <View style={styles.tableData}><Text>2</Text></View>
+                            <View style={styles.tableData}><Text>2</Text></View>
+                            <View style={styles.tableData}><Text>$2.000.0000</Text></View>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCellTotal}><Text>Total:</Text></View>
+                            <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
+                        </View>
                     </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableData}><Text>1</Text></View>
-                        <View style={styles.tableData}><Text>A</Text></View>
-                        <View style={styles.tableData}><Text>Alimenticios</Text></View>
-                        <View style={styles.tableData}><Text>Maiz</Text></View>
-                        <View style={styles.tableData}><Text>50</Text></View>
-                        <View style={styles.tableData}><Text>$1000</Text></View>
-                        <View style={styles.tableData}><Text>800 kg</Text></View>
-                    </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableData}><Text>1</Text></View>
-                        <View style={styles.tableData}><Text>B</Text></View>
-                        <View style={styles.tableData}><Text>Alimenticios</Text></View>
-                        <View style={styles.tableData}><Text>Maiz</Text></View>
-                        <View style={styles.tableData}><Text>20</Text></View>
-                        <View style={styles.tableData}><Text>$1000</Text></View>
-                        <View style={styles.tableData}><Text>800 kg</Text></View>
-                    </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableData}><Text>1</Text></View>
-                        <View style={styles.tableData}><Text>C</Text></View>
-                        <View style={styles.tableData}><Text>Alimenticios</Text></View>
-                        <View style={styles.tableData}><Text>Maiz</Text></View>
-                        <View style={styles.tableData}><Text>200</Text></View>
-                        <View style={styles.tableData}><Text>$1000</Text></View>
-                        <View style={styles.tableData}><Text>800 kg</Text></View>
-                    </View>
-                    <View style={styles.tableRow}>
-                        <View style={styles.tableCellTotal}><Text>Total:</Text></View>
-                        <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
-                        <View style={styles.tableDataTotal}><Text>$5.000.000</Text></View>
+                </View>
+                <View style={styles.section}>
+                    <Text style={styles.text}>PRODUCCIONES</Text>
+                    <View style={styles.line} />
+                    <View style={styles.table}>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCell}><Text>Numero</Text></View>
+                            <View style={styles.tableCell}><Text>Lote</Text></View>
+                            <View style={styles.tableCell}><Text>Cultivo</Text></View>
+                            <View style={styles.tableCell}><Text>Cantidad</Text><Text>Produccion</Text></View>
+                            <View style={styles.tableCell}><Text>Producción</Text></View>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableData}><Text>1</Text></View>
+                            <View style={styles.tableData}><Text>B</Text></View>
+                            <View style={styles.tableData}><Text>Cebolla</Text></View>
+                            <View style={styles.tableData}><Text>50</Text></View>
+                            <View style={styles.tableData}><Text>200000</Text></View>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <View style={styles.tableCellTotal}><Text>Total:</Text></View>
+                            <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
+                        </View>
                     </View>
                 </View>
             </View>
