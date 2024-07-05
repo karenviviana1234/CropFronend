@@ -17,7 +17,7 @@ function NavbarHeader({ toggleSidebar, sidebarAbierto }) {
 
   return (
     <>
-      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '60px', width: navbarWidth }}>
+      <div className={` w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '60px', width: navbarWidth, zIndex:100 }}>
         <div className="mt-1 flex items-center justify-between">
           <div className="w-1/7 text-left">
             <div className={`text-custom-white relative z-1 ${sidebarAbierto ? '' : 'transform rotate-180'}`} onClick={toggleSidebar}>

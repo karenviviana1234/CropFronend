@@ -328,7 +328,7 @@ export function Produccion() {
 
     const peticionGet = async () => {
         try {
-            await axiosClient.get('/listarProduccion:identificacion').then((response) => {
+            await axiosClient.get('/listarProduccion').then((response) => {
                 console.log(response.data)
                 setProduccion(response.data)
             })
@@ -466,7 +466,7 @@ export function Produccion() {
     return (
 
         <>
-  <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+  <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`} >
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
             <div className='w-full max-w-[90%] ml-28 items-center p-10'>                 <AccionesModal
                     isOpen={modalAcciones}

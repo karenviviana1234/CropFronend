@@ -7,7 +7,7 @@
   height: 100px;
   color: white;
   padding: 4px 0;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   display: flex;
