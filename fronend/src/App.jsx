@@ -24,7 +24,7 @@ import { Produccion } from "./components/pages/Produccion.jsx";
 import Empleado from "./components/pages/Empleado.jsx";
 import  Map  from "./components/pages/Map.jsx";
 import Graficas from './components/pages/Graficas.jsx'
-
+import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import PerfilEmpleado from "./components/pages/PerfilEmpleado.jsx";
 import SoporteEmpleado from "./components/pages/SoporteEmpleado.jsx";
 
@@ -76,7 +76,7 @@ function App() {
             {user && user.rol === 'empleado' && (
               <>
                 <Route path="/Empleado" element={<Empleado />} />
-                <Route path="/Inicio" element={<Dashboard />} />
+                <Route path="/InicioE" element={<DashboardEmpleado />} />
                 <Route path="/PerfilEmpleado" element={<PerfilEmpleado />} />
                 <Route path="/soporte" element={<SoporteEmpleado />} />
               </>
