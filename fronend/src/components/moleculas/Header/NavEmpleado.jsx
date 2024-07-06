@@ -3,21 +3,19 @@ import { Link, useLocation } from 'react-router-dom'; // Importar Link y useLoca
 import Icon from '../../atomos/Navbar/IconosNavbar';
 import v from '../../../styles/variables';
 
-function NavbarHeaderEmpleado({ toggleSidebar, sidebarAbierto }) {
+function NavbarHeaderEmpleado({ toggleSidebarE, sidebarAbiertoE }) {
   const [user, setUser] = useState(null);
   const location = useLocation();
   const vistaActual = location.pathname.split('/').filter(Boolean).pop() || 'Inicio'; // Obtener el último segmento de la ruta como nombre de la vista actual
 
-  const navbarWidth = sidebarAbierto ? 'calc(100% - 220px)' : 'calc(100% - 60px)'; // Ajustar el ancho del navbar según el estado del sidebar
+  const navbarWidth = sidebarAbiertoE ? 'calc(100% - 220px)' : 'calc(100% - 60px)'; // Ajustar el ancho del navbar según el estado del sidebar
 
   useEffect(() => {
-    // Función para obtener el usuario del localStorage
     const getUserFromLocalStorage = () => {
       const stored = localStorage.getItem('user');
       return stored ? JSON.parse(stored) : null;
     };
 
-    // Inicializar el usuario
     setUser(getUserFromLocalStorage());
 
     // Listener para actualizar el usuario cuando cambie el localStorage
@@ -35,10 +33,10 @@ function NavbarHeaderEmpleado({ toggleSidebar, sidebarAbierto }) {
 
   return (
     <>
-      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '', width: navbarWidth, zIndex: 100 }}>
+      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbiertoE ? '' : '', width: navbarWidth, zIndex: 100 }}>
         <div className="mt-1 flex items-center justify-between">
           <div className="w-1/7 text-left">
-            <div className={`text-custom-white relative z-1 ${sidebarAbierto ? '' : 'transform rotate-180'}`} onClick={toggleSidebar}>
+            <div className={`text-custom-white relative z-1 ${sidebarAbiertoE ? '' : 'transform rotate-180'}`} onClick={toggleSidebarE}>
               <Icon icon={v.iconoFlechaDerecha} />
             </div>
           </div>
@@ -48,7 +46,7 @@ function NavbarHeaderEmpleado({ toggleSidebar, sidebarAbierto }) {
           <div className="w-1/5 ">
             <div className='items-center flex content-center'>
               {/* Utiliza Link para redirigir a la nueva vista al hacer clic en el icono de perfil */}
-              <Link to="/Perfil" className="flex items-center">
+              <Link to="/PerfilEmpleado" className="flex items-center">
                 <Icon icon={v.iconoPerfilUsuario} />
                 <div>
                   <h2 className="text-custom-white ml-3 font-bold">{user?.nombre}</h2>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './VistasCss.css';
-import Header from '../organismos/Header/Header';
 import v from '../../styles/variables';
 import Icon from '../atomos/Sidebar/IconosSidebar';
 import { useNavigate } from 'react-router-dom';
@@ -10,22 +9,21 @@ import AccionesModal from '../organismos/ModalAcciones';
 import PerfilModal from '../templates/PerfilModal';
 import { Tooltip } from "@nextui-org/react";
 import axiosClient from '../axiosClient';
+import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
 
 
 const PerfilEmpleado = () => {
-  const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  const [sidebarAbierto, setsidebarAbierto] = useState(false);
   const [perfil, setPerfil] = useState(null);
-  const [finca, setFinca] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAcciones, setModalAcciones] = useState(false);
   const [initialData, setInitialData] = useState(null);
   const [mensaje, setMensaje] = useState('');
   const [mode, setMode] = useState('create');
   const identificacion = perfil?.identificacion;
-  const [usuarios, setUsuarios] = useState(null);
 
   const toggleSidebar = () => {
-    setSidebarAbierto(!sidebarAbierto);
+    setsidebarAbierto(!sidebarAbierto);
   };
 
   const navigate = useNavigate();
@@ -88,7 +86,7 @@ const PerfilEmpleado = () => {
 
   return (
     <div className={`contenido pt-5 ${sidebarAbierto ? 'contenido-extendido' : ''}`} style={{ backgroundImage: `url(${v.Image5})`, height: 'auto', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
-      <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+      <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
       {perfil && (
         <div className='my-20 h-full flex justify-center'> {/* cambiar tamaño de la imagen */}
           <div className='bg-white rounded-2xl' style={{ height: '450px', width: '450px' }}>
