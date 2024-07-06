@@ -1,20 +1,33 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import Header from '../organismos/Header/Header';
+import axiosClient from '../axiosClient';
 import './VistasCss.css';
 
 const Graficas = () => {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  const historiaRef = useRef(null);
+  const [totalPrecio, setTotalPrecio] = useState(null);
 
-  const toggleSidebar = () => {
-    setSidebarAbierto(!sidebarAbierto);
+
+  useEffect(() => {
+  const ObtenerDatos = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const getURL = "http://localhost:3000/sumarProduccion";
+      const response = await axiosClient.get(getURL, { headers: { token: token } });
+      console.log(response.data);
+      setTotalPrecio(response.data.data);
+    } catch (error) {
+      console.error("Error al obtener la información", error.response ? error.response.data : error.message);
+    }
   };
+    ObtenerDatos();
+  }, []);
 
   const dataset = {
     source: [
       ['product', '2020', '2021', '2022'],
-      ['Yamboro', 10000, 40000, 123110],
+      ['sumarProduccion.finca', 10000, 40000, 123110],
       ['Brusuelas', 50000, 70000, 120000],
       ['RuizSeñor', 20000, 900000, 54000],
       ['sinai', 73000, 500000, 39000]

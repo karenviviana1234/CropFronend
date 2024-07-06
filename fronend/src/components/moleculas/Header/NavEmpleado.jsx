@@ -3,12 +3,12 @@ import { Link, useLocation } from 'react-router-dom'; // Importar Link y useLoca
 import Icon from '../../atomos/Navbar/IconosNavbar';
 import v from '../../../styles/variables';
 
-function NavbarHeaderEmpleado({ toggleSidebarE, sidebarAbiertoE }) {
+function NavbarHeaderEmpleado({ toggleSidebar, sidebarAbierto}) {
   const [user, setUser] = useState(null);
   const location = useLocation();
   const vistaActual = location.pathname.split('/').filter(Boolean).pop() || 'Inicio'; // Obtener el último segmento de la ruta como nombre de la vista actual
 
-  const navbarWidth = sidebarAbiertoE ? 'calc(100% - 220px)' : 'calc(100% - 60px)'; // Ajustar el ancho del navbar según el estado del sidebar
+  const navbarWidth = sidebarAbierto ? 'calc(100% - 220px)' : 'calc(100% - 60px)'; // Ajustar el ancho del navbar según el estado del sidebar
 
   useEffect(() => {
     const getUserFromLocalStorage = () => {
@@ -33,10 +33,10 @@ function NavbarHeaderEmpleado({ toggleSidebarE, sidebarAbiertoE }) {
 
   return (
     <>
-      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbiertoE ? '' : '', width: navbarWidth, zIndex: 100 }}>
+      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '', width: navbarWidth, zIndex: 100 }}>
         <div className="mt-1 flex items-center justify-between">
           <div className="w-1/7 text-left">
-            <div className={`text-custom-white relative z-1 ${sidebarAbiertoE ? '' : 'transform rotate-180'}`} onClick={toggleSidebarE}>
+            <div className={`text-custom-white relative z-1 ${sidebarAbierto ? '' : 'transform rotate-180'}`} onClick={toggleSidebar}>
               <Icon icon={v.iconoFlechaDerecha} />
             </div>
           </div>
