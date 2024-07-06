@@ -2,10 +2,12 @@ import React, { useState, useRef } from 'react';
 import Header from '../organismos/Header/Header';
 import v from '../../styles/variables';
 import './VistasCss.css';
+import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
 
 function Dashboard() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const historiaRef = useRef(null);
+  const [userRole, setUserRole] = useState('empleado');
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
@@ -17,7 +19,11 @@ function Dashboard() {
 
   return (
     <div className={`contenidos : '60px' ${sidebarAbierto ? 'contenido-extendidos' : ''}`}>
+    {userRole === 'empleado' ? (
+      <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+    ) : (
       <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+    )}
       <div className='bg-cover bg-center' style={{ backgroundImage: `url(${v.Image1})`, height: '800px',  backgroundRepeat: 'no-repeat' }}>
         <div className='flex items-center'>
           <div className='ml-28'>
