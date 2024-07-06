@@ -55,7 +55,7 @@ return (
         )}
         <button
           type="submit"
-          className="w-full bg-green-700 text-white font-medium py-2 px-4 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50"
+          className="w-full bg-green text-white font-medium py-2 px-4 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50"
         >
           Cambiar contraseña
         </button>
