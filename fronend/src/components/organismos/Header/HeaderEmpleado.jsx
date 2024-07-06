@@ -10,7 +10,6 @@ function HeaderEmpleado({ toggleSidebar, sidebarAbierto }) {
     <>
       <NavbarHeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
       {sidebarAbierto ? <SidebarOriginEmpleado /> : <SidebarEmple />}
-      <PerfilEmpleado/>
     </>
   );
 }

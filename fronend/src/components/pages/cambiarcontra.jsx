@@ -30,10 +30,7 @@ return (
     <div className="flex flex-col bg-white border-1 border-green-700 rounded-lg p-8 w-full max-w-md md:mr-4">
         
       <h2 className="text-2xl font-bold mb-4">Cambiar contraseña</h2>
-      <div className=" mt-4 md:mt-0 md:ml-4">
-        <img src={v.imageLogo} alt="img"
-          className="w-full md:w-60 h-50 ml-5  object-cover"        />
-      </div>
+      
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-medium mb-1">Nueva contraseña:</label>

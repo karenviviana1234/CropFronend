@@ -23,12 +23,7 @@ const Recuperarcontra = () => {
     <div className="flex flex-col md:flex-row justify-center items-center h-screen">
     <div className="flex flex-col bg-white border-1 border-green-700 rounded-lg p-8 w-full max-w-md md:mr-4">
         <h2 className="text-2xl font-bold mb-5">Recuperar contraseña</h2>
-        <div className="relative mt-4 md:mt-0 md:ml-4">
-        <img
-          src={v.imageLogo}
-          alt="img"
-          className="w-full md:w-60 h-50 ml-5  object-cover"        />
-      </div>
+        
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-medium mb-2">Correo electrónico:</label>
@@ -53,7 +48,7 @@ const Recuperarcontra = () => {
           )}
           <button
             type="submit"
-            className="w-full bg-green-700 text-white font-medium py-2 px-4 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50"
+            className="w-full bg-green text-white font-medium py-2 px-4 rounded-md hover:bg-green-500 focus:outline-none focus:ring focus:ring-green-500 focus:ring-opacity-50"
           >
             Enviar
           </button>
