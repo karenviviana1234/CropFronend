@@ -2,131 +2,134 @@ import React, { useState } from 'react'
 import v from '../../../../styles/variables';
 import Icon from '../../../atomos/Sidebar/IconosSidebar';
 import Image from '../../../atomos/Logo';
-import {Tooltip} from "@nextui-org/react"
+import { Tooltip } from "@nextui-org/react"
 
 function Sidebar() {
-   
-   const [bgColor, setBgColor] = useState('green');
+
+  const [bgColor, setBgColor] = useState('green');
   return (
-    <div className={`bg-${bgColor} text-custom-white fixed top-0 left-0`} style={{ width: '60px', height: '100vh',position: 'fixed', overflowY: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none', transition: 'width 0.6s' }} >
-      <div className='mt-5' style={{'justifyContent': 'center', 'display': 'flex'}}>
-          <Image style={{ width: '50px', height: '50px', marginLeft: '10px'}}/>
-          </div>
-        <ul className="mavbar mt-5">
+    <div className={`bg-${bgColor} text-custom-white fixed top-0 left-0`} style={{ width: '60px', height: '100vh', position: 'fixed', overflowY: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none', transition: 'width 0.6s' }} >
+      <div className='mt-5' style={{ 'justifyContent': 'center', 'display': 'flex' }}>
+        <Image style={{ width: '50px', height: '50px', marginLeft: '10px' }} />
+      </div>
+
+      <ul className="mavbar mt-5">
+        
         <Tooltip content="Inicio">
           <li className={`rounded-full ml-3 mr-3 flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Inicio"> <Icon  icon={v.iconoInicio} />
-</a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Inicio"> <Icon icon={v.iconoInicio} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Empleados">
+        <Tooltip content="Empleados">
           <li className={`rounded-full ml-3 mr-3 flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Usuario"> 
-             <Icon  icon={v.iconoUsuarios} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Usuario">
+              <Icon icon={v.iconoUsuarios} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Programación">
+        <Tooltip content="Finca">
           <li className={`rounded-full ml-3 mr-3 flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Asignacion"> 
-             <Icon  icon={v.iconoProgramacion} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Finca">
+              <Icon icon={v.iconoFinca} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Actividad">
+        <Tooltip content="Variedad">
+          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Variedad">
+              <Icon icon={v.iconoVariedad} />
+            </a>
+          </li>
+        </Tooltip>
+
+        <Tooltip content="Recursos">
+          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Recursos">
+              <Icon icon={v.iconoTractor} />
+            </a>
+          </li>
+        </Tooltip>
+        
+        <Tooltip content="Actividad">
           <li className={`rounded-full ml-3 mr-3 flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Actividad"> 
-             <Icon  icon={v.iconoActividad} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Actividad">
+              <Icon icon={v.iconoActividad} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
+        
+        <Tooltip content="Lote">
+          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Lote">
+              <Icon icon={v.iconoLote} />
+            </a>
+          </li>
+        </Tooltip>
 
-          <Tooltip content="Finca">
+        <Tooltip content="Asignación">
           <li className={`rounded-full ml-3 mr-3 flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Finca"> 
-             <Icon  icon={v.iconoFinca} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Asignacion">
+              <Icon icon={v.iconoProgramacion} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Lote">
+    
+
+        <Tooltip content="Cultivo">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Lote"> 
-             <Icon  icon={v.iconoLote} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Cultivos">
+              <Icon icon={v.iconoCultivo} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Cultivo">
+        <Tooltip content="Producción">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Cultivos"> 
-             <Icon  icon={v.iconoCultivo} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Produccion">
+              <Icon icon={v.iconoProduccion} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Variedad">
+        <Tooltip content="Costos">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Variedad"> 
-             <Icon  icon={v.iconoVariedad} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="Costos">
+              <Icon icon={v.iconoCostos} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-         
 
-          <Tooltip content="Producción">
-           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Produccion"> 
-             <Icon  icon={v.iconoProduccion} />
-             </a>
-          </li> 
-          </Tooltip>
-
-          <Tooltip content="Costos">
+        <Tooltip content="Estadísticas">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="Costos"> 
-             <Icon  icon={v.iconoCostos} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Graficas">
+              <Icon icon={v.iconoGrafica} />
+            </a>
           </li>
-          </Tooltip>
-          
-          <Tooltip content="Recursos">
-          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Recursos"> 
-             <Icon  icon={v.iconoTractor} /> 
-             </a>
-          </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Estadísticas">
+        <Tooltip content="Soporte">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Graficas"> 
-             <Icon  icon={v.iconoGrafica} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Soporte">
+              <Icon icon={v.iconoSoporte} />
+            </a>
           </li>
-          </Tooltip>
+        </Tooltip>
 
-          <Tooltip content="Soporte">
+        <Tooltip content="Mapa">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Soporte"> 
-             <Icon  icon={v.iconoSoporte} />
-             </a>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/mapa">
+              <Icon icon={v.iconoMapa} />
+            </a>
           </li>
-          </Tooltip>
-
-         <Tooltip content="Mapa">
-          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-               <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/mapa"> 
-             <Icon  icon={v.iconoMapa} />
-             </a>
-          </li>
-          </Tooltip> 
-        </ul>
-  </div>
+        </Tooltip>
+      </ul>
+    </div>
   )
 }
 
