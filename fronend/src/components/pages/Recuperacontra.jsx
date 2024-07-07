@@ -4,19 +4,18 @@ import v from '../../styles/variables';
 
 const Recuperarcontra = () => {
   const [correo, setCorreo] = useState('');
-  const [identificacion, setIdentificacion] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!correo || !identificacion) {
-      setError('Por favor, ingrese su correo y su identificacionentificación.');
+    if (!correo) {
+      setError('Por favor, ingrese su correo.');
       return;
     }
 
-    navigate('/cambia', { state: { correo, identificacion } });
+    navigate('/cambia', { state: { correo } });
   };
 
   return (
@@ -34,15 +33,7 @@ const Recuperarcontra = () => {
               className="w-full border border-gray-700 rounded-md focus:border-green-700  p-2"
               />
           </div>
-          <div>
-            <label className="block font-medium mb-2">Identificación:</label>
-            <input
-              type="text"
-              value={identificacion}
-              onChange={(e) => setIdentificacion(e.target.value)}
-              className="w-full border border-gray-700 rounded-md focus:border-green-700  p-2"
-              />
-          </div>
+      
           {error && (
             <div className="text-red-500 font-medium">{error}</div>
           )}
