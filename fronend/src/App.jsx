@@ -1,12 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import InicioF from "./components/pages/Inicio.jsx";
 import { InicioSesion } from "./components/pages/InicarSesion.jsx";
 import Registro from "./components/pages/Registro.jsx";
 // import ProtectedRoute from "./ProtectedRoute.jsx";
 // import NotFoundPage from "./components/pages/NotFoundPage .jsx";
 import GlobalProvider from "./context/GlobalContext.jsx";
 
-import { Actividad } from './components/pages/Actividad.jsx'
+import { Actividades } from "./components/pages/Actividad.jsx";
 import { Costos } from './components/pages/Costos.jsx'
 import { Cultivos } from "./components/pages/Cultivos.jsx";
 import { Fincas } from "./components/pages/Fincass.jsx";
@@ -27,6 +26,7 @@ import Graficas from './components/pages/Graficas.jsx'
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import PerfilEmpleado from "./components/pages/PerfilEmpleado.jsx";
 import SoporteEmpleado from "./components/pages/SoporteEmpleado.jsx";
+import FondoInicio from "./components/organismos/FondoInicio.jsx";
 
 
 const stored = localStorage.getItem('user')
@@ -40,7 +40,7 @@ function App() {
         {/*   <Sidebar /> */}
         <Routes>
 
-          <Route path="/" element={<InicioF />} />
+          <Route path="/" element={<FondoInicio />} />
           <Route path="/iniciosesion" element={<InicioSesion />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/cambia" element={<CambiarContra />} />
@@ -58,7 +58,7 @@ function App() {
               <Route path="/soporte" element={<Soporte />} />
       
                 <Route path="/Usuario" element={<Usuarios />} />
-                <Route path="/Actividad" element={<Actividad />} />
+                <Route path="/Actividad" element={<Actividades />} />
                 <Route path="/Costos" element={<Costos />} />
                 <Route path="/Cultivos" element={<Cultivos />} />
                 <Route path="/Finca" element={<Fincas />} />

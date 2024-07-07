@@ -2,11 +2,8 @@ import React, { useState, useRef } from 'react';
 import v from '../../styles/variables';
 import './VistasCss.css';
 import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
-<<<<<<< HEAD
-=======
-import v from '../../styles/variables'
+
 //import './VistasCss.css'
->>>>>>> devdfg
 
 function Dashboard() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
