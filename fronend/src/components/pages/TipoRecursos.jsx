@@ -185,7 +185,7 @@ export function TipoRecursos() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="cursor-pointer text-small text-slate-700" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -205,14 +205,14 @@ export function TipoRecursos() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] cursor-pointer" style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-default-400 text-small">Total {tipoRecursos.length} Resultados</span>
-                            <label className="flex items-center text-default-400 mr-30 text-small">
+                            <label className="flex items-center text-default-400 text-small">
                                 Columnas por página:
                                 <select
                                     className="bg-transparent outline-none text-default-400 text-small"
@@ -248,10 +248,10 @@ export function TipoRecursos() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="cursor-pointer text-slate-50" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className=" cursor-pointer text-slate-50 mr-50" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-50" variant="ghost" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -466,10 +466,9 @@ export function TipoRecursos() {
     }
     return (
         <>
+            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-
 
                 <AccionesModal
                     isOpen={modalAcciones}

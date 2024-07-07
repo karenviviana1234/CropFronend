@@ -204,7 +204,11 @@ export function Fincas() {
                     ))}
                   </DropdownMenu>
                 </Dropdown>
+<<<<<<< HEAD
                 <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+=======
+                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+>>>>>>> devdfg
                   Registrar
                 </Button>
               </div>
@@ -468,10 +472,13 @@ export function Fincas() {
 
 
     <>
-       
+        <div className='w-full max-w-[90%] ml-28 items-center p-10'>
         <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+<<<<<<< HEAD
             <div className='w-full max-w-[90%] ml-32 items-center p-10'>
+=======
+>>>>>>> devdfg
 
             <AccionesModal
                 isOpen={modalAcciones}
