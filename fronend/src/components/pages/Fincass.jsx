@@ -204,7 +204,7 @@ export function Fincas() {
                     ))}
                   </DropdownMenu>
                 </Dropdown>
-                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                   Registrar
                 </Button>
               </div>
@@ -371,6 +371,7 @@ export function Fincas() {
     }
 ];
 
+//ua
   //PETICION PARA DESACTIVAR FINCAS    
   const peticionDesactivar = async (id_finca) => {
 
@@ -423,7 +424,7 @@ export function Fincas() {
             Swal.fire({
               position: "center", // Posición centrada
               icon: "success",
-              title: "Lote registrado con éxito",
+              title: "Finca registrado con éxito",
               showConfirmButton: false,
               timer: 1500
             });
@@ -465,11 +466,13 @@ export function Fincas() {
 }
 
   return (
-        <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+
+
+    <>
+       
         <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
             <div className='w-full max-w-[90%] ml-32 items-center p-10'>
-
 
             <AccionesModal
                 isOpen={modalAcciones}
@@ -491,6 +494,6 @@ export function Fincas() {
             />
         </div>
         </div>
-        </div>
+    </>
 )
 }

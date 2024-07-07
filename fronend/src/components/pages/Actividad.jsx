@@ -29,7 +29,7 @@ import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx";
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx";
 
-export function Actividades() {
+export function Actividad() {
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
@@ -203,7 +203,7 @@ export function Actividades() {
 
                                 <Dropdown>
                                     <DropdownTrigger className="hidden sm:flex mr-2  text-black bg-[#f4f4f5]">
-                                        <Button endContent={<ChevronDownIcon className="text-small text-slate-700" />} variant="flat">
+                                        <Button endContent={<ChevronDownIcon className="text-small text-black cursor-pointer" />} variant="shadow">
                                             Estado
                                         </Button>
                                     </DropdownTrigger>
@@ -223,19 +223,19 @@ export function Actividades() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className="z-1 mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
                         </div>
                         <div className="flex items-center justify-between">
-                            <span className="text-default-400 text-small">
+                            <span className="text-white text-small">
                                 Total {actividades.length} actividad
                             </span>
-                            <label className="flex items-center text-default-400 text-small">
+                            <label className="flex items-center text-white text-small">
                                 Columnas por página:
                                 <select
-                                    className="bg-transparent outline-none text-default-400 text-small"
+                                    className="bg-transparent outline-none text-white text-small"
                                     onChange={onRowsPerPageChange}
                                 >
                                     <option value="15">15</option>
@@ -261,10 +261,10 @@ export function Actividades() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2 ">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                        <Button isDisabled={pages === 1} size="md" variant="shadow" className="cursor-pointer text-black" onPress={onPreviousPage}>
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button isDisabled={pages === 1} size="md" className="cursor-pointer text-black mr-58" variant="shadow" onPress={onNextPage}>
                             Siguiente
                         </Button>
                     </div>
@@ -546,9 +546,10 @@ export function Actividades() {
     return (
 
         <>
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
             <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+
                 <AccionesModal
                     isOpen={modalAcciones}
                     onClose={() => setModalAcciones(false)}

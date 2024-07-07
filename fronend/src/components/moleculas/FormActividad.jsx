@@ -4,8 +4,6 @@ import Select from 'react-select';
 import axiosClient from '../axiosClient';
 import ActividadesContext from './../../context/ActividadContext';
 
-// hoka
-
 export const FormActividad = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
   const [variedades, setVariedades] = useState([]);
   const [tipo_recursos, setTipo_Recursos] = useState([]);
@@ -53,9 +51,12 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
       setObservaciones(idActividad.observaciones || '');
       setValorActividad(idActividad.valor_actividad || '');
       setVariedadFK(idActividad.fk_id_variedad || '');
-      if (idActividad.fk_id_tipo_recursos) {
-        setTipoRecursosFK(idActividad.fk_id_tipo_recursos.split(','));
-      }
+
+      axiosClient.get(`/actividad/${idActividad.id_actividad}/tipo_recursos`)
+        .then((response) => {
+          setTipoRecursosFK(response.data);
+        });
+
       setEstadoOp(idActividad.estado || '');
     }
   }, [mode, idActividad]);
@@ -67,7 +68,7 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
         nombre_actividad: nombreActividad,
         tiempo: tiempo,
         observaciones: observaciones,
-        valor_actividad: valorActividad,
+        valor_actividad: valorActividad.replace(/\./g, ''), // Eliminar puntos antes de enviar al backend
         fk_id_variedad: variedadFK,
         fk_id_tipo_recursos: tipoRecursosFK, // Deja como array
         estado: estadoOp,
@@ -81,6 +82,15 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
 
   const handleRecursosChange = (selectedOptions) => {
     setTipoRecursosFK(selectedOptions ? selectedOptions.map(option => option.value) : []);
+  };
+
+  const formatearNumero = (valor) => {
+    return valor.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  };
+
+  const handleValorActividadChange = (e) => {
+    const valorFormateado = formatearNumero(e.target.value);
+    setValorActividad(valorFormateado);
   };
 
   const customStyles = {
@@ -153,13 +163,13 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
           <div className='py-2'>
             <Input
               className='w-80'
-              type="number"
+              type="text" // Cambiado a 'text' para permitir el formateo
               label='Valor Actividad'
               id='valor_actividad'
               name="valor_actividad"
               placeholder='Ingrese el valor de la actividad'
               value={valorActividad}
-              onChange={(e) => setValorActividad(e.target.value)}
+              onChange={handleValorActividadChange}
               required
               min="0"
               title="El valor de la actividad debe ser un número positivo"
@@ -185,20 +195,20 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
           </div>
 
           <div className='py-2'>
-            <Select
-              className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
-              label='Tipo de Recursos'
-              id='fk_id_tipo_recursos'
-              name='fk_id_tipo_recursos'
-              value={tipo_recursos.filter(tipo_recurso => tipoRecursosFK.includes(tipo_recurso.id_tipo_recursos)).map(tipo_recurso => ({ value: tipo_recurso.id_tipo_recursos, label: tipo_recurso.nombre_recursos }))}
-              isMulti
-              onChange={handleRecursosChange}
-              options={tipo_recursos.map(tipo_recurso => ({ value: tipo_recurso.id_tipo_recursos, label: tipo_recurso.nombre_recursos }))}
-              placeholder='Seleccionar Recurso'
-              required
-              styles={customStyles}
-            />
-          </div>
+        <Select
+          className="pl-2 pr-4 py-2 w-[320px] h-14 text-sm border-2 rounded-xl border-gray-200 hover:border-gray-400 shadow-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+          label='Tipo de Recursos'
+          id='fk_id_tipo_recursos'
+          name='fk_id_tipo_recursos'
+          value={tipo_recursos.filter(tipo_recurso => tipoRecursosFK.includes(tipo_recurso.id_tipo_recursos)).map(tipo_recurso => ({ value: tipo_recurso.id_tipo_recursos, label: tipo_recurso.nombre_recursos }))}
+          isMulti
+          onChange={handleRecursosChange}
+          options={tipo_recursos.map(tipo_recurso => ({ value: tipo_recurso.id_tipo_recursos, label: tipo_recurso.nombre_recursos }))}
+          placeholder='Seleccionar Recurso'
+          required
+          styles={customStyles}
+        />
+      </div>
 
           <div className='py-2'>
             <select

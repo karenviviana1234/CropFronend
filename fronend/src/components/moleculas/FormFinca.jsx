@@ -48,38 +48,39 @@ const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
           title="El nombre de la finca debe tener máximo 20 caracteres, y solo puede contener letras y espacios"
         />
       </div>
-        <div className='py-2'>
-          <Input
-            className="w-80"
-            type="number"
-            label='Ingrese la longitud'
-            id='longitud'
-            name="longitud"
-            value={longitud}
-            onChange={(e) => setLongitud(e.target.value)}
-            required
-            min="-180"
-            max="180"
-            step="any"
-            title="La longitud debe ser un número válido entre -180 y 180"
-          />
-        </div>
-        <div className='py-2'>
-          <Input
-            className='w-80'
-            type="number"
-            label='Ingrese la latitud'
-            id='latitud'
-            name="latitud"
-            value={latitud}
-            onChange={(e) => setLatitud(e.target.value)}
-            required
-            min="-190"
-            max="190"
-            step="any"
-            title="La latitud debe ser un número válido entre -190 y 190"
-          />
-        </div>
+      <div className='py-2'>
+  <Input
+    className="w-80"
+    type="number"
+    label='Ingrese la longitud'
+    id='longitud'
+    name="longitud"
+    value={longitud}
+    onChange={(e) => setLongitud(e.target.value)}
+    required
+    min="-79.03" // Mínimo valor de longitud válido en Colombia
+    max="-66.85" // Máximo valor de longitud válido en Colombia
+    step="any"
+    title="La longitud debe ser un número válido entre -79.03 y -66.85 para ubicaciones en Colombia"
+  />
+</div>
+<div className='py-2'>
+  <Input
+    className='w-80'
+    type="number"
+    label='Ingrese la latitud'
+    id='latitud'
+    name="latitud"
+    value={latitud}
+    onChange={(e) => setLatitud(e.target.value)}
+    required
+    min="4.22" // Mínimo valor de latitud válido en Colombia
+    max="12.45" // Máximo valor de latitud válido en Colombia
+    step="any"
+    title="La latitud debe ser un número válido entre 4.22 y 12.45 para ubicaciones en Colombia"
+  />
+</div>
+
         <ModalFooter>
           <Button
             color='danger'
