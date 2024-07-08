@@ -12,10 +12,15 @@ import Footer from '../organismos/Footer.jsx'
 
 
 export const Registro = () => {
+
+  //useState se usa para gestionar el estado de los campos del formulario.
   const navigate = useNavigate()
+  //mensaje para mostrar mensajes de éxito o error.
   const [mensaje, setMensaje] = useState('')
+//modalAcciones para controlar la visibilidad del modal.
   const [modalAcciones, setModalAcciones] = useState(false)
 
+  // datos almacenados en el formulario, se guardan
   const [formData, setFormData] = useState({
     identificacion: '',
     nombre: '',
@@ -25,6 +30,7 @@ export const Registro = () => {
     rol: 'administrador',
   });
 
+//handleChange actualiza el estado formData cuando el usuario cambia los valores del formulario.
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -32,6 +38,8 @@ export const Registro = () => {
     });
   };
 
+//handleSubmit envía los datos del formulario a la API 
+//para registrar un nuevo usuario y muestra un mensaje de éxito o error.
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -44,8 +52,9 @@ export const Registro = () => {
       console.error('Error al procesar la solicitud:', error);
     }
   };
+  //isVisible para controlar la visibilidad de la contraseña.
   const [isVisible, setIsVisible] = React.useState(false);
-
+//toggleVisibility alterna la visibilidad de la contraseña entre texto y puntos.
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
@@ -151,10 +160,10 @@ export const Registro = () => {
               </button>
             </form>
           </div>
-
           <div className='relative'>
             <img src={v.image10} className='w-[500px] h-full hidden rounded-r-2xl md:block object-cover' />
           </div>
+          
           <AccionesModal
             isOpen={modalAcciones}
             onClose={() => setModalAcciones(false)}
@@ -166,6 +175,8 @@ export const Registro = () => {
         <Footer />
       </div>
     </div>
+    //Se muestra un modal de acciones (AccionesModal) cuando el registro es exitoso.
+//Se incluye un pie de página (Footer).
   )
 }
 

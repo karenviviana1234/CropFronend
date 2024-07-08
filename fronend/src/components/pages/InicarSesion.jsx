@@ -12,29 +12,37 @@ import Swal from 'sweetalert2';
 import Footer from '../organismos/Footer.jsx'
 
 export const InicioSesion = () => {
+    //useState se usa para gestionar el estado de los campos del formulario.
+    //mensaje para mostrar mensajes de éxito o error.
   const [mensaje, setMensaje] = useState('')
+  //modalAcciones para controlar la visibilidad del modal.
   const [modalAcciones, setModalAcciones] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
+
+  //url enviada desde el backend
   const baseURL = "http://localhost:3000/validacion"
 
+  //datos del formulario
   const correo = useRef(null)
   const password = useRef(null)
+  //navegacion para poder pasar a otra vista 
   const navigate = useNavigate()
-
+//handleSubmit envía los datos del formulario a la API
+// para registrar un nuevo usuario y muestra un mensaje de éxito o error.
   const handleSubmit = (e) => {
     e.preventDefault()
 
     try {
       const emailValue = correo.current.value
       const passwordValue = password.current.value
-
+//verificacion para que los input esten llenos 
       if (!emailValue || !passwordValue) {
         setMensaje('Los campos son obligatorios')
         setModalAcciones(true)
         return
       }
-
+//datos del formulario
       const data = {
         correo: emailValue,
         password: passwordValue
@@ -42,7 +50,7 @@ export const InicioSesion = () => {
 
       axios.post(baseURL, data).then((response) => {
         console.log(response)
-
+//condicional que envia un estado, envia el token y el usuario a la consola
         if (response.status === 200) {
           const { token, user } = response.data
           localStorage.setItem('token', token)
@@ -50,7 +58,7 @@ export const InicioSesion = () => {
           console.log(response.data.user[0])
 
           const userRol = user[0]?.rol
-
+//condicional para separar los roles
           if (userRol === 'empleado') {
             setMensaje('Bienvenido empleado')
             setModalAcciones(true)
@@ -61,7 +69,7 @@ export const InicioSesion = () => {
             setModalOpen(false)
             navigate('/Inicio')
 
-          }
+          }//condicionales que verifican si hay algo mal
         } else {
           console.log('Response', response)
           setMensaje('Credenciales incorrectas')
@@ -73,8 +81,10 @@ export const InicioSesion = () => {
       alert('Error del servidor' + error)
     }
   }
-  const [isVisible, setIsVisible] = React.useState(false);
 
+  //isVisible para controlar la visibilidad de la contraseña.
+  const [isVisible, setIsVisible] = React.useState(false);
+//toggleVisibility alterna la visibilidad de la contraseña entre texto y puntos.
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
@@ -156,5 +166,7 @@ export const InicioSesion = () => {
         <Footer />
       </div>
     </div>
+//Se muestra un modal de acciones (AccionesModal) cuando el registro es exitoso.
+//Se incluye un pie de página (Footer).
   )
 }
