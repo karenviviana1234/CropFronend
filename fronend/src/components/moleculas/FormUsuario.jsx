@@ -5,22 +5,24 @@ import { EyeFilledIcon } from "../NextUI/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../NextUI/EyeSlashFilledIcon";
 
 export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
-
+//useRef se usa para acceder a los elementos del formulario.
   const identificacionRef = useRef(null);
   const nombreRef = useRef(null);
   const apellidoRef = useRef(null);
   const correoRef = useRef(null);
   const passwordRef = useRef(null);
   const rolRef = useRef([]);
-
+//useState se usa para gestionar el estado de los campos del formulario.
   const [identificacion, setIdentificacion] = useState('');
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [rol, setRol] = useState('Empleado');
+  //useContext se usa para acceder al contexto del usuario.
   const { idUsuario } = useContext(UsuarioContext);
 
+  //useEffect:Se utiliza para inicializar el formulario con los datos del usuario si el modo es 'update' y hay un usuario seleccionado. Si el modo es 'create', se inicializan los campos en blanco.
   useEffect(() => {
     if (mode === 'update' && idUsuario) {
       setIdentificacion(idUsuario.identificacion);
@@ -39,6 +41,7 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
     }
   }, [mode, idUsuario]);
 
+  //handleFormSubmit: Se encarga de manejar el envío del formulario. Recolecta los datos del formulario y los pasa a la función handleSubmit.
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -56,8 +59,9 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
       alert('Hay un error en el sistema ' + error);
     }
   };
-
+//isVisible controla si la contraseña es visible o no.
   const [isVisible, setIsVisible] = useState(false);
+//toggleVisibility cambia el estado de visibilidad de la contraseña.
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 

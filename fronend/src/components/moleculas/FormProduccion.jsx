@@ -4,13 +4,15 @@ import { ModalFooter, Button, Input } from "@nextui-org/react";
 import ProduccionContext from '../../context/ProduccionContext.jsx';
 
 export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actionLabel }) => {
+  //useState se usa para gestionar el estado de los campos del formulario.
+
   const [programaciones, setProgramacion] = useState([]);
 
   const [cantidad_produccion, setcantidad_produccion] = useState('');
   const [precio, setPrecio] = useState('');
   
   const [programacionFk, setProgramacionFk] = useState('');
-
+  //useContext se usa para acceder al contexto de produccion
   const { idProduccion } = useContext(ProduccionContext);
 
   useEffect(() => {
@@ -39,6 +41,7 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
     }
   }, [mode, idProduccion]);
 
+   //useEffect:Se utiliza para inicializar el formulario con los datos del produccion si el modo es 'update' y hay una produccion seleccionado.
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {

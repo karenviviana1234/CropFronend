@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import UsuarioContext from '../../context/UsuariosContext.jsx';
 
-
+//importanciones que se necesitan en la tabla de nextui
 import {
     Table,
     TableHeader,
@@ -23,6 +23,7 @@ import {
     Chip,
     Pagination,
 } from "@nextui-org/react";
+//importaciones de nextui
 import { PlusIcon } from "./../NextUI/PlusIcon.jsx";
 import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
@@ -31,7 +32,7 @@ import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
 import Header from '../organismos/Header/Header.jsx';
 
 export function Usuarios() {
-
+//estados que se utililzan
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
@@ -40,6 +41,7 @@ export function Usuarios() {
 
     function EjemploUsuario() {
 
+        //page se utilizan para gestionar el estado de la búsqueda, filtrado, selección y paginación.
         const [filterValue, setFilterValue] = React.useState("");
         const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
         const [statusFilter, setStatusFilter] = React.useState("all");
@@ -56,6 +58,7 @@ export function Usuarios() {
         ];
 
         const hasSearchFilter = Boolean(filterValue);
+        //filteredItems filtra los usuarios según el valor de búsqueda y el filtro de estado
         const filteredItems = React.useMemo(() => {
             let filteredusuarios = usuarios;
 
@@ -86,7 +89,7 @@ export function Usuarios() {
 
             return filteredItems.slice(start, end);
         }, [page, filteredItems, rowsPerPage]);
-
+//sortedItems ordena los elementos según la columna seleccionada.
         const sortedItems = React.useMemo(() => {
             return [...items].sort((a, b) => {
                 const first = a[sortDescriptor.column];
@@ -96,7 +99,7 @@ export function Usuarios() {
                 return sortDescriptor.direction === "descending" ? -cmp : cmp;
             });
         }, [sortDescriptor, items]);
-
+//Renderización de Celdas: renderCell define cómo se renderizan las celdas, incluyendo los botones de actualización y desactivación.
         const renderCell = React.useCallback((usuario, columnKey) => {
             const cellValue = usuario[columnKey];
 
@@ -133,7 +136,8 @@ export function Usuarios() {
                     return cellValue;
             }
         }, []);
-
+//Gestión de Paginación: onNextPage, onPreviousPage, onRowsPerPageChange gestionan el cambio de página y 
+//la cantidad de filas por página.
         const onNextPage = React.useCallback(() => {
             if (page < pages) {
                 setPage(page + 1);
@@ -168,7 +172,7 @@ export function Usuarios() {
         const onStatusFilter = (selectedKeys) => {
             setStatusFilter(selectedKeys)
         }
-
+//Contenido Superior e Inferior: topContent y bottomContent definen la interfaz para la búsqueda, filtrado, y paginación.
         const topContent = React.useMemo(() => {
             return (
                 <>
@@ -238,7 +242,7 @@ export function Usuarios() {
             hasSearchFilter,
         ]);
 
-
+//aqui se ve la paginacioon y los btones de anterior y siguiente
         const bottomContent = React.useMemo(() => {
             return (
                 <div className="py-2 px-2 flex justify-between items-center m-3">
@@ -319,7 +323,8 @@ export function Usuarios() {
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
     };
-
+//Peticiones HTTP: peticionGet obtiene los usuarios del servidor.
+//Carga los usuarios al montar el componente.
     useEffect(() => {
         peticionGet()
     }, []);
@@ -334,7 +339,7 @@ export function Usuarios() {
             console.log('Error en el servidor ' + error)
         }
     };
-
+//datos de la tabla
     const data = [
         {
             uid: 'identificacion',
@@ -372,7 +377,7 @@ export function Usuarios() {
             sortable: true
         }
     ];
-
+//Desactivación de Usuarios: peticionDesactivar desactiva a un usuario con una confirmación previa mediante SweetAlert
     const peticionDesactivar = async (identificacion) => {
 
         // console.log("ID del usuarios a desactivar:", identificacion);
@@ -413,6 +418,7 @@ export function Usuarios() {
         console.log('Datos enviados:', formData);
         e.preventDefault()
 
+//Utilza dos modos para registrar y actualizar y tenemos una confirmacion con SweetAlert
         try {
 
             if (mode === 'create') {
@@ -436,7 +442,7 @@ export function Usuarios() {
                     }
                 })
             } else if (mode === 'update') {
-
+//aqui se esta actulizando el usuario
                 await axiosClient.put(`/usuario/actualizarUsuario/${idUsuario.identificacion}`, formData).then((response) => {
                     console.log(response);
                     if (response.status === 200) {

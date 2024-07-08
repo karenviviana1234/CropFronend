@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import ProduccionContext from '../../context/ProduccionContext.jsx';
 
+//importanciones que se necesitan en la tabla de nextui
+
 import {
     Table,
     TableHeader,
@@ -22,6 +24,7 @@ import {
     Chip,
     Pagination,
 } from "@nextui-org/react";
+//importaciones de nextui
 import { PlusIcon } from "./../NextUI/PlusIcon.jsx";
 import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
@@ -30,7 +33,7 @@ import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
 import Header from '../organismos/Header/Header.jsx';
 
 export function Produccion() {
-
+//estados que se utilizan 
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
@@ -39,6 +42,7 @@ export function Produccion() {
 
     function EjemploProduccion() {
 
+        //page se utilizan para gestionar el estado de la búsqueda, filtrado, selección y paginación.
         const [filterValue, setFilterValue] = React.useState("");
         const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
         const [statusFilter, setStatusFilter] = React.useState("all");
@@ -55,6 +59,8 @@ export function Produccion() {
         ];
 
         const hasSearchFilter = Boolean(filterValue);
+                //filteredItems filtra los usuarios según el valor de búsqueda y el filtro de estado
+
         const filteredItems = React.useMemo(() => {
             let filteredproducciones = producciones;
 
@@ -82,6 +88,7 @@ export function Produccion() {
 
             return filteredItems.slice(start, end);
         }, [page, filteredItems, rowsPerPage]);
+//sortedItems ordena los elementos según la columna seleccionada.
 
         const sortedItems = React.useMemo(() => {
             return [...items].sort((a, b) => {
@@ -92,6 +99,7 @@ export function Produccion() {
                 return sortDescriptor.direction === "descending" ? -cmp : cmp;
             });
         }, [sortDescriptor, items]);
+//Renderización de Celdas: renderCell define cómo se renderizan las celdas, incluyendo los botones de actualización y desactivación.
 
         const renderCell = React.useCallback((produccion, columnKey) => {
             const cellValue = produccion[columnKey];
@@ -129,7 +137,8 @@ export function Produccion() {
                     return cellValue;
             }
         }, []);
-
+//Gestión de Paginación: onNextPage, onPreviousPage, onRowsPerPageChange gestionan el cambio de página y 
+//la cantidad de filas por página.
         const onNextPage = React.useCallback(() => {
             if (page < pages) {
                 setPage(page + 1);
@@ -164,6 +173,7 @@ export function Produccion() {
         const onStatusFilter = (selectedKeys) => {
             setStatusFilter(selectedKeys)
         }
+//Contenido Superior e Inferior: topContent y bottomContent definen la interfaz para la búsqueda, filtrado, y paginación.
 
         const topContent = React.useMemo(() => {
             return (
@@ -237,7 +247,9 @@ export function Produccion() {
        
         const bottomContent = React.useMemo(() => {
             return (
+//aqui se ve la paginacioon y los btones de anterior y siguient
                 <div className="py-2 px-2 flex justify-between items-center m-3">
+
                     <Pagination
                         showControls
                         initialPage={1}
@@ -321,7 +333,8 @@ export function Produccion() {
         setSidebarAbierto(!sidebarAbierto);
     };
 
-
+//Peticiones HTTP: peticionGet obtiene los usuarios del servidor.
+//Carga los usuarios al montar el componente.
     useEffect(() => {
         peticionGet()
     }, []);
@@ -336,7 +349,7 @@ export function Produccion() {
             console.log('Error en el servidor ' + error)
         }
     };
-
+//datos de la tabla
     const data = [
         {
             uid: 'id_producccion',
@@ -370,7 +383,8 @@ export function Produccion() {
         }
     ];
 
-    
+    //Desactivación de Usuarios: peticionDesactivar desactiva a un usuario con una confirmación previa mediante SweetAlert
+
     const peticionDesactivar =  (idProduccion) => {
 
         try {
@@ -409,6 +423,7 @@ export function Produccion() {
     const handleSubmit = async (formData, e) => {
         console.log('Datos enviados:', formData);
         e.preventDefault()
+//Utilza dos modos para registrar y actualizar y tenemos una confirmacion con SweetAlert
 
         try {
 
@@ -433,6 +448,7 @@ export function Produccion() {
                     }
                 })
             } else if (mode === 'update') {
+//aqui se esta actulizando el usuario
 
                 await axiosClient.put(`/ActualizarProduccion/${idProduccion.id_producccion}`, formData).then((response) => {
                     console.log(response);

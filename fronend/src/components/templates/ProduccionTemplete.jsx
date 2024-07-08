@@ -2,6 +2,7 @@ import React from 'react';
 import FormProduccion from '../moleculas/FormProduccion.jsx';
 import { ModalAcciones } from '../organismos/Modal.jsx';
 
+//se renderiza el formulario de la produccion
 function ProduccionModal({ open, onClose, handleSubmit, actionLabel, title, initialData, mode }) {
     return (
         <>
