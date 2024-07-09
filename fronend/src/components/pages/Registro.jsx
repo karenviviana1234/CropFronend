@@ -8,7 +8,9 @@ import { Input } from "@nextui-org/react";
 import { EyeFilledIcon } from "../NextUI/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../NextUI/EyeSlashFilledIcon";
 import { Select } from "@nextui-org/select";
-import Footer from '../organismos/Footer.jsx'
+import Footer from '../organismos/Footer.jsx';
+import Swal from 'sweetalert2';
+
 
 
 export const Registro = () => {
@@ -47,6 +49,13 @@ export const Registro = () => {
       await axios.post(baseURL, formData);
       setMensaje('Usuario Registrado exitosamente')
       setModalAcciones(true)
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "Usuario Registrado Con Exito",
+        showConfirmButton: false,
+        timer: 1500
+      });
       navigate('/iniciosesion')
     } catch (error) {
       console.error('Error al procesar la solicitud:', error);

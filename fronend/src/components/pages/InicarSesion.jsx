@@ -56,6 +56,13 @@ export const InicioSesion = () => {
           localStorage.setItem('token', token)
           localStorage.setItem('user', JSON.stringify(response.data.user[0]))
           console.log(response.data.user[0])
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Bienvenido",
+            showConfirmButton: false,
+            timer: 1500
+          });
 
           const userRol = user[0]?.rol
 //condicional para separar los roles
@@ -74,6 +81,13 @@ export const InicioSesion = () => {
           console.log('Response', response)
           setMensaje('Credenciales incorrectas')
           setModalAcciones(true)
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Datos Incorrectos",
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       })
     } catch (error) {

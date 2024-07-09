@@ -30,7 +30,7 @@ import FondoInicio from "./components/organismos/FondoInicio.jsx";
 
 
 const stored = localStorage.getItem('user')
-const user = stored ? JSON.parse(stored) : null
+const user = stored && stored !== 'undefined' ? JSON.parse(stored) : null;
 
 function App() {
 
