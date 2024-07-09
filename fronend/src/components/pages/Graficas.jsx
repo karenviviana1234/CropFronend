@@ -13,7 +13,6 @@ function Grafica() {
     setSidebarAbierto(!sidebarAbierto);
   };
 
-  // Función para obtener las producciones por finca desde la API
   async function obtenerProducciones() {
     try {
       const token = localStorage.getItem('token');
@@ -29,21 +28,17 @@ function Grafica() {
       setProducciones(response.data);
     } catch (error) {
       if (error.response) {
-        // El servidor respondió con un código de estado fuera del rango 2xx
         console.error('Error de respuesta:', error.response.data);
         console.error('Código de estado:', error.response.status);
         console.error('Encabezados de respuesta:', error.response.headers);
       } else if (error.request) {
-        // La solicitud se hizo pero no se recibió respuesta
         console.error('No se recibió respuesta:', error.request);
       } else {
-        // Ocurrió un error antes de enviar la solicitud
         console.error('Error al configurar la solicitud:', error.message);
       }
     }
   }
 
-  // Función para obtener las inversiones por finca desde la API
   async function obtenerInversiones() {
     try {
       const token = localStorage.getItem('token');
@@ -59,27 +54,22 @@ function Grafica() {
       setInversiones(response.data);
     } catch (error) {
       if (error.response) {
-        // El servidor respondió con un código de estado fuera del rango 2xx
         console.error('Error de respuesta:', error.response.data);
         console.error('Código de estado:', error.response.status);
         console.error('Encabezados de respuesta:', error.response.headers);
       } else if (error.request) {
-        // La solicitud se hizo pero no se recibió respuesta
         console.error('No se recibió respuesta:', error.request);
       } else {
-        // Ocurrió un error antes de enviar la solicitud
         console.error('Error al configurar la solicitud:', error.message);
       }
     }
   }
 
-  // Efecto para llamar obtenerProducciones() y obtenerInversiones() al montar el componente
   useEffect(() => {
     obtenerProducciones();
     obtenerInversiones();
   }, []);
 
-  // Función para formatear los datos para ECharts (producciones)
   const formatDataForChartProducciones = () => {
     const nombresFincas = producciones.map(produccion => produccion.nombre_finca);
     const valoresProduccion = producciones.map(produccion => ({
@@ -93,7 +83,6 @@ function Grafica() {
     };
   };
 
-  // Función para formatear los datos para ECharts (inversiones)
   const formatDataForChartInversiones = () => {
     const nombresFincas = inversiones.map(inversion => inversion.nombre_finca);
     const valoresInversion = inversiones.map(inversion => ({
@@ -107,7 +96,6 @@ function Grafica() {
     };
   };
 
-  // Estado y configuración inicial del gráfico de producciones usando ECharts
   const [optionProducciones, setOptionProducciones] = useState({
     backgroundColor: 'white',
     title: {
@@ -140,7 +128,6 @@ function Grafica() {
     ]
   });
 
-  // Estado y configuración inicial del gráfico de inversiones usando ECharts
   const [optionInversiones, setOptionInversiones] = useState({
     backgroundColor: 'white',
     title: {
@@ -173,7 +160,6 @@ function Grafica() {
     ]
   });
 
-  // Efecto para actualizar el gráfico de producciones cuando cambian los datos
   useEffect(() => {
     const { nombresFincas, valoresProduccion } = formatDataForChartProducciones();
 
@@ -192,7 +178,6 @@ function Grafica() {
     }));
   }, [producciones]);
 
-  // Efecto para actualizar el gráfico de inversiones cuando cambian los datos
   useEffect(() => {
     const { nombresFincas, valoresInversion } = formatDataForChartInversiones();
 
@@ -243,3 +228,4 @@ function Grafica() {
 }
 
 export default Grafica;
+
