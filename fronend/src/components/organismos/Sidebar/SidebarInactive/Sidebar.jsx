@@ -38,10 +38,26 @@ function Sidebar() {
           </li>
         </Tooltip>
 
+        <Tooltip content="Lote">
+          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Lote">
+              <Icon icon={v.iconoLote} />
+            </a>
+          </li>
+        </Tooltip>
+
         <Tooltip content="Variedad">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
             <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Variedad">
               <Icon icon={v.iconoVariedad} />
+            </a>
+          </li>
+        </Tooltip>
+        
+        <Tooltip content="Cultivo">
+          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Cultivos">
+              <Icon icon={v.iconoCultivo} />
             </a>
           </li>
         </Tooltip>
@@ -62,36 +78,10 @@ function Sidebar() {
           </li>
         </Tooltip>
         
-        <Tooltip content="Lote">
-          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Lote">
-              <Icon icon={v.iconoLote} />
-            </a>
-          </li>
-        </Tooltip>
-
         <Tooltip content="Asignación">
           <li className={`rounded-full ml-3 mr-3 flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
             <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Asignacion">
               <Icon icon={v.iconoProgramacion} />
-            </a>
-          </li>
-        </Tooltip>
-
-    
-
-        <Tooltip content="Cultivo">
-          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Cultivos">
-              <Icon icon={v.iconoCultivo} />
-            </a>
-          </li>
-        </Tooltip>
-
-        <Tooltip content="Producción">
-          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
-            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Produccion">
-              <Icon icon={v.iconoProduccion} />
             </a>
           </li>
         </Tooltip>
@@ -104,6 +94,13 @@ function Sidebar() {
           </li>
         </Tooltip>
 
+        <Tooltip content="Producción">
+          <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
+            <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Produccion">
+              <Icon icon={v.iconoProduccion} />
+            </a>
+          </li>
+        </Tooltip>
 
         <Tooltip content="Estadísticas">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-3 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>

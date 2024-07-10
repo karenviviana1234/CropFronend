@@ -78,7 +78,7 @@ const FormVariedades = ({ mode, initialData, handleSubmit, onClose, actionLabel 
                required={true}
             >
                   <option value="" hidden className="text-gray-600">
-              Seleccionar Finca
+              Seleccionar Tipo de Cultivo
             </option>
               {tipoCultivo.map((item) => (
                 <option key={item.value} value={item.value}>{item.label}</option>
