@@ -4,17 +4,20 @@ import Swal from "sweetalert2";
 import ButtonDesactivar from "../atomos/ButtonDesactivar";
 import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
 import { FaSistrix } from "react-icons/fa6";
+import EmpleadoModal from "../templates/EmpleadoModal";
 
 const Empleado = () => {
   const [filterValue, setFilterValue] = React.useState("");
   const [mensaje, setMensaje] = useState('');
+  const [id_actividad, setId_actividad] = useState();
+
   const [modalAcciones, setModalAcciones] = useState(false);
   const [empleado, setEmpleado] = useState([]);
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [formData, setFormData] = useState({ observacion: '' });
   const [filteredData, setFilteredData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
-//gfdrt
+  //gfdrt
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
@@ -37,7 +40,7 @@ const Empleado = () => {
   const handleFilter = (event) => {
     const filterValue = event.target.value.toLowerCase();
     const newData = originalData.filter(row => {
-      return row.nombre_actividad.toLowerCase().includes(filterValue);
+      return row.nombre_variedad.toLowerCase().includes(filterValue);
     });
     setFilteredData(newData);
   };
@@ -46,21 +49,21 @@ const Empleado = () => {
   }, [empleado]);
 
 
-
   useEffect(() => {
     ObtenerDatos();
   }, []);
 
-  const handleSubmit = async (e, id_actividad) => {
+  const handleSubmit = async (e, formData,id_actividad) => {
+    console.log('Datos enviados:', formData);
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const baseURL = `http://localhost:3000/EmpleadoMood/Registrar/${id_actividad}`;
+      const baseURL = (`http://localhost:3000/Registrar/${id_actividad}`)
+
       await axios.put(baseURL, formData, { headers: { token: token } });
-      setMensaje('Observación Registrada exitosamente');
-      setModalAcciones(true);
+      console.log('Observación registrada exitosamente');
     } catch (error) {
-      console.error('Error al procesar la solicitud:', error);
+      console.error('Error al procesar la solicitud:', error.response?.data || error.message);
     }
   };
 
@@ -104,6 +107,8 @@ const Empleado = () => {
   };
 
 
+
+
   return (
     <div className={`contenido ${sidebarAbierto ? "contenido-extendido" : ""}`}>
       <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
@@ -133,46 +138,25 @@ const Empleado = () => {
               <p className="text-lg font-normal">Fecha Inicio: {empleado.fecha_inicio}</p>
               <p className="text-lg font-normal">Fecha Fin: {empleado.fecha_fin}</p>
               <p className="text-lg font-normal">Variedad: {empleado.nombre_variedad}</p>
+              <p className="text-lg font-normal">id activi: {empleado.id_actividad}</p>
               <p className="text-lg font-normal">Actividad: {empleado.nombre_actividad}</p>
               <p className="text-lg font-normal">Tiempo: {empleado.tiempo}</p>
               <p className="text-lg font-normal">Estado: {empleado.estado}</p>
 
-              <form onSubmit={(e) => handleSubmit(e, empleado.id_actividad)}>
-                <div className="mb-4">
-                  <label htmlFor="observacion" className="font-normal mb-1">
-                    Observación:
-                  </label>
-                  <div className='py-2'>
-                    <input
-                      className='w-60 border'
-                      type="text"
-                      label='Ingrese la observacion'
-                      id='observacion'
-                      name="observacion"
-                      value={formData.observacion}
-                      onChange={(e) => setFormData({ ...formData, observacion: e.target.value })}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex col">
-                  <button
-                    type="submit"
-                    className="mr-5 bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    Enviar
-                  </button>
-                  <br />
-                  <button
-                    onClick={() => Desactivar(empleado.id_actividad)}
-                    className="bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    Estado
-                  </button>
-                </div>
-              </form>
+              <EmpleadoModal handleSubmit={handleSubmit} id_actividad={empleado.id_actividad} />
 
-              
+              <div className="flex col">
+               
+                <br />
+                <button
+                  onClick={() => Desactivar(empleado.id_actividad)}
+                  className="bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Estado
+                </button>
+              </div>
+
+
             </div>
           </div>
         ))}
