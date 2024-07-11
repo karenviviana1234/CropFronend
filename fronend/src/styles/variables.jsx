@@ -18,6 +18,8 @@ import Img17 from '../assets/dashboardDos.png'
 import Logo from '../assets/Diseño_sin_título-removebg-preview.png'
 import LogoVerde from '../assets/logoverde.png'
 
+import gifpaso from '../assets/Registra tus Herramientas.gif'
+
 const v = {
  /* Iconos */
  iconoUsuario: faUser,
@@ -73,6 +75,7 @@ iconoApp: faGooglePlay,
     image14:Img14,
     image16:Img16,
     image17:Img17,
+    gifpaso:gifpaso,
      imageLogo: Logo,
      imageLogoV: LogoVerde,
 }

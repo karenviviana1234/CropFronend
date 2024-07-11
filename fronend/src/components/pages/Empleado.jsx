@@ -7,16 +7,16 @@ import { FaSistrix } from "react-icons/fa6";
 import EmpleadoModal from "../templates/EmpleadoModal";
 
 const Empleado = () => {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [mensaje, setMensaje] = useState('');
-  const [id_actividad, setId_actividad] = useState();
 
-  const [modalAcciones, setModalAcciones] = useState(false);
   const [empleado, setEmpleado] = useState([]);
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const [formData, setFormData] = useState({ observacion: '' });
   const [filteredData, setFilteredData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+  
+  const [actividad, setActidad]= useState()
+  const id_actividad = actividad?.id_actividad;
+
   //gfdrt
 
   const toggleSidebar = () => {
@@ -56,12 +56,16 @@ const Empleado = () => {
   const handleSubmit = async (e, formData,id_actividad) => {
     console.log('Datos enviados:', formData);
     e.preventDefault();
-    try {
-      const token = localStorage.getItem("token");
-      const baseURL = (`http://localhost:3000/Registrar/${id_actividad}`)
 
-      await axios.put(baseURL, formData, { headers: { token: token } });
-      console.log('Observación registrada exitosamente');
+    try {
+      if (mode === 'update' && id_actividad) {
+        const token = localStorage.getItem("token");
+        const baseURL = (`http://localhost:3000/Registrar/${id_actividad}`)
+        console.log(id_actividad);
+        await axios.put(baseURL, formData, { headers: { token: token } });
+        console.log('Observación registrada exitosamente');
+      }
+    
     } catch (error) {
       console.error('Error al procesar la solicitud:', error.response?.data || error.message);
     }
@@ -145,12 +149,11 @@ const Empleado = () => {
 
               <EmpleadoModal handleSubmit={handleSubmit} id_actividad={empleado.id_actividad} />
 
-              <div className="flex col">
+              <div className="flex col justify-end ">
                
-                <br />
                 <button
                   onClick={() => Desactivar(empleado.id_actividad)}
-                  className="bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="bg-[#006000] hover:bg-[#153815] text-white font-bold py-2  px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Estado
                 </button>

@@ -5,7 +5,7 @@ import HeaderEmpleado from '../organismos/Header/HeaderEmpleado';
 
 //import './VistasCss.css'
 
-function Dashboard() {
+function DashboardEmpleado() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const historiaRef = useRef(null);
 
@@ -69,4 +69,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DashboardEmpleado;
