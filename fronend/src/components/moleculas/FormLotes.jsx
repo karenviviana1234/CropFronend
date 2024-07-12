@@ -70,10 +70,10 @@ export const FormLotes = ({ mode, initialData, handleSubmit, onClose, actionLabe
             value={longitud}
             onChange={(e) => setLongitud(e.target.value)}
             required={true}
-            min={-180}
-            max={180}
+            min="-79.03" // Mínimo valor de longitud válido en Colombia
+            max="-66.85" // Máximo valor de longitud válido en Colombia
             step="any"
-            title="La longitud es obligatoria y debe estar entre -180 y 180"
+            title="La longitud debe ser un número válido entre -79.03 y -66.85 para ubicaciones en Colombia" z
           />
         </div>
         <div className='py-2'>
@@ -86,10 +86,10 @@ export const FormLotes = ({ mode, initialData, handleSubmit, onClose, actionLabe
             value={latitud}
             onChange={(e) => setLatitud(e.target.value)}
             required={true}
-            min={-80}
-            max={90}
+            min="4.22" // Mínimo valor de latitud válido en Colombia
+            max="12.45" // Máximo valor de latitud válido en Colombia
             step="any"
-            title="La latitud es obligatoria y debe estar entre -80 y 90"
+            title="La latitud debe ser un número válido entre 4.22 y 12.45 para ubicaciones en Colombia"
           />
         </div>
         <div className="py-2">
@@ -115,7 +115,7 @@ export const FormLotes = ({ mode, initialData, handleSubmit, onClose, actionLabe
           <Button color="danger" variant="flat" onPress={onClose}>
             Close
           </Button>
-          <Button  type='submit' className='text-white bg-[#006000]'>
+          <Button type='submit' className='text-white bg-[#006000]'>
             {actionLabel}
           </Button>
         </ModalFooter>

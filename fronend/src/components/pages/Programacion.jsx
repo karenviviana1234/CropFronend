@@ -501,7 +501,7 @@ export function Programaciones() {
                         Swal.fire({
                             position: "center",
                             icon: "success",
-                            title: "Actividad registrada con éxito",
+                            title: "Asignacion registrada con éxito",
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -516,7 +516,7 @@ export function Programaciones() {
                         Swal.fire({
                             position: "center",
                             icon: "success",
-                            title: "Se actualizó la actividad con éxito",
+                            title: "Se actualizó la asignación con éxito",
                             showConfirmButton: false,
                             timer: 1500
                         });
