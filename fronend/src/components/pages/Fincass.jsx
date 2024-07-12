@@ -29,6 +29,7 @@ import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
 import DescargarPDF from '../organismos/DescargarPDF.jsx';
+
 export function Fincas() {
 
   const statusColorMap = {
@@ -375,13 +376,12 @@ export function Fincas() {
   //PETICION PARA DESACTIVAR FINCAS    
   const peticionDesactivar = async (id_finca) => {
 
-    // console.log("ID del lotes a desactivar:", id_lote);
     try {
       axiosClient.put(`/finca/desactivarFinca/${id_finca}`, null).then((response) => {
         console.log(response.data)
         if (response.status == 200) {
           const nuevoEstado = response.data.message;
-          /* fetchData() */
+         
           Swal.fire({
             title: "¿Estás seguro?",
             text: "¡Esto podra afectar a tus fincas!",
@@ -446,7 +446,7 @@ export function Fincas() {
               timer: 1500
             });
             peticionGet()
-          } else {
+          } else { 
             alert('Error al actualizar')
           }
         })
