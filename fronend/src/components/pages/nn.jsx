@@ -1,177 +1,218 @@
-import React, { useEffect, useState } from 'react';
-import { FaSearch } from "react-icons/fa";
-import BotonRegistrar from '../atomos/BotonRegistrar.jsx'
-import DataTableComponent from '../organismos/Tablas.jsx';
-import axios from 'axios';
-import Header from '../organismos/Header/Header.jsx';
-import UsuarioModal from '../templates/TempleteUsuarios.jsx';
-import ButtonActualizar from '../atomos/ButtonActualizar.jsx';
-import ButtonDesactivar from '../atomos/ButtonDesactivar.jsx';
-import { FaSistrix } from "react-icons/fa6";
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  getUser,
+  getUserForId,
+  createUser,
+  updateUser,
+  activarUser,
+  desactivarUser,
+  loginUser,
+  updatePasswordUser,
+  restartTokenPassword,
+  restartPassword
+} from "../api/api.users";
+import ModalMessage from "../nextui/ModalMessage";
 
-export function Usuario() {
-    const [originalData, setOriginalData] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [mode, setMode] = useState('create');
-    const [selectedUser, setSelectedUser] = useState(null);
+const AuthContext = createContext();
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const columns = [
-        {
-            name: 'Identificacion',
-            selector: row => row.identificacion,
-            sortable: true
-        },
-        {
-            name: 'Nombre',
-            selector: row => row.nombre,
-            sortable: true
-        },
-        {
-            name: 'Apellido',
-            selector: row => row.apellido,
-            sortable: true
-        },
-        {
-            name: 'Correo',
-            selector: row => row.correo,
-            sortable: true
-        },
-        {
-            name: 'Rol',
-            selector: row => row.rol,
-            sortable: true
-        },
-        {
-            name: 'Estado',
-            selector: row => row.estado,
-            sortable: true
-        },
-        {
-            name: 'Acciones',
-            cell: row => <>
-                <ButtonActualizar variant="primary" click={() => handleToggle('update', row)} />
-                <ButtonDesactivar variant="danger" click={() => handleDesactivar(row.identificacion)} />
-            </>
-        }
-    ];
-
-    const fetchData = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const baseURL = 'http://localhost:3000/usuarios/listarUsuario';
-            const response = await axios.get(baseURL, { headers: { token: token } });
-            console.log(response.data)
-            setOriginalData(response.data);
-            setFilteredData(response.data);
-        } catch (error) {
-            console.error('Error al obtener datos:', error);
-        }
-    };
-
-    const handleFilter = (event) => {
-        const newData = originalData.filter(row => {
-            const name= row.nombre.toLowerCase().includes(event.target.value.toLowerCase());
-            const id= row.identificacion.toString().includes(event.target.value);
-            return name || id;
-        });
-        setFilteredData(newData);
-    };
-
-
-    const handleDesactivar = async (identificacion) => {
-        console.log("ID del usuario a desactivar:", identificacion);
-        try {
-            const token = localStorage.getItem('token');
-            const baseURL = `http://localhost:3000/usuarios/desactivarUsuario/${identificacion}`;
-            await axios.put(baseURL, null, { headers: { token: token } });
-            console.log("se desactivo correctamente el usuario");
-            alert('Usuario desactivado con éxito');
-            fetchData();
-        } catch (error) {
-            console.error('Error al desactivar usuario:', error);
-            alert('Error al desactivar usuario');
-        }
-    };
-
-    const handleToggle = (mode, user) => {
-        setMode(mode);
-        setSelectedUser(user);
-        setModalOpen(true);
-    };
-
-    const handleSubmit = async (formData, e) => {
-        console.log(formData);
-        try {
-            const token = localStorage.getItem('token');
-            if (mode === 'create') {
-                const baseURL = 'http://localhost:3000/usuarios/registrarUsuario';
-                await axios.post(baseURL, formData, { headers: { token: token } });
-                alert('Usuario registrado exitosamente');
-                fetchData();
-                setModalOpen(false);
-            } else if (mode === 'update' && selectedUser) {
-                await actualizar(selectedUser.identificacion, formData);
-            }
-        } catch (error) {
-            console.error('Error al procesar la solicitud:', error);
-        }
-    };
-
-    const actualizar = async (identificacion, formData) => {
-        console.log(identificacion);
-        try {
-            const token = localStorage.getItem('token');
-            const baseURL = `http://localhost:3000/usuarios/actualizarusuario/${identificacion}`;
-            await axios.put(baseURL, formData,{ headers: { token: token }});
-            alert('Usuario actualizado exitosamente');
-            setModalOpen(false);
-            fetchData();
-        } catch (error) {
-            console.error('Error al actualizar usuario:', error);
-        }
-    };
-
-    return (
-        <>
-            <div>
-                
-                <div className='w-10/12 ml-28'>
-                    <div className='flex justify-center items-center text-center'>
-                        <div className='w-96 bg-[#E5E5E5] flex items-center m-8 rounded-lg border-black'>
-                            <input className='w-full p-2 bg-[#E5E5E5] text-black rounded-lg border' type="text" 
-                            onChange={handleFilter}
-                             placeholder='Buscar' 
-                             />
-                            <FaSistrix size={25} style={{ marginRight: 10 }} />
-                        </div>
-                    </div>
-                    <BotonRegistrar  click={() => handleToggle('create')} />
-                    <UsuarioModal
-                        open={modalOpen}
-                        onClose={() => setModalOpen(false)}
-                        handleSubmit={handleSubmit}
-                        selectedUser={selectedUser}
-                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    />
-
-                    <div style={{ height: '80vh', width: '100%' }}> 
-                        <DataTableComponent
-                            columns={columns}
-                            data={Array.isArray(filteredData) ? filteredData : []}
-                            title="Usuarios registrados"
-                            fixedHeader
-                            pagination
-                            paginationPerPage={5}
-                            paginationRowsPerPageOptions={[5, 10, 15]}
-                        />
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+export const useAuthContext = () => {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('Debes usar AuthProvider en el App')
+  }
+  return context;
 }
+
+export const AuthProvider = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [user, setUser] = useState([])
+  const [modalMessage, setModalMessage] = useState(false);
+  const [mensaje, setMensaje] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [idUser, setIdUser] = useState([])
+  const [onClose, setOnClose] = useState(false)
+  const [cerrarModal, setCerrarModal] = useState(false)
+  const [back, setBack] = useState(false);
+
+  const getUsers = async () => {
+    try {
+      const response = await getUser();
+      setUsers(response.data.data);
+    } catch (error) {
+      setErrors([error.response.data.message]);
+    }
+  }
+
+  const getUserID = async (id) => {
+    try {
+      const response = await getUserForId(id)
+      setUser(response.data.data[0]);
+    } catch (error) {
+      setErrors([error.response.data.message]);
+    }
+  }
+
+  const loginUsers = async (dataForm) => {
+    try {
+      const response = await loginUser(dataForm)
+      const { token, user } = response.data;
+      setIsAuthenticated(true)
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+      setMensaje(response.data.message)
+      setModalMessage(true)
+    } catch (error) {
+      setErrors([error.response.data.message]);
+    }
+  }
+
+  const createUsers = async (data) => {
+    try {
+      const response = await createUser(data)
+      if(response.status === 200) {
+        getUsers()
+        setMensaje(response.data.message)
+        setModalMessage(true)
+        setOnClose(true)
+        setCerrarModal(true)
+      }
+    } catch (error) {
+      setErrors([error.response.data.message]);
+    }
+  }
+
+  const updateUsers = async (id, data) => {
+    try {
+      const response = await updateUser(id, data)
+      if(response.status === 200) {
+        getUsers()
+        setMensaje(response.data.message)
+        setModalMessage(true)
+        getUserID(id)
+        setOnClose(true)
+        setCerrarModal(true)
+      }
+    } catch (error) {
+      setErrors([error.response.data.message])
+    }
+  }
+
+  const updatePassword = async (id, data) => {
+    try {
+      const response = await updatePasswordUser(id, data)
+      if(response.status === 200) {
+        getUsers()
+        setMensaje(response.data.message)
+        getUserID(id)
+        setModalMessage(true)
+        setOnClose(true)
+        setCerrarModal(true)
+      }
+    } catch (error) {
+      setErrors([error.response.data.message])
+    }
+  }
+
+  const updateUserActive = async (id) => {
+    try {
+      const response = await activarUser(id)
+      getUsers()
+      setMensaje(response.data.message)
+      setModalMessage(true)
+    } catch (error) {
+      setErrors([error.response.data.message])
+    }
+  }
+
+  const updateUserDesactive = async (id) => {
+    try {
+      const response = await desactivarUser(id)
+      getUsers()
+      setMensaje(response.data.message)
+      setModalMessage(true)
+    } catch (error) {
+      setErrors([error.response.data.message])
+    }
+  }
+
+  const tokenPassword = async (data) => {
+    try {
+      const response = await restartTokenPassword(data)
+      setMensaje(response.data.message)
+      setModalMessage(true)
+      setBack(true)
+    } catch (error) {
+      setErrors([error.response?.data?.message || "Error al procesar la solicitud"]);
+    }
+  }
+
+  const updatePasswordFinish = async (data) => {
+    try {
+      const response = await restartPassword(data)
+      setMensaje(response.data.message)
+      setModalMessage(true)
+    } catch (error) {
+      setErrors([error.response.data.message])
+    }
+  }
+
+  const logout = () => {
+    try {
+      localStorage.clear();
+      setIsAuthenticated(false)
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (errors.length > 0) {
+      const timer = setTimeout(() => {
+        setErrors([]);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [errors]);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        users,
+        errors,
+        idUser,
+        user,
+        onClose,
+        back, 
+        setBack,
+        logout,
+        setUser,
+        setIdUser,
+        getUserID,
+        setIsAuthenticated,
+        loginUsers,
+        getUsers,
+        createUsers,
+        updatePassword,
+        updateUsers,
+        updateUserActive,
+        updateUserDesactive,
+        setUsers,
+        cerrarModal,
+        setCerrarModal,
+        tokenPassword,
+        updatePasswordFinish
+      }}
+    >
+      <ModalMessage
+        isOpen={modalMessage}
+        onClose={() => setModalMessage(false)}
+        label={mensaje}
+      />
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthContext;
