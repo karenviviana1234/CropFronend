@@ -12,6 +12,7 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
   const correoRef = useRef(null);
   const passwordRef = useRef(null);
   const rolRef = useRef([]);
+  
 //useState se usa para gestionar el estado de los campos del formulario.
   const [identificacion, setIdentificacion] = useState('');
   const [nombre, setNombre] = useState('');
@@ -19,6 +20,7 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const [rol, setRol] = useState('Empleado');
+  
   //useContext se usa para acceder al contexto del usuario.
   const { idUsuario } = useContext(UsuarioContext);
 

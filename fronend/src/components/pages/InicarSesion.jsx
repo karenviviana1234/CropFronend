@@ -148,7 +148,7 @@ export const InicioSesion = () => {
             </div>
 
 
-            {/* <a href="/recuperar" className="text-gray-700 hover:text-gray-900 hover:underline flex justify-center mt-3">Olvidó su contraseña?</a> */}
+             <a href="/update-password" className="text-gray-700 hover:text-gray-900 hover:underline flex justify-center mt-3">Olvidó su contraseña?</a> 
 
             <button
               className="w-full mt-3 p-2 bg-[#006000] text-white  rounded-lg cursor-pointer  flex justify-center items-center "
