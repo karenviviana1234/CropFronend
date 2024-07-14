@@ -41,7 +41,8 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
     }
   }, [mode, idUsuario]);
 
-  //handleFormSubmit: Se encarga de manejar el envío del formulario. Recolecta los datos del formulario y los pasa a la función handleSubmit.
+  //handleFormSubmit: Se encarga de manejar el envío del formulario. Recolecta los datos del formulario 
+  //y los pasa a la función handleSubmit.
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {

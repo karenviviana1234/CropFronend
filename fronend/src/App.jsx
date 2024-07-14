@@ -21,7 +21,7 @@ import Recuperarcontra from "./components/pages/Recuperacontra.jsx";
 import { Usuarios } from "./components/pages/Usuarios.jsx";
 import { Produccion } from "./components/pages/Produccion.jsx";
 import Empleado from "./components/pages/Empleado.jsx";
-import  Map  from "./components/pages/Map.jsx";
+import Map from "./components/pages/Map.jsx";
 import Graficas from './components/pages/Graficas.jsx'
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import PerfilEmpleado from "./components/pages/PerfilEmpleado.jsx";
@@ -51,38 +51,36 @@ function App() {
 
 
 
-            {user && user.rol === 'administrador' && (
-              <>
+          {user && user.rol === 'administrador' && (
+            <>
               <Route path="/Inicio" element={<Dashboard />} />
               <Route path="/perfil" element={<PerfilUsuario />} />
               <Route path="/soporte" element={<Soporte />} />
-      
-                <Route path="/Usuario" element={<Usuarios />} />
-                <Route path="/Actividad" element={<Actividad />} />
-                <Route path="/Costos" element={<Costos />} />
-                <Route path="/Cultivos" element={<Cultivos />} />
-                <Route path="/Finca" element={<Fincas />} />
-                <Route path="/Lote" element={<Lotes />} />
-                <Route path="/Asignacion" element={<Programaciones />} />
-                <Route path="/Recursos" element={<TipoRecursos />} />
-                <Route path="/Variedad" element={<Variedades />} />
-                <Route path="/Produccion" element={<Produccion />} />
+              <Route path="/Usuario" element={<Usuarios />} />
+              <Route path="/Actividad" element={<Actividad />} />
+              <Route path="/Costos" element={<Costos />} />
+              <Route path="/Cultivos" element={<Cultivos />} />
+              <Route path="/Finca" element={<Fincas />} />
+              <Route path="/Lote" element={<Lotes />} />
+              <Route path="/Asignacion" element={<Programaciones />} />
+              <Route path="/Recursos" element={<TipoRecursos />} />
+              <Route path="/Variedad" element={<Variedades />} />
+              <Route path="/Produccion" element={<Produccion />} />
+              <Route path="/Mapa" element={<Map />} />
+              <Route path="/Graficas" element={<Graficas />} />
+            </>
+          )}
 
-                <Route path="/Mapa" element={<Map />} />
-                <Route path="/Graficas" element={<Graficas />} />
-              </>
-            )}
+          {user && user.rol === 'empleado' && (
+            <>
+              <Route path="/Empleado" element={<Empleado />} />
+              <Route path="/InicioE" element={<DashboardEmpleado />} />
+              <Route path="/PerfilEmpleado" element={<PerfilEmpleado />} />
+              <Route path="/soporte" element={<SoporteEmpleado />} />
+            </>
+          )}
 
-            {user && user.rol === 'empleado' && (
-              <>
-                <Route path="/Empleado" element={<Empleado />} />
-                <Route path="/InicioE" element={<DashboardEmpleado />} />
-                <Route path="/PerfilEmpleado" element={<PerfilEmpleado />} />
-                <Route path="/soporte" element={<SoporteEmpleado />} />
-              </>
-            )}
 
-          
         </Routes>
       </GlobalProvider>
     </BrowserRouter >
