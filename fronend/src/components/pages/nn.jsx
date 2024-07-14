@@ -11,8 +11,7 @@ import {
   restartTokenPassword,
   restartPassword
 } from "../api/api.users";
-import ModalMessage from "../nextui/ModalMessage";
-
+import ModalMessage from "../NextUI/ModalMessage";
 const AuthContext = createContext();
 
 export const useAuthContext = () => {

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button, Input } from "@nextui-org/react";
-import { EyeSlashFilledIcon } from '../nextui/EyeSlashFilledIcon';
-import { EyeFilledIcon } from '../nextui/EyeFilledIcon';
-import { icono } from '../components/atoms/IconsAtom';
+import { EyeSlashFilledIcon } from "../NextUI/EyeSlashFilledIcon";
+import { EyeFilledIcon } from "../NextUI/EyeFilledIcon";
 import axios from "axios";
 
 const ResetPassword = () => {
@@ -39,14 +38,14 @@ const ResetPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (formData.newPassword !== formData.confirmPassword) {
             setError("Las contraseñas no coinciden");
             return;
         }
-
+    
         try {
-            const response = await axios.put("http://localhost:4000/auth/cambiar", {
+            const response = await axios.put("http://localhost:3000/auth/cambiar", {
                 token,
                 password: formData.newPassword,
             });
@@ -59,6 +58,7 @@ const ResetPassword = () => {
             );
         }
     };
+    
 
     return (
         <div className="flex items-center flex-col justify-center min-h-screen bg-[#F0F4F8] relative">
@@ -78,7 +78,7 @@ const ResetPassword = () => {
                         aria-label="Nueva Contraseña"
                         variant="bordered"
                         placeholder="Nueva Contraseña"
-                        startContent={<icono.iconoContraseña />}
+                        // startContent={<icono.iconoContraseña />}
                         endContent={
                             <button
                                 type="button"
@@ -94,6 +94,8 @@ const ResetPassword = () => {
                         }
                         type={isVisibleNew ? "text" : "password"}
                         value={formData.newPassword}
+
+
                         name="newPassword"
                         onChange={handleChange}
                         required
@@ -103,7 +105,7 @@ const ResetPassword = () => {
                         aria-label="Confirmar Contraseña"
                         variant="bordered"
                         placeholder="Confirmar Contraseña"
-                        startContent={<icono.iconoContraseña />}
+                        // startContent={<icono.iconoContraseña />}
                         endContent={
                             <button
                                 type="button"
@@ -134,9 +136,7 @@ const ResetPassword = () => {
                     </div>
                 </form>
             </div>
-            <div className="absolute top-0 left-0 w-96 h-96 bg-[#39A800] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-            <div className="absolute top-0 right-0 w-96 h-96 bg-[#39A800] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-            <div className="absolute bottom-0 left-20 w-96 h-96 bg-[#39A800] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+            
         </div>
     );
 };

@@ -16,8 +16,6 @@ import { Variedades } from "./components/pages/Variedades.jsx";
 import Dashboard from "./components/pages/Dashboard.jsx";
 import PerfilUsuario from "./components/pages/Perfil.jsx";
 import Soporte from "./components/pages/Soporte.jsx";
-import CambiarContra from "./components/pages/cambiarcontra.jsx";
-import Recuperarcontra from "./components/pages/Recuperacontra.jsx";
 import { Usuarios } from "./components/pages/Usuarios.jsx";
 import { Produccion } from "./components/pages/Produccion.jsx";
 import Empleado from "./components/pages/Empleado.jsx";
@@ -27,6 +25,8 @@ import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import PerfilEmpleado from "./components/pages/PerfilEmpleado.jsx";
 import SoporteEmpleado from "./components/pages/SoporteEmpleado.jsx";
 import FondoInicio from "./components/organismos/FondoInicio.jsx";
+import ResetPassword from "./components/pages/Recuperarcontra.jsx";
+import RecuperarPasswordUserLogin from "./components/moleculas/RecuperarPassword.jsx";
 
 
 const stored = localStorage.getItem('user')
@@ -43,11 +43,12 @@ function App() {
           <Route path="/" element={<FondoInicio />} />
           <Route path="/iniciosesion" element={<InicioSesion />} />
           <Route path="/registro" element={<Registro />} />
-          <Route path="/cambia" element={<CambiarContra />} />
-          <Route path="/recuperar" element={<Recuperarcontra />} />
+          
 
           <Route path="/perfil" element={<PerfilUsuario />} />
           <Route path="/Perfil" element={<PerfilEmpleado />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/update-password" element={<RecuperarPasswordUserLogin />} />
 
 
 
