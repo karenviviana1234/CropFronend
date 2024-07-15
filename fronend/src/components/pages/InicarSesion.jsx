@@ -113,7 +113,7 @@ export const InicioSesion = () => {
             </Link>
             <span className="mb-3 text-4xl font-bold">Inicio De Sesion</span>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <img src={v.imageLogoV} style={{ width: '120px', height: '120px' }} alt="" />
+              <img src={v.imageInicio} style={{ width: '120px', height: '120px' }} alt="" />
             </div>
             <div className='py-2'>
               <Input

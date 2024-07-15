@@ -60,7 +60,7 @@ function Soporte() {
         </div>
         <div className="flex justify-center my-5">
           <div className="bg-custom-white mt-10 items-center flex justify-center cursor-pointer shadow-2xl w-80 h-28 mx-20 rounded-2xl py-2 hover:shadow-2xl" >
-          <Link to="/" className="flex justify-between items-center cursor-pointer hover:text-green no-underline hover:no-underline">
+          <Link to="/update-password" className="flex justify-between items-center cursor-pointer hover:text-green no-underline hover:no-underline">
             <Icon icon={v.iconoCandado} className="mx-3 w-9 h-9 text-center text-green" />
             <h1 className="text-center" style={{ fontSize: '18px' }}>Recuperacion de <br /> Contraseña</h1>
             </Link>

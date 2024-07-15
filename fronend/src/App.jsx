@@ -18,7 +18,7 @@ import PerfilUsuario from "./components/pages/Perfil.jsx";
 import Soporte from "./components/pages/Soporte.jsx";
 import { Usuarios } from "./components/pages/Usuarios.jsx";
 import { Produccion } from "./components/pages/Produccion.jsx";
-import Empleado from "./components/pages/Empleado.jsx";
+// import Empleado from "./components/pages/Empleado.jsx";
 import Map from "./components/pages/Map.jsx";
 import Graficas from './components/pages/Graficas.jsx'
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
@@ -74,7 +74,7 @@ function App() {
 
           {user && user.rol === 'empleado' && (
             <>
-              <Route path="/Empleado" element={<Empleado />} />
+              {/* <Route path="/Empleado" element={<Empleado />} /> */}
               <Route path="/InicioE" element={<DashboardEmpleado />} />
               <Route path="/PerfilEmpleado" element={<PerfilEmpleado />} />
               <Route path="/soporte" element={<SoporteEmpleado />} />

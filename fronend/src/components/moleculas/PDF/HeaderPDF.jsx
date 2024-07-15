@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import Logo from '../../../assets/Diseño_sin_título-removebg-preview.png';
+import Logo from '../../../assets/image-removebg-preview.png';
 
 const styles = StyleSheet.create({
     header: {

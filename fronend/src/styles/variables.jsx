@@ -15,7 +15,8 @@ import Img14 from '../assets/ImagenS-Photoroom.jpg'
 
 import Img16 from '../assets/Imagen3.png'
 import Img17 from '../assets/dashboardDos.png'
-import Logo from '../assets/Diseño_sin_título-removebg-preview.png'
+import Logo from '../assets/imagelogo.png'
+import LogoInicio from '../assets/imageinicio.png'
 import LogoVerde from '../assets/logoverde.png'
 
 import gifpaso from '../assets/Registra tus Herramientas.gif'
@@ -77,6 +78,7 @@ iconoApp: faGooglePlay,
     image17:Img17,
     gifpaso:gifpaso,
      imageLogo: Logo,
+     imageInicio: LogoInicio,
      imageLogoV: LogoVerde,
 }
 
