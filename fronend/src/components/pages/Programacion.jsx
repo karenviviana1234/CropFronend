@@ -28,6 +28,7 @@ import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx";
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx";
+
 export function Programaciones() {
     const statusColorMap = {
         activo: "success",
@@ -36,11 +37,9 @@ export function Programaciones() {
         terminado: "secondary",
         todos: "primary",
     };
-
-    function Ejemplo() {
+    function Ejemplo({ programaciones }) {
         const [filterValue, setFilterValue] = React.useState("");
-        const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState(new Set(["todos"]));
+        const [statusFilter, setStatusFilter] = React.useState("todos");
         const [rowsPerPage, setRowsPerPage] = React.useState(5);
         const [sortDescriptor, setSortDescriptor] = React.useState({
             column: "fecha",
@@ -59,24 +58,28 @@ export function Programaciones() {
         const hasSearchFilter = Boolean(filterValue);
 
         const filteredItems = React.useMemo(() => {
-            let filteredprogramaciones = programaciones;
+            let filteredProgramaciones = programaciones;
 
             if (hasSearchFilter) {
-                filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-                    String(programacion.id_programacion).toLowerCase().includes(filterValue.toLowerCase()) ||
-                    programacion.usuario.toLowerCase().includes(filterValue.toLowerCase()) ||
-                    String(programacion.nombre_actividad).toLowerCase().includes(filterValue.toLowerCase())
+                filteredProgramaciones = filteredProgramaciones.filter(
+                    (programacion) =>
+                        String(programacion.id_programacion)
+                            .toLowerCase()
+                            .includes(filterValue.toLowerCase()) ||
+                        programacion.usuario.toLowerCase().includes(filterValue.toLowerCase()) ||
+                        String(programacion.nombre_actividad)
+                            .toLowerCase()
+                            .includes(filterValue.toLowerCase())
                 );
             }
 
-            if (statusFilter !== "todos" && Array.from(statusFilter).length !== statusOptions.length) {
-                filteredprogramaciones = filteredprogramaciones.filter(programacion =>
-                    statusFilter.has("todos") || statusFilter.has(programacion.estado)
+            if (statusFilter !== "todos") {
+                filteredProgramaciones = filteredProgramaciones.filter(
+                    (programacion) => programacion.estado === statusFilter
                 );
             }
 
-
-            return filteredprogramaciones;
+            return filteredProgramaciones;
         }, [programaciones, filterValue, statusFilter]);
 
         const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -101,17 +104,15 @@ export function Programaciones() {
         const renderCell = React.useCallback((programacion, columnKey) => {
             const cellValue = programacion[columnKey];
 
-            const handleUpdateClick = (id_programacion, programacion) => {
-                localStorage.setItem('idUser', id_programacion);
-                clickEditar(id_programacion, programacion);
-                console.log('ID del programacion seleccionado:', id_programacion);
-                console.log('Datos del programacion seleccionado:', programacion);
-            };
-
             switch (columnKey) {
                 case "estado":
                     return (
-                        <Chip className="capitalize" color={statusColorMap[programacion.estado]} size="sm" variant="flat">
+                        <Chip
+                            className="capitalize"
+                            color={statusColorMap[programacion.estado]}
+                            size="sm"
+                            variant="flat"
+                        >
                             {cellValue}
                         </Chip>
                     );
@@ -165,22 +166,14 @@ export function Programaciones() {
             }
         }, []);
 
+        const onStatusFilter = React.useCallback((key) => {
+            const selectedStatus = Array.from(key).pop();
+            setStatusFilter(selectedStatus);
+        }, []);
+
         const onClear = React.useCallback(() => {
             setFilterValue("");
             setPage(1);
-        }, []);
-
-        const onStatusFilter = React.useCallback((keys) => {
-            if (keys.size === 0) {
-                setStatusFilter(new Set(["todos"]));
-                console.log("Has seleccionado: Todos");
-            } else {
-                if (keys.has("todos")) {
-                    keys.delete("todos");
-                }
-                setStatusFilter(keys);
-                console.log("Has seleccionado:", Array.from(keys));
-            }
         }, []);
 
         const topContent = React.useMemo(() => {
@@ -262,10 +255,22 @@ export function Programaciones() {
                         onChange={setPage}
                     />
                     <div className="hidden sm:flex w-[40%] justify-end gap-2">
-                        <Button isDisabled={pages === 1} size="md" variant="ghost" className="text-slate-50" onPress={onPreviousPage}>
+                        <Button
+                            isDisabled={pages === 1}
+                            size="md"
+                            variant="ghost"
+                            className="text-slate-50"
+                            onPress={onPreviousPage}
+                        >
                             Anterior
                         </Button>
-                        <Button isDisabled={pages === 1} size="md" className="text-slate-50 mr-58" variant="ghost" onPress={onNextPage}>
+                        <Button
+                            isDisabled={pages === 1}
+                            size="md"
+                            className="text-slate-50 mr-58"
+                            variant="ghost"
+                            onPress={onNextPage}
+                        >
                             Siguiente
                         </Button>
                     </div>
@@ -285,12 +290,9 @@ export function Programaciones() {
                             wrapper: "max-h-[100%] max-w-[100%]",
                         }}
                         className="flex"
-                        selectedKeys={selectedKeys}
                         sortDescriptor={sortDescriptor}
                         topContent={topContent}
                         topContentPlacement="outside"
-                        onSelectionChange={setSelectedKeys}
-                        onSortChange={setSortDescriptor}
                     >
                         <TableHeader columns={data}>
                             {(column) => (
@@ -303,15 +305,10 @@ export function Programaciones() {
                                 </TableColumn>
                             )}
                         </TableHeader>
-                        <TableBody
-                            emptyContent={"No hay asignaciones registradas"}
-                            items={sortedItems}
-                        >
+                        <TableBody emptyContent={"No hay asignaciones registradas"} items={sortedItems}>
                             {(item) => (
                                 <TableRow key={item.id_programacion}>
-                                    {(columnKey) => (
-                                        <TableCell>{renderCell(item, columnKey)}</TableCell>
-                                    )}
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
                                 </TableRow>
                             )}
                         </TableBody>
@@ -342,46 +339,46 @@ export function Programaciones() {
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) {
-          return ''; // Devuelve una cadena vacía si la fecha es inválida
+            return ''; // Devuelve una cadena vacía si la fecha es inválida
         }
         return date.toISOString().split('T')[0];
-      };
-    
-      const peticionGet = async () => {
+    };
+
+    const peticionGet = async () => {
         try {
-          const response = await axiosClient.get('/listarProgramacion');
-          const formattedData = response.data.map((item) => ({
-            ...item,
-            fecha_inicio: formatDate(item.fecha_inicio),
-            fecha_fin: formatDate(item.fecha_fin),
-          }));
-          setProgramaciones(formattedData);
+            const response = await axiosClient.get('/listarProgramacion');
+            const formattedData = response.data.map((item) => ({
+                ...item,
+                fecha_inicio: formatDate(item.fecha_inicio),
+                fecha_fin: formatDate(item.fecha_fin),
+            }));
+            setProgramaciones(formattedData);
         } catch (error) {
-          console.log('Error en el servidor ' + error);
+            console.log('Error en el servidor ' + error);
         }
-      };
-    
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         peticionGet();
-      }, []);
-    
-      const data = [
+    }, []);
+
+    const data = [
         {
-          uid: 'id_programacion',
-          name: 'Id',
-          sortable: true,
+            uid: 'id_programacion',
+            name: 'Id',
+            sortable: true,
         },
         {
-          uid: 'fecha_inicio',
-          name: 'Fecha Inicio',
-          sortable: true,
-          render: (row) => row.fecha_inicio, // Ya formateado en peticionGet
+            uid: 'fecha_inicio',
+            name: 'Fecha Inicio',
+            sortable: true,
+            render: (row) => row.fecha_inicio, // Ya formateado en peticionGet
         },
         {
-          uid: 'fecha_fin',
-          name: 'Fecha Fin',
-          sortable: true,
-          render: (row) => row.fecha_fin, // Ya formateado en peticionGet
+            uid: 'fecha_fin',
+            name: 'Fecha Fin',
+            sortable: true,
+            render: (row) => row.fecha_fin, // Ya formateado en peticionGet
         },
         {
             uid: 'usuario',
@@ -420,10 +417,10 @@ export function Programaciones() {
         try {
             const response = await axiosClient.put(`/estadoProgramacion/${id_programacion}`, null);
             console.log(response.data);
-    
+
             if (response.status === 200) {
                 const nuevoEstado = response.data.message;
-    
+
                 Swal.fire({
                     title: "¿Estás seguro?",
                     text: "¡Esto podrá afectar a tus programaciones!",
@@ -470,7 +467,7 @@ export function Programaciones() {
             }
         }
     };
-    
+
     const mostrarAlertaError = (mensaje) => {
         Swal.fire({
             position: "center",
@@ -481,8 +478,8 @@ export function Programaciones() {
             timer: 2000
         });
     };
-    
-    
+
+
 
 
 
@@ -501,7 +498,7 @@ export function Programaciones() {
                         Swal.fire({
                             position: "center",
                             icon: "success",
-                            title: "Actividad registrada con éxito",
+                            title: "Asignacion registrada con éxito",
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -516,7 +513,7 @@ export function Programaciones() {
                         Swal.fire({
                             position: "center",
                             icon: "success",
-                            title: "Se actualizó la actividad con éxito",
+                            title: "Se actualizó la asignación con éxito",
                             showConfirmButton: false,
                             timer: 1500
                         });
@@ -541,29 +538,29 @@ export function Programaciones() {
     return (
 
         <>
-      
-                <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <ProgramacionModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar Asignaciones' : 'Actualizar Asignaciones'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    programaciones={programaciones}
-                />
-            </div>
+
+            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <ProgramacionModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar Asignaciones' : 'Actualizar Asignaciones'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        programaciones={programaciones}
+                    />
+                </div>
             </div>
         </>
     )

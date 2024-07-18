@@ -16,21 +16,21 @@ import { Variedades } from "./components/pages/Variedades.jsx";
 import Dashboard from "./components/pages/Dashboard.jsx";
 import PerfilUsuario from "./components/pages/Perfil.jsx";
 import Soporte from "./components/pages/Soporte.jsx";
-import CambiarContra from "./components/pages/cambiarcontra.jsx";
-import Recuperarcontra from "./components/pages/Recuperacontra.jsx";
 import { Usuarios } from "./components/pages/Usuarios.jsx";
 import { Produccion } from "./components/pages/Produccion.jsx";
-import Empleado from "./components/pages/Empleado.jsx";
-import  Map  from "./components/pages/Map.jsx";
+import Map from "./components/pages/Map.jsx";
 import Graficas from './components/pages/Graficas.jsx'
+import Empleado from "./components/pages/Empleado.jsx";
 import DashboardEmpleado from "./components/pages/DashboardEmpleado.jsx";
 import PerfilEmpleado from "./components/pages/PerfilEmpleado.jsx";
 import SoporteEmpleado from "./components/pages/SoporteEmpleado.jsx";
 import FondoInicio from "./components/organismos/FondoInicio.jsx";
+import ResetPassword from "./components/pages/Recuperarcontra.jsx";
+import RecuperarPasswordUserLogin from "./components/moleculas/RecuperarPassword.jsx";
 
 
 const stored = localStorage.getItem('user')
-const user = stored ? JSON.parse(stored) : null
+const user = stored && stored !== 'undefined' ? JSON.parse(stored) : null;
 
 function App() {
 
@@ -43,46 +43,45 @@ function App() {
           <Route path="/" element={<FondoInicio />} />
           <Route path="/iniciosesion" element={<InicioSesion />} />
           <Route path="/registro" element={<Registro />} />
-          <Route path="/cambia" element={<CambiarContra />} />
-          <Route path="/recuperar" element={<Recuperarcontra />} />
+          
 
           <Route path="/perfil" element={<PerfilUsuario />} />
           <Route path="/Perfil" element={<PerfilEmpleado />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/update-password" element={<RecuperarPasswordUserLogin />} />
 
 
 
-            {user && user.rol === 'administrador' && (
-              <>
+          {user && user.rol === 'administrador' && (
+            <>
               <Route path="/Inicio" element={<Dashboard />} />
               <Route path="/perfil" element={<PerfilUsuario />} />
               <Route path="/soporte" element={<Soporte />} />
-      
-                <Route path="/Usuario" element={<Usuarios />} />
-                <Route path="/Actividad" element={<Actividad />} />
-                <Route path="/Costos" element={<Costos />} />
-                <Route path="/Cultivos" element={<Cultivos />} />
-                <Route path="/Finca" element={<Fincas />} />
-                <Route path="/Lote" element={<Lotes />} />
-                <Route path="/Asignacion" element={<Programaciones />} />
-                <Route path="/Recursos" element={<TipoRecursos />} />
-                <Route path="/Variedad" element={<Variedades />} />
-                <Route path="/Produccion" element={<Produccion />} />
+              <Route path="/Usuario" element={<Usuarios />} />
+              <Route path="/Actividad" element={<Actividad />} />
+              <Route path="/Costos" element={<Costos />} />
+              <Route path="/Cultivos" element={<Cultivos />} />
+              <Route path="/Finca" element={<Fincas />} />
+              <Route path="/Lote" element={<Lotes />} />
+              <Route path="/Asignacion" element={<Programaciones />} />
+              <Route path="/Recursos" element={<TipoRecursos />} />
+              <Route path="/Variedad" element={<Variedades />} />
+              <Route path="/Produccion" element={<Produccion />} />
+              <Route path="/Mapa" element={<Map />} />
+              <Route path="/Graficas" element={<Graficas />} />
+            </>
+          )}
 
-                <Route path="/Mapa" element={<Map />} />
-                <Route path="/Graficas" element={<Graficas />} />
-              </>
-            )}
+          {user && user.rol === 'empleado' && (
+            <>
+              <Route path="/Empleado" element={<Empleado />} /> 
+              <Route path="/InicioE" element={<DashboardEmpleado />} />
+              <Route path="/PerfilEmpleado" element={<PerfilEmpleado />} />
+              <Route path="/soporte" element={<SoporteEmpleado />} />
+            </>
+          )}
 
-            {user && user.rol === 'empleado' && (
-              <>
-                <Route path="/Empleado" element={<Empleado />} />
-                <Route path="/InicioE" element={<DashboardEmpleado />} />
-                <Route path="/PerfilEmpleado" element={<PerfilEmpleado />} />
-                <Route path="/soporte" element={<SoporteEmpleado />} />
-              </>
-            )}
 
-          
         </Routes>
       </GlobalProvider>
     </BrowserRouter >

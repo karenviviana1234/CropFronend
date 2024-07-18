@@ -1,180 +1,207 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import ButtonDesactivar from "../atomos/ButtonDesactivar";
 import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
-import { FaSistrix } from "react-icons/fa6";
+import FormEmpleado from "../moleculas/FormEmpleado.jsx";
+import { Input, Card, CardHeader } from "@nextui-org/react";
+import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 
 const Empleado = () => {
-  const [filterValue, setFilterValue] = React.useState("");
-  const [mensaje, setMensaje] = useState('');
-  const [modalAcciones, setModalAcciones] = useState(false);
+  const [filterValue, setFilterValue] = useState("");
+  const [estadoFilter, setEstadoFilter] = useState("");
   const [empleado, setEmpleado] = useState([]);
-  const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  const [formData, setFormData] = useState({ observacion: '' });
   const [filteredData, setFilteredData] = useState([]);
-  const [originalData, setOriginalData] = useState([]);
-//gfdrt
-
-  const toggleSidebar = () => {
-    setSidebarAbierto(!sidebarAbierto);
-  };
+  const [formData, setFormData] = useState({ observacion: '' });
 
   const ObtenerDatos = async () => {
     try {
       const token = localStorage.getItem("token");
       const getURL = "http://localhost:3000/Listar";
       const response = await axios.get(getURL, { headers: { token: token } });
-      console.log(response.data);
-      setEmpleado(response.data);
-      setOriginalData(response.data);
-      setFilteredData(response.data);
+      const activeData = response.data.filter(item => item.estado !== 'inactivo');
+      setEmpleado(activeData);
+      setFilteredData(activeData);
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
   };
 
-  const handleFilter = (event) => {
-    const filterValue = event.target.value.toLowerCase();
-    const newData = originalData.filter(row => {
-      return row.nombre_actividad.toLowerCase().includes(filterValue);
+  const filterData = (nombreFilter, estadoFilter) => {
+    const newData = empleado.filter(row => {
+      const matchesNombre = row.nombre_variedad.toLowerCase().includes(nombreFilter.toLowerCase());
+      const matchesEstado = estadoFilter ? row.estado === estadoFilter : true;
+      return matchesNombre && matchesEstado;
     });
     setFilteredData(newData);
   };
-  useEffect(() => {
-    setOriginalData(empleado);
-  }, [empleado]);
 
+  const handleFilter = (event) => {
+    const nombreFilter = event.target.value.toLowerCase();
+    setFilterValue(nombreFilter);
+    filterData(nombreFilter, estadoFilter);
+  };
 
+  const handleEstadoFilterChange = (event) => {
+    const selectedEstado = event.target.value;
+    setEstadoFilter(selectedEstado);
+    filterData(filterValue, selectedEstado);
+  };
 
   useEffect(() => {
     ObtenerDatos();
   }, []);
 
-  const handleSubmit = async (e, id_actividad) => {
+  const handleSubmitObservacion = async (e, formData, idActividad, estado) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const baseURL = `http://localhost:3000/EmpleadoMood/Registrar/${id_actividad}`;
+      const baseURL = `http://localhost:3000/Registrar/${idActividad}`;
       await axios.put(baseURL, formData, { headers: { token: token } });
-      setMensaje('Observación Registrada exitosamente');
-      setModalAcciones(true);
+      Swal.fire({
+        title: "Éxito",
+        text: "Observación registrada exitosamente",
+        icon: "success",
+      });
+      setFormData(formData); // Actualizar el estado de formData con la observación enviada
+      ObtenerDatos();
     } catch (error) {
-      console.error('Error al procesar la solicitud:', error);
+      console.error('Error al procesar la solicitud:', error.response?.data || error.message);
+      Swal.fire({
+        title: "Error",
+        text: error.response?.data?.message || "Error al procesar la solicitud",
+        icon: "error",
+      });
     }
   };
 
-  const Desactivar = (id_actividad) => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "¡Esto podrá afectar a tus lotes!",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonColor: "#006000",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, estoy seguro!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        try {
-          const token = localStorage.getItem("token");
-          axios
-            .put(`http://localhost:3000/cambioestado/${id_actividad}`, null, { headers: { token: token } })
-            .then((response) => {
-              if (response.status === 200) {
-                const nuevoEstado = response.data.message;
-                ObtenerDatos();
-                Swal.fire({
-                  title: "¡Actualizado!",
-                  text: `${nuevoEstado}`,
-                  icon: "success",
-                });
-              }
-            });
-        } catch (error) {
-          console.error("Error al obtener los datos:", error);
-        }
-      } else {
+  const handleIniciarTerminar = async (idActividad, estado) => {
+    if (estado === "activo") {
+      try {
+        const token = localStorage.getItem("token");
+        await axios.put(`http://localhost:3000/cambioestado/${idActividad}`, null, { headers: { token: token } });
         Swal.fire({
-          title: "Cancelado",
-          text: "La operación ha sido cancelada",
-          icon: "info",
+          title: "¡Actividad Iniciada!",
+          text: "La actividad ha sido iniciada correctamente.",
+          icon: "success",
+        });
+        ObtenerDatos();
+      } catch (error) {
+        console.error("Error al iniciar la actividad:", error);
+        Swal.fire({
+          title: "Error",
+          text: "Hubo un problema al iniciar la actividad",
+          icon: "error",
         });
       }
-    });
+    } else if (estado === "proceso") {
+      if (!formData.observacion) {
+        Swal.fire({
+          title: "Error",
+          text: "Debes proporcionar una observación antes de terminar la actividad.",
+          icon: "error",
+        });
+        return;
+      }
+      try {
+        const token = localStorage.getItem("token");
+        await axios.put(`http://localhost:3000/cambioestado/${idActividad}`, null, { headers: { token: token } });
+        Swal.fire({
+          title: "¡Actividad Terminada!",
+          text: "La actividad ha sido terminada correctamente.",
+          icon: "success",
+        });
+        setFormData({ observacion: '' }); // Limpiar el formulario después de terminar
+        ObtenerDatos();
+      } catch (error) {
+        console.error("Error al terminar la actividad:", error);
+        Swal.fire({
+          title: "Error",
+          text: "Hubo un problema al terminar la actividad",
+          icon: "error",
+        });
+      }
+    } else if (estado === "terminado") {
+      Swal.fire({
+        title: "Error",
+        text: "La actividad ya ha sido terminada.",
+        icon: "error",
+      });
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "No se puede iniciar la actividad si no está activa.",
+        icon: "error",
+      });
+    }
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
-    <div className={`contenido ${sidebarAbierto ? "contenido-extendido" : ""}`}>
-      <HeaderEmpleado toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+    <div className="contenidos">
+      <HeaderEmpleado />
 
-      {/* hola */}
-      <div className="mt-20 ml-40">
-        <div className='w-50 bg-[#E5E5E5] flex items-center rounded-lg'>
-          <input
-            className='w-full p-2 bg-[#E5E5E5] text-black rounded-lg border'
-            type="text"
-            onChange={handleFilter}
-            placeholder='Buscar'
-          />
-          <FaSistrix size={25} style={{ marginRight: 10 }} />
-        </div>
+      <div className="filter-input-container flex flex-row items-center space-x-4 m-10">
+        <Input
+          clearable
+          underlined
+          placeholder="Filtrar por variedad"
+          contentLeft={<SearchIcon fill="var(--nextui-colors-accents6)" size={16} />}
+          value={filterValue}
+          onChange={handleFilter}
+          className="w-64 h-10"
+        />
+        <select
+          value={estadoFilter}
+          onChange={handleEstadoFilterChange}
+          className="w-48 h-10 px-2 bg-gray-100 rounded-lg "
+        >
+          <option value="">Todos los estados</option>
+          <option value="activo">Activo</option>
+          <option value="proceso">En proceso</option>
+          <option value="terminado">Terminado</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
       </div>
 
-      <div className="flex flex-wrap ml-36">
 
-        {empleado.map((empleado, index) => (
+      <div className="flex flex-wrap ml-4">
+        {filteredData.map((actividad, index) => (
+          <Card className="py-4 m-4 mx-auto" key={index}>
+            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+              <p className="text-lg">Identificación: {actividad.identificacion}</p>
+              <p className="text-lg">Nombre: {actividad.nombre}</p>
+              <p className="text-lg">Fecha Inicio: {formatDate(actividad.fecha_inicio)}</p>
+              <p className="text-lg">Fecha Fin: {formatDate(actividad.fecha_fin)}</p>
+              <p className="text-lg">Variedad: {actividad.nombre_variedad}</p>
+              <p className="text-lg">id actividad: {actividad.id_actividad}</p>
+              <p className="text-lg">Actividad: {actividad.nombre_actividad}</p>
+              <p className="text-lg">Tiempo: {actividad.tiempo}</p>
+              <p className="text-lg">Estado: {actividad.estado}</p>
 
-          <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden m-4 w-90 flex justify-center">
+              {actividad.estado === "proceso" && (
+                <FormEmpleado
+                  actionLabel="Enviar Observación"
+                  handleSubmit={(e, formData) => handleSubmitObservacion(e, formData, actividad.id_actividad, actividad.estado)}
+                  initialData={{ observacion: formData.observacion }}
+                />
+              )}
 
-            <div className="p-6">
-              <p className="text-lg font-normal">Identificación: {empleado.identificacion}</p><br />
-              <p className="text-lg font-normal mb-1">Nombre: {empleado.nombre}</p>
-              <p className="text-lg font-normal">Fecha Inicio: {empleado.fecha_inicio}</p>
-              <p className="text-lg font-normal">Fecha Fin: {empleado.fecha_fin}</p>
-              <p className="text-lg font-normal">Variedad: {empleado.nombre_variedad}</p>
-              <p className="text-lg font-normal">Actividad: {empleado.nombre_actividad}</p>
-              <p className="text-lg font-normal">Tiempo: {empleado.tiempo}</p>
-              <p className="text-lg font-normal">Estado: {empleado.estado}</p>
-
-              <form onSubmit={(e) => handleSubmit(e, empleado.id_actividad)}>
-                <div className="mb-4">
-                  <label htmlFor="observacion" className="font-normal mb-1">
-                    Observación:
-                  </label>
-                  <div className='py-2'>
-                    <input
-                      className='w-60 border'
-                      type="text"
-                      label='Ingrese la observacion'
-                      id='observacion'
-                      name="observacion"
-                      value={formData.observacion}
-                      onChange={(e) => setFormData({ ...formData, observacion: e.target.value })}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="flex col">
+              {(actividad.estado === "activo" || actividad.estado === "proceso") && (
+                <div className="mt-4">
                   <button
-                    type="submit"
+                    onClick={() => handleIniciarTerminar(actividad.id_actividad, actividad.estado)}
                     className="mr-5 bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   >
-                    Enviar
-                  </button>
-                  <br />
-                  <button
-                    onClick={() => Desactivar(empleado.id_actividad)}
-                    className="bg-[#006000] hover:bg-[#153815] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    Estado
+                    {actividad.estado === "activo" ? "Iniciar Actividad" : "Terminar Actividad"}
                   </button>
                 </div>
-              </form>
-
-              
-            </div>
-          </div>
+              )}
+            </CardHeader>
+          </Card>
         ))}
       </div>
     </div>

@@ -9,6 +9,7 @@ import { TipoRecursosProvider } from './TipoRContext'
 import { VariedadesProvider } from './VariedadContext'
 import { UsuarioProvider } from './UsuariosContext'
 import { ProduccionProvider } from './ProduccionContext'
+import { PaswordProvider } from './PasswordContext'
 // import { AuthProvider } from './authContext.jsx'
 
 
@@ -31,10 +32,12 @@ const GlobalProvider = ({ children }) => {
                                     <CostosProvider>
                                         <ActividadesProvider>
                                             <LotesProvider>
+                                                <PaswordProvider>
                                                 <UsuarioProvider>
 
                                                 {children}
                                                 </UsuarioProvider>
+                                                </PaswordProvider>
                                             </LotesProvider>
                                         </ActividadesProvider>
                                     </CostosProvider>

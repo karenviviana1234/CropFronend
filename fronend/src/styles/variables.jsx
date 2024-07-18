@@ -15,8 +15,11 @@ import Img14 from '../assets/ImagenS-Photoroom.jpg'
 
 import Img16 from '../assets/Imagen3.png'
 import Img17 from '../assets/dashboardDos.png'
-import Logo from '../assets/Diseño_sin_título-removebg-preview.png'
+import Logo from '../assets/imagelogo.png'
+import LogoInicio from '../assets/imageinicio.png'
 import LogoVerde from '../assets/logoverde.png'
+
+import gifpaso from '../assets/Registra tus Herramientas.gif'
 
 const v = {
  /* Iconos */
@@ -73,7 +76,9 @@ iconoApp: faGooglePlay,
     image14:Img14,
     image16:Img16,
     image17:Img17,
+    gifpaso:gifpaso,
      imageLogo: Logo,
+     imageInicio: LogoInicio,
      imageLogoV: LogoVerde,
 }
 

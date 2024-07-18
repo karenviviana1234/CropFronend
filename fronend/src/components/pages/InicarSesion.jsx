@@ -56,6 +56,13 @@ export const InicioSesion = () => {
           localStorage.setItem('token', token)
           localStorage.setItem('user', JSON.stringify(response.data.user[0]))
           console.log(response.data.user[0])
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Bienvenido",
+            showConfirmButton: false,
+            timer: 1500
+          });
 
           const userRol = user[0]?.rol
 //condicional para separar los roles
@@ -74,6 +81,13 @@ export const InicioSesion = () => {
           console.log('Response', response)
           setMensaje('Credenciales incorrectas')
           setModalAcciones(true)
+          Swal.fire({
+            position: "top-center",
+            icon: "error",
+            title: "Datos Incorrectos",
+            showConfirmButton: false,
+            timer: 1500
+          });
         }
       })
     } catch (error) {
@@ -99,7 +113,7 @@ export const InicioSesion = () => {
             </Link>
             <span className="mb-3 text-4xl font-bold">Inicio De Sesion</span>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <img src={v.imageLogoV} style={{ width: '120px', height: '120px' }} alt="" />
+              <img src={v.imageInicio} style={{ width: '120px', height: '120px' }} alt="" />
             </div>
             <div className='py-2'>
               <Input
@@ -134,7 +148,7 @@ export const InicioSesion = () => {
             </div>
 
 
-            {/* <a href="/recuperar" className="text-gray-700 hover:text-gray-900 hover:underline flex justify-center mt-3">Olvidó su contraseña?</a> */}
+             <a href="/update-password" className="text-gray-700 hover:text-gray-900 hover:underline flex justify-center mt-3">Olvidó su contraseña?</a> 
 
             <button
               className="w-full mt-3 p-2 bg-[#006000] text-white  rounded-lg cursor-pointer  flex justify-center items-center "

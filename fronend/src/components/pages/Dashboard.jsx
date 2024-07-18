@@ -3,16 +3,16 @@ import Header from '../organismos/Header/Header';
 import v from '../../styles/variables';
 import './VistasCss.css';
 
-function DashboardEmpleado() {
+function Dashboard() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  const historiaRef = useRef(null);
+  const usoRef = useRef(null);
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
   };
 
-  const scrollHistoria = () => {
-    historiaRef.current.scrollIntoView({ behavior: 'smooth' });
+  const scrollUso = () => {
+    usoRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -26,19 +26,28 @@ function DashboardEmpleado() {
             <h2 className='text-custom-white text-3xl text-justify mr-40'>
               Una plataforma innovadora y accesible que transforma la gestión de cultivos y fincas. Pensada para optimizar la productividad y la rentabilidad de los usuarios, esta herramienta es tu aliado en la toma de decisiones informadas para el éxito de tus cultivos.
             </h2>
-            <button onClick={scrollHistoria} className='inline-block mt-3 w-28 h-11 bg-green text-xl text-custom-white rounded-lg cursor-pointer transition duration-500 ease-in-out hover:bg-transparent hover:border-white hover:translate-x-1 hover:font-medium hover:focus:outline-none hover:border-2'>
+            <button onClick={scrollUso} className='inline-block mt-3 w-28 h-11 bg-green text-xl text-custom-white rounded-lg cursor-pointer transition duration-500 ease-in-out hover:bg-transparent hover:border-white hover:translate-x-1 hover:font-medium hover:focus:outline-none hover:border-2'>
               Ver más
             </button>
           </div>
         </div>
       </div>
-      <div className='flex flex-col items-center' style={{height:'800px'}} ref={historiaRef}>
-        <h1 className='mt-28 mb-10 text-4xl text-center text-green bold'>Nuestra Historia</h1>
+      <div className='flex flex-col items-center' style={{height:'900px'}} ref={usoRef}>
+      <h1 className='text-4xl text-center text-green bold mt-28 mb-10'>¿Como Utilizar CropLink?</h1>
+      <div className='flex justify-center items-center text-justify mx-20'>
+      <p className='text-xl'>
+      ¡Bienvenido a CropLink! Sigue estos sencillos pasos para empezar a gestionar tus campos de manera eficiente. Abre la aplicación, inicia sesión, selecciona tu campo, agrega nuevas tareas y configura los detalles. ¡Es así de fácil! Mejora la productividad de tus cultivos con CropLink.
+      </p>
+      <img src={v.gifpaso} className='ml-10' style={{width: '600px', height: '600px'}} alt="Gif" />
+      </div>
+      </div>
+      <div className='flex flex-col items-center' style={{height:'800px'}}>
+        <h1 className='mt-20 mb-10 text-4xl text-center text-green bold'>Nuestra Historia</h1>
         <div className='flex justify-center items-center'>
-          <h2 className='ml-36 mr-20 flex justify-center text-xl'>
+          <p className='ml-36 mr-20 flex justify-center text-xl'>
             Crop Link surge a partir de la problemática que enfrentan muchos campesinos en sus cultivos, quienes a menudo carecen del tiempo o la disposición para estar pendientes de sus tierras. Tradicionalmente, el control de las fincas se realizaba de manera física, lo que resultaba en una organización poco eficiente y un desperdicio de papel perjudicial para el medio ambiente.
             Por lo tanto, se creó esta plataforma para que los administradores y dueños de fincas controlen sus cultivos de forma remota y en tiempo real, con un seguimiento detallado de todas las actividades en cada lote, asegurando un control efectivo de las producciones.
-          </h2>
+          </p>
           <img src={v.image17} style={{ width: '500px', height: '400px', marginRight: '60px' }} alt="Graph" />
         </div>
         </div>
@@ -67,4 +76,4 @@ function DashboardEmpleado() {
   );
 }
 
-export default DashboardEmpleado;
+export default Dashboard;

@@ -40,7 +40,9 @@ export function Costos() {
 
     function Ejemplo() {
 
-        const [filterValue, setFilterValue] = React.useState("");
+        const [filterValue, 
+            
+        ] = React.useState("");
         const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
         const [statusFilter, setStatusFilter] = React.useState("all");
         const [rowsPerPage, setRowsPerPage] = React.useState(5);
