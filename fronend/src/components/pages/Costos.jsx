@@ -40,17 +40,15 @@ export function Costos() {
 
     function Ejemplo() {
 
-        const [filterValue, 
-            
-        ] = React.useState("");
-        const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState("all");
-        const [rowsPerPage, setRowsPerPage] = React.useState(5);
-        const [sortDescriptor, setSortDescriptor] = React.useState({
+        const [filterValue, ] = useState("");
+        const [selectedKeys, setSelectedKeys] = useState(new Set([]));
+        const [statusFilter, setStatusFilter] = useState("all");
+        const [rowsPerPage, setRowsPerPage] = useState(5);
+        const [sortDescriptor, setSortDescriptor] = useState({
             column: "fecha",
             direction: "ascending",
         });
-        const [page, setPage] = React.useState(1);
+        const [page, setPage] = useState(1);
 
         const statusOptions = [
             { name: "Todos", uid: "todos" },

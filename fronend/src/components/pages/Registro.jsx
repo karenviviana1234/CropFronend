@@ -15,7 +15,6 @@ import Swal from 'sweetalert2';
 
 export const Registro = () => {
 
-  //useState se usa para gestionar el estado de los campos del formulario.
   const navigate = useNavigate()
   //mensaje para mostrar mensajes de éxito o error.
   const [mensaje, setMensaje] = useState('')

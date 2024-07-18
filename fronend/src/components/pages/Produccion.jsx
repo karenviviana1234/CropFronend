@@ -43,15 +43,15 @@ export function Produccion() {
     function EjemploProduccion() {
 
         //page se utilizan para gestionar el estado de la búsqueda, filtrado, selección y paginación.
-        const [filterValue, setFilterValue] = React.useState("");
-        const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState("all");
-        const [rowsPerPage, setRowsPerPage] = React.useState(5);
-        const [sortDescriptor, setSortDescriptor] = React.useState({
+        const [filterValue, setFilterValue] = useState("");
+        const [selectedKeys, setSelectedKeys] = useState(new Set([]));
+        const [statusFilter, setStatusFilter] = useState("all");
+        const [rowsPerPage, setRowsPerPage] = useState(5);
+        const [sortDescriptor, setSortDescriptor] = useState({
             column: "fecha",
             direction: "ascending",
         });
-        const [page, setPage] = React.useState(1);
+        const [page, setPage] = useState(1);
         const statusOptions = [
             { name: "Todos", uid: "todos" },
             { name: "Activo", uid: "inactivo" },

@@ -38,14 +38,14 @@ export function Programaciones() {
         todos: "primary",
     };
     function Ejemplo({ programaciones }) {
-        const [filterValue, setFilterValue] = React.useState("");
-        const [statusFilter, setStatusFilter] = React.useState("todos");
-        const [rowsPerPage, setRowsPerPage] = React.useState(5);
-        const [sortDescriptor, setSortDescriptor] = React.useState({
+        const [filterValue, setFilterValue] = useState("");
+        const [statusFilter, setStatusFilter] = useState("todos");
+        const [rowsPerPage, setRowsPerPage] = useState(5);
+        const [sortDescriptor, setSortDescriptor] = useState({
             column: "fecha",
             direction: "ascending",
         });
-        const [page, setPage] = React.useState(1);
+        const [page, setPage] = useState(1);
 
         const statusOptions = [
             { name: "Todos", uid: "todos" },

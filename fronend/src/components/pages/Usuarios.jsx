@@ -42,20 +42,22 @@ export function Usuarios() {
     function EjemploUsuario() {
 
         //page se utilizan para gestionar el estado de la búsqueda, filtrado, selección y paginación.
-        const [filterValue, setFilterValue] = React.useState("");
-        const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-        const [statusFilter, setStatusFilter] = React.useState("all");
-        const [rowsPerPage, setRowsPerPage] = React.useState(5);
-        const [sortDescriptor, setSortDescriptor] = React.useState({
+        const [filterValue, setFilterValue] = useState("");
+        const [selectedKeys, setSelectedKeys] = useState(new Set([]));
+        const [statusFilter, setStatusFilter] = useState("all");
+        const [rowsPerPage, setRowsPerPage] = useState(5);
+
+        const [sortDescriptor, setSortDescriptor] = useState({
             column: "fecha",
             direction: "ascending",
         });
-        const [page, setPage] = React.useState(1);
+        const [page, setPage] = useState(1);
         const statusOptions = [
             { name: "Todos", uid: "todos" },
             { name: "Activo", uid: "inactivo" },
             { name: "Inactivo", uid: "activo" },
         ];
+        // const [estadonuevo, setnuevo] =useState([])
 
         const hasSearchFilter = Boolean(filterValue);
         //filteredItems filtra los usuarios según el valor de búsqueda y el filtro de estado
@@ -73,7 +75,7 @@ export function Usuarios() {
                 );
             }
 
-            if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+            if (statusFilter !== "all " && Array.from(statusFilter).length !== statusOptions.length) {
                 filteredusuarios = filteredusuarios.filter(usuario =>
                     Array.from(statusFilter).includes(usuario.estado)
                 );
@@ -319,6 +321,7 @@ export function Usuarios() {
     const [usuarios, setusuarios] = useState([]);
     const { idUsuario, setUsuarioId } = useContext(UsuarioContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
+// const nuevo =response.data.filter(item => item.estado === "activo" )
 
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
@@ -332,10 +335,9 @@ export function Usuarios() {
     const peticionGet = async () => {
         try {
             await axiosClient.get('/usuario/listarUsuarios').then((response) => {
-                console.log(response.data)
                 setusuarios(response.data)
             })
-        } catch (error) {
+        } catch (error) { 
             console.log('Error en el servidor ' + error)
         }
     };
