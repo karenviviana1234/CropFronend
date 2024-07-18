@@ -29,7 +29,7 @@ import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
 import DescargarPDF from '../organismos/DescargarPDF.jsx';
-
+import TabsGreen from '../moleculas/Tabs.jsx';
 export function Fincas() {
 
   const statusColorMap = {
@@ -52,7 +52,7 @@ export function Fincas() {
       { name: "Todos", uid: "todos" },
       { name: "Activo", uid: "activo" },
       { name: "Inactivo", uid: "inactivo" },
-  ];
+    ];
 
     const hasSearchFilter = Boolean(filterValue);
 
@@ -113,7 +113,7 @@ export function Fincas() {
           );
         case "actions":
           return (
-            <div className="relative flex items-center justify-start gap-2">
+            <div className="relative flex items-center justify-end gap-2">
               <Dropdown>
                 <div className="flex items-center gap-2">
                   <ButtonActualizar
@@ -122,7 +122,7 @@ export function Fincas() {
                     onClick={() => peticionDesactivar(finca.id_finca)}
                     estado={finca.estado}
                   />
-                  <DescargarPDF/>
+                  <DescargarPDF />
                 </div>
               </Dropdown>
             </div>
@@ -189,6 +189,7 @@ export function Fincas() {
                       Estado
                     </Button>
                   </DropdownTrigger>
+
                   <DropdownMenu
                     disallowEmptySelection
                     aria-label="Menu de acciones"
@@ -205,7 +206,7 @@ export function Fincas() {
                     ))}
                   </DropdownMenu>
                 </Dropdown>
-                <Button className="z-1 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                <Button className="z-1 mr-40 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                   Registrar
                 </Button>
               </div>
@@ -224,6 +225,14 @@ export function Fincas() {
                 </select>
               </label>
             </div>
+          </div>
+          <div>
+          <div className='flex justify-normal'>
+            <TabsGreen label="Lote" href="/Lote" />
+            <TabsGreen label="Cultivos" href="/Cultivos" />
+            <TabsGreen label="Variedad" href="/Variedad" />
+            <TabsGreen label="Recursos" href="/Recursos" />
+          </div>          
           </div>
         </>
 
@@ -258,11 +267,9 @@ export function Fincas() {
         </div>
       );
     }, [items.length, page, pages, hasSearchFilter]);
-    
     return (
-      <div className="flex items-center justify-center p-4 w-full">
-                <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
-                <Table
+      <div className="flex items-center justify-center">
+        <Table
           aria-label="Tabla"
           isHeaderSticky
           bottomContent={bottomContent}
@@ -299,7 +306,6 @@ export function Fincas() {
           </TableBody>
         </Table>
       </div>
-      </div>
 
     );
   }
@@ -312,9 +318,9 @@ export function Fincas() {
   const { idFinca, setFincaId } = useContext(FincasContext)
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
 
-    const toggleSidebar = () => {
-        setSidebarAbierto(!sidebarAbierto);
-    };
+  const toggleSidebar = () => {
+    setSidebarAbierto(!sidebarAbierto);
+  };
 
   useEffect(() => {
 
@@ -341,47 +347,47 @@ export function Fincas() {
 
   const data = [
     {
-        uid: 'id_finca',
-        name: 'Id',  // El titulo de los id
-        sortable: true
+      uid: 'id_finca',
+      name: 'Id',  // El titulo de los id
+      sortable: true
     },
     {
-        uid: 'nombre_finca',
-        name: 'Nombre finca',
-        sortable: true
+      uid: 'nombre_finca',
+      name: 'Nombre finca',
+      sortable: true
     },
     {
-        uid: 'longitud',
-        name: 'Longitud',
-        sortable: true
+      uid: 'longitud',
+      name: 'Longitud',
+      sortable: true
     },
     {
-        uid: 'latitud',
-        name: 'Latitud',
-        sortable: true
+      uid: 'latitud',
+      name: 'Latitud',
+      sortable: true
     },
     {
-        uid: 'estado',
-        name: 'Estado',
-        sortable: true
+      uid: 'estado',
+      name: 'Estado',
+      sortable: true
     },
     {
-        uid: 'actions',
-        name: "Acciones",
-        sortable: true
+      uid: 'actions',
+      name: "Acciones",
+      sortable: true
     }
-];
+  ];
 
-//ua
   //PETICION PARA DESACTIVAR FINCAS    
   const peticionDesactivar = async (id_finca) => {
 
+    // console.log("ID del lotes a desactivar:", id_lote);
     try {
       axiosClient.put(`/finca/desactivarFinca/${id_finca}`, null).then((response) => {
         console.log(response.data)
         if (response.status == 200) {
           const nuevoEstado = response.data.message;
-         
+          /* fetchData() */
           Swal.fire({
             title: "¿Estás seguro?",
             text: "¡Esto podra afectar a tus fincas!",
@@ -424,7 +430,7 @@ export function Fincas() {
             Swal.fire({
               position: "center", // Posición centrada
               icon: "success",
-              title: "Finca registrado con éxito",
+              title: "Lote registrado con éxito",
               showConfirmButton: false,
               timer: 1500
             });
@@ -446,7 +452,7 @@ export function Fincas() {
               timer: 1500
             });
             peticionGet()
-          } else { 
+          } else {
             alert('Error al actualizar')
           }
         })
@@ -463,37 +469,36 @@ export function Fincas() {
     setInitialData(initialData)
     setModalOpen(true)
     setMode(mode)
-}
+  }
 
   return (
 
 
     <>
-       
-        <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-32 items-center p-10'>
 
-            <AccionesModal
-                isOpen={modalAcciones}
-                onClose={() => setModalAcciones(false)}
-                label={mensaje}
-            />
-            <FincasModal
-                open={modalOpen}
-                onClose={() => setModalOpen(false)}
-                title={mode === 'create' ? 'Registrar Finca' : 'Actualizar Finca'}
-                actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                initialData={initialData}
-                handleSubmit={handleSubmit}
-                mode={mode}
-            />
-            <Ejemplo
-                data={data}
-                fincas={fincas}
-            />
+      <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+        <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+        <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+          <AccionesModal
+            isOpen={modalAcciones}
+            onClose={() => setModalAcciones(false)}
+            label={mensaje}
+          />
+          <FincasModal
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+            title={mode === 'create' ? 'Registrar actividades' : 'Actualizar actividades'}
+            actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+            initialData={initialData}
+            handleSubmit={handleSubmit}
+            mode={mode}
+          />
+          <Ejemplo
+            data={data}
+            fincas={fincas}
+          />
         </div>
-        </div>
+      </div>
     </>
-)
+  )
 }

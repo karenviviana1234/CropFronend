@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import CultivosContext from '../../context/CultivosContext.jsx';
 import Header from '../organismos/Header/Header.jsx';
+import TabsGreen from '../moleculas/Tabs.jsx';
 import { format } from 'date-fns';
 import {
     Table,
@@ -97,7 +98,7 @@ export function Cultivos() {
 
         const renderCell = React.useCallback((cultivo, columnKey) => {
             const cellValue = cultivo[columnKey];
-        
+
             switch (columnKey) {
                 case "fecha_inicio":
                     // Formatear la fecha para que solo muestre la fecha sin la hora
@@ -127,8 +128,8 @@ export function Cultivos() {
                     return cellValue;
             }
         }, []);
-        
-        
+
+
 
         const onNextPage = React.useCallback(() => {
             if (page < pages) {
@@ -221,6 +222,13 @@ export function Cultivos() {
                                     <option value="20">20</option>
                                 </select>
                             </label>
+                        </div>
+                        <div className='flex justify-normal'>
+                        <TabsGreen label="Finca" href="/Finca" />
+                            <TabsGreen label="Lote" href="/Lote" />
+                            <TabsGreen label="Cultivos" href="/Cultivos" />
+                            <TabsGreen label="Variedad" href="/Variedad" />
+                            <TabsGreen label="Recursos" href="/Recursos" />
                         </div>
                     </div>
                 </>

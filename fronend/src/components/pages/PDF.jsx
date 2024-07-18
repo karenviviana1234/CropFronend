@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import HeaderPDF from '../moleculas/PDF/HeaderPDF';
+import axiosClient from '../axiosClient';
 
 const styles = StyleSheet.create({
     page: {
@@ -44,11 +45,11 @@ const styles = StyleSheet.create({
     },
     tableRow: {
         flexDirection: 'row',
-        alignItems: 'stretch', // Asegura que todas las celdas tengan la misma altura
+        alignItems: 'stretch',
     },
     tableCell: {
-        flex: 1, // Hace que todas las celdas tengan el mismo ancho
-        justifyContent: 'center', // Centra verticalmente el contenido
+        flex: 1,
+        justifyContent: 'center',
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: '#FFFFFF',
@@ -57,8 +58,8 @@ const styles = StyleSheet.create({
         fontSize: '11px',
     },
     tableData: {
-        flex: 1, // Hace que todas las celdas tengan el mismo ancho
-        justifyContent: 'center', // Centra verticalmente el contenido
+        flex: 1,
+        justifyContent: 'center',
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: '#FFFFFF',
@@ -67,8 +68,8 @@ const styles = StyleSheet.create({
         fontSize: '11px',
     },
     tableCellTotal: {
-        flex: 5, // Ajusta el ancho de la celda "Total"
-        justifyContent: 'center', // Centra verticalmente el contenido
+        flex: 3,
+        justifyContent: 'center',
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: '#FFFFFF',
@@ -77,8 +78,8 @@ const styles = StyleSheet.create({
         fontSize: '11px',
     },
     tableDataTotal: {
-        flex: 1, // Hace que todas las celdas tengan el mismo ancho
-        justifyContent: 'center', // Centra verticalmente el contenido
+        flex: 1,
+        justifyContent: 'center',
         borderStyle: 'solid',
         borderWidth: 1,
         borderColor: '#FFFFFF',
@@ -99,67 +100,87 @@ const styles = StyleSheet.create({
     },
 });
 
-const PDF = () => (
-    <Document>
-        <Page size="A4" style={styles.page}>
-            <HeaderPDF />
-            <View style={styles.container}>
-                <View style={styles.section}>
-                    <Text style={styles.tituloUno}>REPORTE GENERAL</Text>
-                    <Text style={styles.text}>INVERSIONES</Text>
-                    <View style={styles.line} />
-                    <View style={styles.table}>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}><Text>Numero</Text></View>
-                            <View style={styles.tableCell}><Text>Lote</Text></View>
-                            <View style={styles.tableCell}><Text>Cultivo</Text></View>
-                            <View style={styles.tableCell}><Text>Cantidad Sembrada</Text></View>
-                            <View style={styles.tableCell}><Text>Asignacion</Text></View>
-                            <View style={styles.tableCell}><Text>Valor Inversion</Text></View>
+const PDF = () => {
+    const [produccion, setProduccion] = useState([]);
+
+    useEffect(() => {
+        const fetchProduccion = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const getURL = "http://localhost:3000/listarProduccion";
+                const response = await axiosClient.get(getURL, {
+                    headers: { token: token }
+                });
+                console.log(response.data);
+                setProduccion(response.data);
+            } catch (error) {
+                console.error("Error al obtener la información", error.response ? error.response.data : error.message);
+            }
+        };
+        fetchProduccion();
+    }, []);
+
+    return (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                <HeaderPDF />
+                <View style={styles.container}>
+                    <View style={styles.section}>
+                        <Text style={styles.tituloUno}>REPORTE GENERAL</Text>
+                        <Text style={styles.text}>INVERSIONES</Text>
+                        <View style={styles.line} />
+                        <View style={styles.table}>
+                            <View style={styles.tableRow}>
+                                <View style={styles.tableCell}><Text>ID</Text></View>
+                                <View style={styles.tableCell}><Text>Nombre</Text></View>
+                                <View style={styles.tableCell}><Text>Asignacion</Text></View>
+                                <View style={styles.tableCell}><Text>Valor de la Inversion</Text></View>
+                            </View>
+                            {produccion.map((item, index) => (
+                                <View key={index} style={styles.tableRow}>
+                                    <View style={styles.tableData}><Text>{item.id_inversion}</Text></View>
+                                    <View style={styles.tableData}><Text>{item.nombre_lote}</Text></View>
+                                    <View style={styles.tableData}><Text>{item.fk_id_programacion}</Text></View>
+                                    <View style={styles.tableData}><Text>{item.valor_inversion}</Text></View>
+                                </View>
+                            ))}
+                            <View style={styles.tableRow}>
+                                <View style={styles.tableCellTotal}><Text>Total:</Text></View>
+                                <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
+                            </View>
                         </View>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableData}><Text>1</Text></View>
-                            <View style={styles.tableData}><Text>B</Text></View>
-                            <View style={styles.tableData}><Text>2</Text></View>
-                            <View style={styles.tableData}><Text>2</Text></View>
-                            <View style={styles.tableData}><Text>$2.000.0000</Text></View>
-                        </View>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCellTotal}><Text>Total:</Text></View>
-                            <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
+                    </View>
+                    <View style={styles.section}>
+                        <Text style={styles.text}>PRODUCCIONES</Text>
+                        <View style={styles.line} />
+                        <View style={styles.table}>
+                            <View style={styles.tableRow}>
+                                <View style={styles.tableCell}><Text>Numero</Text></View>
+                                <View style={styles.tableCell}><Text>Lote</Text></View>
+                                <View style={styles.tableCell}><Text>Cantidad Produccion</Text></View>
+                                <View style={styles.tableCell}><Text>Producción</Text></View>
+                            </View>
+                            {produccion.map((item, index) => (
+                                <View key={index} style={styles.tableRow}>
+                                    <View style={styles.tableData}><Text>{item.id_producccion}</Text></View>
+                                    <View style={styles.tableData}><Text>{item.nombre_lote}</Text></View>
+                                    <View style={styles.tableData}><Text>{item.cantidad_produccion}</Text></View>
+                                    <View style={styles.tableData}><Text>{item.precio}</Text></View>
+                                </View>
+                            ))}
+                            <View style={styles.tableRow}>
+                                <View style={styles.tableCellTotal}><Text>Total:</Text></View>
+                                <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
+                            </View>
                         </View>
                     </View>
                 </View>
-                <View style={styles.section}>
-                    <Text style={styles.text}>PRODUCCIONES</Text>
-                    <View style={styles.line} />
-                    <View style={styles.table}>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCell}><Text>Numero</Text></View>
-                            <View style={styles.tableCell}><Text>Lote</Text></View>
-                            <View style={styles.tableCell}><Text>Cultivo</Text></View>
-                            <View style={styles.tableCell}><Text>Cantidad</Text><Text>Produccion</Text></View>
-                            <View style={styles.tableCell}><Text>Producción</Text></View>
-                        </View>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableData}><Text>1</Text></View>
-                            <View style={styles.tableData}><Text>B</Text></View>
-                            <View style={styles.tableData}><Text>Cebolla</Text></View>
-                            <View style={styles.tableData}><Text>50</Text></View>
-                            <View style={styles.tableData}><Text>200000</Text></View>
-                        </View>
-                        <View style={styles.tableRow}>
-                            <View style={styles.tableCellTotal}><Text>Total:</Text></View>
-                            <View style={styles.tableDataTotal}><Text>$4.000.000</Text></View>
-                        </View>
-                    </View>
-                </View>
-            </View>
-            <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
-                `Página ${pageNumber} de ${totalPages}`
-            )} fixed />
-        </Page>
-    </Document>
-);
+                <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (
+                    `Página ${pageNumber} de ${totalPages}`
+                )} fixed />
+            </Page>
+        </Document>
+    );
+};
 
 export default PDF;

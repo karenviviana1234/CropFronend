@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import Logo from '../../../assets/image-removebg-preview.png';
+import v from '../../../styles/variables';
 
 const styles = StyleSheet.create({
     header: {
@@ -59,7 +59,7 @@ const HeaderPDF = ({ title }) => (
             <Text style={styles.title}>Daniel Felipe Gonzalez Bravo</Text>
         </div>
         <div style={styles.headerTwo}>
-            <Image src={Logo} style={styles.image} />
+            <Image src={v.imageLogo} style={styles.image} />
             <Text style={styles.titletwo}>CropLink</Text>
         </div>
     </View>

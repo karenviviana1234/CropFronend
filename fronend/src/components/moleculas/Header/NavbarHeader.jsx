@@ -35,30 +35,27 @@ function NavbarHeader({ toggleSidebar, sidebarAbierto }) {
 
   return (
     <>
-      <div className={`w-full top-0 fixed items-center h-12 bg-green transition-margin-left duration-600`} style={{ marginLeft: sidebarAbierto ? '' : '', width: navbarWidth, zIndex: 100 }}>
-        <div className="mt-1 flex items-center justify-between">
-          <div className="w-1/7 text-left">
+     <div className={`w-full top-0 fixed h-12 bg-green transition-margin-left duration-600 flex items-center`} style={{ marginLeft: sidebarAbierto ? '' : '', width: navbarWidth, zIndex: 100 }}>
+    <div className="flex items-center justify-between w-full px-4">
+        <div className="flex items-center w-1/7">
             <div className={`text-custom-white relative z-1 ${sidebarAbierto ? '' : 'transform rotate-180'}`} onClick={toggleSidebar}>
-              <Icon icon={v.iconoFlechaDerecha} />
+                <Icon icon={v.iconoFlechaDerecha} />
             </div>
-          </div>
-          <div className="text-center">
-            <h3 className='text-3xl ml-40 text-custom-white'>{vistaActual}</h3>
-          </div>
-          <div className="w-1/5 ">
-            <div className='items-center flex content-center'>
-              {/* Utiliza Link para redirigir a la nueva vista al hacer clic en el icono de perfil */}
-              <Link to="/perfil" className="flex items-center">
-                <Icon icon={v.iconoPerfilUsuario} />
-                <div>
-                  <h2 className="text-custom-white ml-3 font-bold">{user?.nombre}</h2>
-                  <h2 className="text-custom-white ml-3">{user?.rol}</h2>
-                </div>
-              </Link>
-            </div>
-          </div>
         </div>
-      </div>
+        <div className="flex-grow text-center">
+            <h3 className="text-3xl text-custom-white ml-60">{vistaActual}</h3>
+        </div>
+        <div className="flex items-center w-1/5 justify-end mr-10">
+            <Link to="/perfil" className="flex items-center">
+                <Icon icon={v.iconoPerfilUsuario} />
+                <div className="ml-3">
+                    <h2 className="text-custom-white font-bold">{user?.nombre}</h2>
+                    <h2 className="text-custom-white">{user?.rol}</h2>
+                </div>
+            </Link>
+        </div>
+    </div>
+</div>
     </>
   );
 }

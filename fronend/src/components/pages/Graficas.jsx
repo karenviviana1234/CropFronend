@@ -199,27 +199,27 @@ function Grafica() {
   return (
     <div className={`contenidos ${sidebarAbierto ? 'contenido-extendidos' : ''}`}>
       <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-      <div className='m-20 border shadow-2xl p-10'>
-        <h1 className='mb-20 text-4xl text-center text-gray-700'>Distribución de las Producciones Totales por Finca Registrada</h1>
-        <h2 className='mb-3 font-semibold'>Fincas Registradas:</h2>
+      <div className='mx-20 my-5 border shadow-2xl p-8'style={{ height: '550px'}}>
+        <h1 className='mb-2 text-4xl text-center text-gray-700'>Producciones</h1>
+        <h2 className='font-semibold'>Fincas Registradas:</h2>
         <ReactEchartsCore
           echarts={echarts}
           option={optionProducciones}
           notMerge={true}
           lazyUpdate={true}
-          style={{ height: '700px', width: '100%' }}
+          style={{ height: '440px', width: '100%' }}
           theme="light"
         />
       </div>
-      <div className='m-20 border shadow-2xl p-10'>
-        <h1 className='mb-20 text-4xl text-center text-gray-700'>Distribución de las Inversiones Totales por Finca Registrada</h1>
-        <h2 className='mb-3 font-semibold'>Fincas Registradas:</h2>
+      <div className='mx-20 my-5 border shadow-2xl p-8'style={{ height: '550px'}}>
+        <h1 className='mb-2 text-4xl text-center text-gray-700'>Inversiones</h1>
+        <h2 className='font-semibold'>Fincas Registradas:</h2>
         <ReactEchartsCore
           echarts={echarts}
           option={optionInversiones}
           notMerge={true}
           lazyUpdate={true}
-          style={{ height: '600px', width: '100%' }}
+          style={{ height: '440px', width: '100%' }}
           theme="light"
         />
       </div>

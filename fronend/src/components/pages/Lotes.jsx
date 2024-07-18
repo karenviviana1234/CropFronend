@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import LotesContext from '../../context/LotesContext.jsx';
 import Header from '../organismos/Header/Header.jsx';
+import TabsGreen from '../moleculas/Tabs.jsx';
 import {
     Table,
     TableHeader,
@@ -221,6 +222,12 @@ export function Lotes() {
                                 </select>
                             </label>
                         </div>
+                        <div className='flex justify-normal'>
+                            <TabsGreen label="Finca" href="/Finca" />
+                            <TabsGreen label="Cultivos" href="/Cultivos" />
+                            <TabsGreen label="Variedad" href="/Variedad" />
+                            <TabsGreen label="Recursos" href="/Recursos" />
+                        </div>
                     </div>
                 </>
 
@@ -260,43 +267,43 @@ export function Lotes() {
         return (
             <div className="flex items-center justify-center p-4 w-full">
                 <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
-                <Table
-                    aria-label="Tabla"
-                    isHeaderSticky
-                    bottomContent={bottomContent}
-                    bottomContentPlacement="outside"
-                    classNames={{
-                        wrapper: "max-h-[100%] max-w-[100%]",
-                    }}
-                    className="flex"
-                    selectedKeys={selectedKeys}
-                    // selectionMode="multiple"
-                    sortDescriptor={sortDescriptor}
-                    topContent={topContent}
-                    topContentPlacement="outside"
-                    onSelectionChange={setSelectedKeys}
-                    onSortChange={setSortDescriptor}
-                >
-                    <TableHeader columns={data}>
-                        {(column) => (
-                            <TableColumn
-                                key={column.uid}
-                                align={column.uid === "actions" ? "center" : "start"}
-                                allowsSorting={column.sortable}
-                            >
-                                {column.name}
-                            </TableColumn>
-                        )}
-                    </TableHeader>
-                    <TableBody emptyContent={"No hay lotes registrados"} items={sortedItems}>
-                        {(item) => (
-                            <TableRow key={item.id_lote}>
-                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
+                    <Table
+                        aria-label="Tabla"
+                        isHeaderSticky
+                        bottomContent={bottomContent}
+                        bottomContentPlacement="outside"
+                        classNames={{
+                            wrapper: "max-h-[100%] max-w-[100%]",
+                        }}
+                        className="flex"
+                        selectedKeys={selectedKeys}
+                        // selectionMode="multiple"
+                        sortDescriptor={sortDescriptor}
+                        topContent={topContent}
+                        topContentPlacement="outside"
+                        onSelectionChange={setSelectedKeys}
+                        onSortChange={setSortDescriptor}
+                    >
+                        <TableHeader columns={data}>
+                            {(column) => (
+                                <TableColumn
+                                    key={column.uid}
+                                    align={column.uid === "actions" ? "center" : "start"}
+                                    allowsSorting={column.sortable}
+                                >
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody emptyContent={"No hay lotes registrados"} items={sortedItems}>
+                            {(item) => (
+                                <TableRow key={item.id_lote}>
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
 
         );
@@ -376,10 +383,10 @@ export function Lotes() {
         try {
             const response = await axiosClient.put(`/desactivarlote/${id_lote}`, null);
             console.log(response.data);
-            
+
             if (response.status === 200) {
                 const nuevoEstado = response.data.message;
-                
+
                 Swal.fire({
                     title: "¿Estás seguro?",
                     text: "¡Esto podrá afectar a tus lotes!",
@@ -422,7 +429,7 @@ export function Lotes() {
             }
         }
     };
-    
+
     const mostrarAlertaError = (mensaje) => {
         Swal.fire({
             position: "center",
@@ -433,7 +440,7 @@ export function Lotes() {
             timer: 2000
         });
     };
-    
+
     // registrar y actualizar lote
     const handleSubmit = async (formData, e) => {
         console.log('Datos enviados:', formData);
@@ -491,29 +498,29 @@ export function Lotes() {
     return (
 
         <>
-             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-32 items-center p-10'>
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <LotesModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    lotes={lotes}
-                />
+            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-32 items-center p-10'>
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <LotesModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar lotes' : 'Actualizar lotes'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        lotes={lotes}
+                    />
+                </div>
             </div>
-             </div> 
         </>
     )
 }
