@@ -31,8 +31,8 @@ const FondoInicio = () => {
             </nav>
 
             <div className="texto">
-                <h1>Bienvenido a Crop Link</h1>
-                <p>¡Bienvenido a Crop Link tu aliado en el mundo de la agricultura digital. Explora nuestras características y mejora tu rendimiento agrícola</p>
+                <h1>Bienvenido a Huellas Peludas</h1>
+                <p>¡Bienvenido </p>
             </div>
             </div>
             <div>
