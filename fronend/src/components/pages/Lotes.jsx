@@ -53,6 +53,7 @@ export function Lotes() {
             { name: "Activo", uid: "inactivo" },
             { name: "Inactivo", uid: "activo" },
         ];
+        // const [estadonuevo, setEstadonuevo] = useState([]);
 
         const hasSearchFilter = Boolean(filterValue);
         const filteredItems = React.useMemo(() => {
@@ -318,6 +319,7 @@ export function Lotes() {
     const [lotes, setLotes] = useState([]);
     const { idLote, setLoteId } = useContext(LotesContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  // const nuevo = response.data.filter(item=> item.estado === "activo")
 
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
@@ -331,7 +333,6 @@ export function Lotes() {
     const peticionGet = async () => {
         try {
             await axiosClient.get('/listarlote').then((response) => {
-                console.log(response.data)
                 setLotes(response.data)
             })
         } catch (error) {
@@ -340,6 +341,8 @@ export function Lotes() {
     };
 
     // columnas de la tabla lotes
+  // setEstadonuevo(nuevo)
+
     const data = [
         {
             uid: 'id_lote',

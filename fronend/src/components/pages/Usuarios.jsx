@@ -33,6 +33,8 @@ import Header from '../organismos/Header/Header.jsx';
 
 export function Usuarios() {
 //estados que se utililzan
+        // const [estadonuevo, setEstadonuevo] = useState([]);
+
     const statusColorMap = {
         activo: "success",
         inactivo: "danger",
@@ -46,7 +48,6 @@ export function Usuarios() {
         const [selectedKeys, setSelectedKeys] = useState(new Set([]));
         const [statusFilter, setStatusFilter] = useState("all");
         const [rowsPerPage, setRowsPerPage] = useState(5);
-
         const [sortDescriptor, setSortDescriptor] = useState({
             column: "fecha",
             direction: "ascending",
@@ -316,16 +317,17 @@ export function Usuarios() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAcciones, setModalAcciones] = useState(false);
     const [mode, setMode] = useState('create');
+    // const nuevo =response.data.filter(item => item.estado === "activo" )
     const [initialData, setInitialData] = useState(null);
     const [mensaje, setMensaje] = useState('')
     const [usuarios, setusuarios] = useState([]);
     const { idUsuario, setUsuarioId } = useContext(UsuarioContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
-// const nuevo =response.data.filter(item => item.estado === "activo" )
-
+    
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
     };
+
 //Peticiones HTTP: peticionGet obtiene los usuarios del servidor.
 //Carga los usuarios al montar el componente.
     useEffect(() => {
@@ -341,7 +343,9 @@ export function Usuarios() {
             console.log('Error en el servidor ' + error)
         }
     };
+
 //datos de la tabla
+ // setEstadonuevo(nuevo)
     const data = [
         {
             uid: 'identificacion',

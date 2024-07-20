@@ -42,6 +42,7 @@ export function Fincas() {
     const [filterValue, setFilterValue] =useState("");
     const [selectedKeys, setSelectedKeys] =useState(new Set([]));
     const [statusFilter, setStatusFilter] =useState("all");
+    const [estadonuevo, setEstadonuevo] = useState([]);
     const [rowsPerPage, setRowsPerPage] =useState(10);
     const [sortDescriptor, setSortDescriptor] =useState({
       column: "fecha",
@@ -333,7 +334,6 @@ export function Fincas() {
   const peticionGet = async () => {
     try {
       await axiosClient.get('/finca/listarFinca').then((response) => {
-        console.log(response.data)
         setFincas(response.data)
       })
 

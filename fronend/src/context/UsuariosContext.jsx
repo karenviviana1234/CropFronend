@@ -1,6 +1,7 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState,useEffect } from 'react'
 //Archivo axiosClient es una instancia de Axios configurada previamente para hacer peticiones HTTP.
 import axiosClient from '../components/axiosClient'
+import { use } from 'echarts'
 /* import axios from 'axios' */
 
 //creando el contexto
@@ -11,6 +12,7 @@ export const UsuarioProvider = ({ children }) => {
 //usuario: Datos de un usuario específico.
 //idUsuario: Identificador del usuario.
     const [usuarios, setUsuarios] = useState([])
+    const [finca ,setFinca] =useState([])
     const [usuario, setUsuario] = useState([])
     const [idUsuario, setUsuarioId] = useState([])
 
@@ -38,6 +40,19 @@ export const UsuarioProvider = ({ children }) => {
             console.log('Error' + error) ;
         }
     }
+
+    const getFinca = async () => {
+        try {
+            const response = await axiosClient.get('/finca/listarFinca');
+            setFinca(response.data);
+        } catch (error) {
+            console.log('Error en el servidor ' + error);
+        }
+    };
+
+    useEffect(() => {
+        getFinca();  
+    }, []);
   return (
     //Se exporta todo lo que se utilizo
     <UsuarioContext.Provider
@@ -46,6 +61,7 @@ export const UsuarioProvider = ({ children }) => {
             usuario,
             idUsuario,
             setUsuarios,
+            setFinca,
             setUsuario,
             setUsuarioId,
             getUsuarios,
