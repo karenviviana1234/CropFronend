@@ -36,17 +36,17 @@ const PerfilUsuario = () => {
   };
   useEffect(() => {
 
-  const ObtenerDatos = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      const getURL = "http://localhost:3000/usuario/listarPerfil";
-      const response = await axiosClient.get(getURL, { headers: { token: token } });
-      console.log(response.data);
-      setPerfil(response.data.data);
-    } catch (error) {
-      console.error("Error al obtener la información", error.response ? error.response.data : error.message);
-    }
-  };
+    const ObtenerDatos = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const getURL = "http://localhost:3000/usuario/listarPerfil";
+        const response = await axiosClient.get(getURL, { headers: { token: token } });
+        console.log(response.data);
+        setPerfil(response.data.data);
+      } catch (error) {
+        console.error("Error al obtener la información", error.response ? error.response.data : error.message);
+      }
+    };
     ObtenerDatos();
   }, []);
 
@@ -121,47 +121,17 @@ const PerfilUsuario = () => {
   };
 
   return (
-    <div className={`contenido pt-5 ${sidebarAbierto ? 'contenido-extendido' : ''}`} style={{ backgroundImage: `url(${v.Image5})`, height: 'auto', backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
+    <div className={`contenido h-max-screen ${sidebarAbierto ? 'contenido-extendido' : ''}`} style={{ backgroundImage: `url(${v.Image5})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}>
       <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
       {perfil && (
-        <div className='my-20 h-full flex justify-center'> {/* cambiar tamaño de la imagen */}
-          <div className='bg-white rounded-2xl' style={{ height: '450px', width: '450px' }}>
-            <div className='mt-4'>
+        <div className='my-12 flex justify-center'> {/* cambiar tamaño de la imagen */}
+          <div className='bg-white rounded-2xl' style={{ width: '1100px' }}>
+            <div className='mt-10'>
               <span className='bg-green p-2 text-white'>{perfil.rol}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Icon icon={v.iconoPerfilUsuario} className='h-50 w-50 mt-5' />
-            </div>
-            <span className='mt-4' style={{ display: 'flex', justifyContent: 'center', fontSize: '25px', borderRadius: '10px' }}>{`${perfil.nombre} ${perfil.apellido}`}</span>
-          </div>
-          <div className='w-10'></div> {/* Espacio en el medio */}
-          <div className='bg-white rounded-2xl pt-3' style={{ height: '450px', width: '620px' }}>
-            <span className='ml-10 mr-60 text-2xl font-semibold'>Información del Usuario:</span>
-            <hr className='mx-4' />
-            <ul className='mt-4'>
-              <li className='ml-5'>
-                <label style={{ fontWeight: '500', fontSize: '19px' }}> Identificación: </label>
-                <br />
-                <label>{perfil.identificacion}</label>
-              </li>
-              <li className='ml-5'>
-                <label style={{ fontWeight: '500', fontSize: '19px' }}> Nombres: </label>
-                <br />
-                <label>{perfil.nombre}</label>
-              </li>
-              <li className='ml-5'>
-                <label style={{ fontWeight: '500', fontSize: '19px' }}> Apellidos: </label>
-                <br />
-                <label>{perfil.apellido}</label>
-              </li>
-              <li className='ml-5'>
-                <label style={{ fontWeight: '500', fontSize: '19px' }}> Correo Electrónico: </label>
-                <br />
-                <label>{perfil.correo}</label>
-              </li>
-            </ul>
-            <div className='flex justify-end mt-7 gap-3 mr-4'>
-              <div className='"text-black shadow-xl flex items-center rounded-lg transition-colors duration-300 hover:bg-green hover:text-white cursor-pointer'>
+            <div className='flex justify-end px-10 my-3'>
+              <span className='mt-4 mr-80 text-3xl font-semibold' style={{ display: 'flex', justifyContent: 'center', borderRadius: '10px' }}>{`${perfil.nombre} ${perfil.apellido}`}</span>
+              <div className='mr-5 ml-10 text-black shadow-xl flex items-center rounded-lg transition-colors duration-300 hover:bg-green hover:text-white cursor-pointer'>
                 <ButtonActualizar onClick={() => handleToggle('update', setPerfil(perfil))} />
               </div>
               <Tooltip content="Salir">
@@ -193,17 +163,42 @@ const PerfilUsuario = () => {
                 </div>
               </Tooltip>
             </div>
+            <span className='ml-10 mr-60 text-xl font-semibold'>Información del Usuario:</span>
+            <hr className='mx-8' />
+            <ul className='mt-4 flex justify-between px-10'>
+              <li className='my-3'>
+                <label style={{ fontWeight: '500', fontSize: '19px' }}> Identificación: </label>
+                <br />
+                <label>{perfil.identificacion}</label>
+              </li>
+              <li className='my-3'>
+                <label style={{ fontWeight: '500', fontSize: '19px' }}> Nombres: </label>
+                <br />
+                <label>{perfil.nombre}</label>
+              </li>
+              <li className='my-3'>
+                <label style={{ fontWeight: '500', fontSize: '19px' }}> Apellidos: </label>
+                <br />
+                <label>{perfil.apellido}</label>
+              </li>
+              <li className='mt-3'>
+                <label style={{ fontWeight: '500', fontSize: '19px' }}> Correo Electrónico: </label>
+                <br />
+                <label>{perfil.correo}</label>
+              </li>
+            </ul>
+            <div className='flex justify-center gap-10 '> {/* Flex container para centrar */}
+              <div className='p-10 text-black hover:text-white hover:bg-green h-40 w-96 rounded-2xl flex items-center m-10'>
+                <label className='text-xl font-semibold text-center'>Fincas Registradas: <span className='text-4xl ml-20'>{finca}</span></label>
+              </div>
+              <div className='p-10  text-black hover:text-white hover:bg-green h-40 w-96 rounded-2xl flex items-center m-10'>
+                <label className='text-xl font-semibold text-center'>Empleados Registrados: <span className='text-4xl ml-10'>{usuarios}</span></label>
+              </div>
+            </div>
           </div>
         </div>
       )}
-      <div className='flex justify-center gap-10 '> {/* Flex container para centrar */}
-        <div className='bg-white rounded-2xl p-5 mb-5 flex items-center' style={{ height: '100px', width: '450px' }}>
-          <label className='text-xl font-semibold'>Fincas Registradas: <span className='text-2xl mx-20'>{finca}</span></label>
-        </div>
-        <div className='bg-white rounded-2xl p-5 mb-5 flex items-center' style={{ height: '100px', width: '615px' }}>
-          <label className='text-xl font-semibold'>Empleados Registrados: <span className='text-2xl mx-20'>{usuarios}</span></label>
-        </div>
-      </div>
+
       <div className='ml-28 items-center p-10'>
         <AccionesModal
           isOpen={modalAcciones}

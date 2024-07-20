@@ -224,12 +224,11 @@ export function Cultivos() {
                             </label>
                         </div>
                         <div className='flex justify-normal'>
-                        <TabsGreen label="Finca" href="/Finca" />
-                            <TabsGreen label="Lote" href="/Lote" />
-                            <TabsGreen label="Cultivos" href="/Cultivos" />
-                            <TabsGreen label="Variedad" href="/Variedad" />
-                            <TabsGreen label="Recursos" href="/Recursos" />
-                        </div>
+            <TabsGreen label="Lote" href="/Lote" />
+            <TabsGreen label="Cultivos" href="/Cultivos" />
+            <TabsGreen label="Variedad" href="/Variedad" />
+            <TabsGreen label="Recursos" href="/Recursos" />
+          </div>  
                     </div>
                 </>
 

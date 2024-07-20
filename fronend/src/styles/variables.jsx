@@ -3,11 +3,11 @@ import {faGithub,  faGooglePlay, faFigma} from '@fortawesome/free-brands-svg-ico
 import Img1 from '../assets/dashboard2.1.png'
 import Img2 from '../assets/FdGjFfBXgAIvsuN.jpg'
 import Img3 from '../assets/07.png'
-import Img5 from '../assets/orange-orange-tree-orange-park-beauty-world.jpg'
+import Img5 from '../assets/lechuga.jpg'
 import Img6 from '../assets/seguimiento.png'
 import Img7 from '../assets/produccion.png'
 import Img9 from '../assets/pexels2.jpg'
-import Img10 from '../assets/campesinas.jpeg'
+import Img10 from '../assets/registro.jpg'
 import Img11 from '../assets/plantita.jpg'
 import Img12 from '../assets/pexels-mark-stebnicki-2889442.jpg'
 import Img13 from '../assets/soporte.png'
@@ -15,6 +15,7 @@ import Img14 from '../assets/ImagenS-Photoroom.jpg'
 
 import Img16 from '../assets/Imagen3.png'
 import Img17 from '../assets/dashboardDos.png'
+import Img18 from '../assets/aloe.jpg'
 import Logo from '../assets/imagelogo.png'
 import LogoInicio from '../assets/imageinicio.png'
 import LogoVerde from '../assets/logoverde.png'
@@ -76,6 +77,7 @@ iconoApp: faGooglePlay,
     image14:Img14,
     image16:Img16,
     image17:Img17,
+    image18:Img18,
     gifpaso:gifpaso,
      imageLogo: Logo,
      imageInicio: LogoInicio,

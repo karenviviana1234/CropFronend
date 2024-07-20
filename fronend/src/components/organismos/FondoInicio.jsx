@@ -8,7 +8,7 @@ const FondoInicio = () => {
         <div className='contenerdor'>
             <nav className='iniciossss'>
                 <img src={v.imageLogo} alt="Logo" className='logo' />
-                <ul className='ulua'>
+                <ul className='ulua px-10'>
                     <li className='liasss'>
                         <Link to='/registro'>
                             <button 

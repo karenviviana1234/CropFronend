@@ -4,6 +4,7 @@ import { Button, Input } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "../NextUI/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "../NextUI/EyeFilledIcon";
 import axios from "axios";
+import v from "../../styles/variables";
 
 const ResetPassword = () => {
     const [isVisibleNew, setIsVisibleNew] = useState(false);
@@ -61,10 +62,10 @@ const ResetPassword = () => {
     
 
     return (
-        <div className="flex items-center flex-col justify-center min-h-screen bg-[#F0F4F8] relative">
+        <div className='flex items-center flex-col justify-center min-h-screenbg-cover bg-center' style={{ backgroundImage: `url(${v.image18})`, height: '800px',  backgroundRepeat: 'no-repeat' }}>
             <div className="absolute top-8 left-8 flex items-center">
                 <img
-                    src="./src/assets/logoverde.png"
+                    src="./src/assets/imagelogo.png"
                     alt="Placeholder Image"
                     className="w-12 h-12 mr-2"
                 />
