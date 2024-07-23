@@ -169,7 +169,7 @@ export const Registro = () => {
             </form>
           </div>
           <div className='relative'>
-            <img src={v.image10} className='w-[500px] h-full hidden rounded-r-2xl md:block object-cover' />
+            <img src={v.image10} className='w-[500px] h-full hidden rounded-r-2xl md:block object-cover ' />
           </div>
           
           <AccionesModal

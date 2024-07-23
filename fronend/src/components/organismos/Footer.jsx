@@ -7,19 +7,6 @@ function Footer() {
     <div className='bg-custom-white p-5'>
       <section className="flex flex-wrap justify-around gap-4 mb-3 ">
         <div className="flex flex-col items-start">
-          <h3 className="font-bold text-lg">Servicios</h3>
-          <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Mapa Interactivo</button>
-          <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Graficas en Tiempo Real</button>
-          <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Asignacion de Actividades a Empleados</button>
-          <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Reporte General</button>
-        </div>
-        <div className="flex flex-col items-start">
-          <h3 className="font-bold text-lg">Acerca de</h3>
-          <button href="#" className="mt-2 text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Nuestra Historia</button>
-          <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Beneficios</button>
-          <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500">Nuestro Equipo</button>
-        </div>
-        <div className="flex flex-col items-start">
           <h3 className="font-bold text-lg">Ayuda</h3>
           <button href="#" className="text-gray-700 mb-2 mt-3 hover:text-green hover:translate-x-1 transition duration-500 block">Documentacion CropLink</button>
           <button href="#" className="text-gray-700 mb-2 hover:text-green hover:translate-x-1 transition duration-500 block">Contáctanos</button>
@@ -44,10 +31,10 @@ function Footer() {
 
       </section>
       <hr className=" text-gray-500 ml-10 mr-10" />
-      <div className="flex justify-content-center align-items-center text-gray-500 mt-2">
+      <div className="flex justify-center align-items-center text-gray-500 mt-2">
         <p className="m-0">Copyright </p>
         <Icon icon={v.iconoCopyRight} className="mx-1 w-4 "></Icon>
-        <p className="m-0"> 2024 By Equipo CropLink</p>
+        <p className="m-0 "> 2024 By Equipo CropLink</p>
       </div>
     </div>
   )

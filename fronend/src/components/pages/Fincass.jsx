@@ -228,7 +228,7 @@ export function Fincas() {
             </div>
           </div>
           <div>
-          <div className='flex justify-normal'>
+          <div className='flex justify-normal rounded-lg bg-slate-700 h-12 items-center' style={{width: '350px'}}>
             <TabsGreen label="Lote" href="/Lote" />
             <TabsGreen label="Cultivos" href="/Cultivos" />
             <TabsGreen label="Variedad" href="/Variedad" />

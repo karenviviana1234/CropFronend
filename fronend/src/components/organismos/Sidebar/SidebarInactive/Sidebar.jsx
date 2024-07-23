@@ -53,13 +53,13 @@ function Sidebar() {
           </li>
         </Tooltip>
 
-        <Tooltip content="Costos">
+{/*         <Tooltip content="Costos">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-4 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>
             <a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="Costos">
               <Icon icon={v.iconoCostos} />
             </a>
           </li>
-        </Tooltip>
+        </Tooltip> */}
 
         <Tooltip content="Producción">
           <li className={`rounded-full ml-3 mr-3  flex items-center mb-4 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ width: '30px', height: '30px', justifyContent: 'center' }}>

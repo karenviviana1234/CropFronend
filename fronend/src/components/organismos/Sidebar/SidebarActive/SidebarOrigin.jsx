@@ -36,9 +36,9 @@ function SidebarOrigin() {
                <Icon className="ml-8" icon={v.iconoProgramacion} /><a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Asignacion">Asignación</a>
             </li>
             
-            <li className={`p-2 rounded-2xl ml-3 mr-3 flex items-center mb-1 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ paddingRight: '20px', gap: '13px', justifyContent: 'left' }}>
+{/*             <li className={`p-2 rounded-2xl ml-3 mr-3 flex items-center mb-1 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ paddingRight: '20px', gap: '13px', justifyContent: 'left' }}>
                <Icon className="ml-8" icon={v.iconoCostos} /><a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Costos">Costos</a>
-            </li>
+            </li> */}
 
             <li className={`p-2 rounded-2xl ml-3 mr-3 flex items-center mb-1 transition-colors duration-300 ${bgColor === 'green' ? 'bg-green text-custom-white hover:bg-custom-white hover:text-green' : 'bg-white text-green hover:bg-green hover:text-white'}`} style={{ paddingRight: '20px', gap: '13px', justifyContent: 'left' }}>
                <Icon className="ml-8" icon={v.iconoProduccion} /><a className={`nav-link no-underline ${bgColor === 'green' ? ' hover:text-green' : 'bg-green hover:text-green'}`} href="/Produccion">Produccion</a>

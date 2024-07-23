@@ -6,7 +6,7 @@ import Registro from "./components/pages/Registro.jsx";
 import GlobalProvider from "./context/GlobalContext.jsx";
 
 import { Actividad } from './components/pages/Actividad.jsx'
-import { Costos } from './components/pages/Costos.jsx'
+// import { Costos } from './components/pages/Costos.jsx'
 import { Cultivos } from "./components/pages/Cultivos.jsx";
 import { Fincas } from "./components/pages/Fincass.jsx";
 import { Lotes } from "./components/pages/Lotes.jsx";
@@ -59,7 +59,7 @@ function App() {
               <Route path="/soporte" element={<Soporte />} />
               <Route path="/Usuario" element={<Usuarios />} />
               <Route path="/Actividad" element={<Actividad />} />
-              <Route path="/Costos" element={<Costos />} />
+              {/* <Route path="/Costos" element={<Costos />} /> */}
               <Route path="/Cultivos" element={<Cultivos />} />
               <Route path="/Finca" element={<Fincas />} />
               <Route path="/Lote" element={<Lotes />} />
