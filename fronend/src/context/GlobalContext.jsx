@@ -1,7 +1,6 @@
 import React, { createContext } from 'react'
 import { LotesProvider } from './LotesContext'
 import { ActividadesProvider } from './ActividadContext'
-import { CostosProvider } from './CostosContext'
 import { CultivosProvider } from './CultivosContext'
 import { FincasProvider } from './FincaContext'
 import { ProgramacionesProvider } from './ProgramacionesContext'
@@ -29,7 +28,6 @@ const GlobalProvider = ({ children }) => {
                         <LotesProvider>
                             <FincasProvider>
                                 <CultivosProvider>
-                                    <CostosProvider>
                                         <ActividadesProvider>
                                             <LotesProvider>
                                                 <PaswordProvider>
@@ -40,7 +38,6 @@ const GlobalProvider = ({ children }) => {
                                                 </PaswordProvider>
                                             </LotesProvider>
                                         </ActividadesProvider>
-                                    </CostosProvider>
                                 </CultivosProvider>
                             </FincasProvider>
                         </LotesProvider>

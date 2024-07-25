@@ -3,7 +3,12 @@ import Header from '../organismos/Header/Header';
 import v from '../../styles/variables';
 import './VistasCss.css';
 
-function Dashboard() {
+function Dashboard({ role }) {
+
+  
+const stored = localStorage.getItem('user')
+const user = stored && stored !== 'undefined' ? JSON.parse(stored) : null;
+
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
   const usoRef = useRef(null);
 
@@ -32,15 +37,17 @@ function Dashboard() {
           </div>
         </div>
       </div>
-      <div className='flex flex-col items-center' style={{height:'900px'}} ref={usoRef}>
-      <h1 className='text-4xl text-center text-green bold mt-28 mb-10'>¿Como Utilizar CropLink?</h1>
-      <div className='flex justify-center items-center text-justify mx-20'>
-      <p className='text-xl'>
-      ¡Bienvenido a CropLink! Sigue estos sencillos pasos para empezar a gestionar tus campos de manera eficiente. Abre la aplicación, inicia sesión, selecciona tu campo, agrega nuevas tareas y configura los detalles. ¡Es así de fácil! Mejora la productividad de tus cultivos con CropLink.
-      </p>
-      <img src={v.gifpaso} className='ml-10' style={{width: '400px', height: '400px'}} alt="Gif" />
-      </div>
-      </div>
+      {user && user.rol === 'administrador' && (
+        <div className='flex flex-col items-center' style={{height:'900px'}} ref={usoRef}>
+          <h1 className='text-4xl text-center text-green bold mt-28 mb-10'>¿Como Utilizar CropLink?</h1>
+          <div className='flex justify-center items-center text-justify mx-20'>
+            <p className='text-xl'>
+              ¡Bienvenido a CropLink! Sigue estos sencillos pasos para empezar a gestionar tus campos de manera eficiente. Abre la aplicación, inicia sesión, selecciona tu campo, agrega nuevas tareas y configura los detalles. ¡Es así de fácil! Mejora la productividad de tus cultivos con CropLink.
+            </p>
+            <img src={v.gifpaso} className='ml-10' style={{width: '400px', height: '400px'}} alt="Gif" />
+          </div>
+        </div>
+      )}
       <div className='flex flex-col items-center' style={{height:'800px'}}>
         <h1 className='mt-20 mb-10 text-4xl text-center text-green bold'>Nuestra Historia</h1>
         <div className='flex justify-center items-center'>
@@ -50,28 +57,28 @@ function Dashboard() {
           </p>
           <img src={v.image17} style={{ width: '500px', height: '400px', marginRight: '60px' }} alt="Graph" />
         </div>
+      </div>
+      <div className='py-10 h-auto bg-zinc-100'>
+        <h1 className='text-4xl text-center'>Beneficios de utilizar CropLink</h1>
+        <div className='m-32 flex justify-center h-60 items-center shadow-2xl rounded-3xl bg-custom-white'>
+          <p className='text-xl text-justify mr-10 ml-20'>
+            Monitoreo en Tiempo Real: Los administradores y dueños de fincas pueden estar informados en todo momento sobre el estado de sus cultivos, permitiendo una respuesta rápida a cualquier percance o necesidad.
+          </p>
+          <img className="w-96 h-60 rounded-tr-xl rounded-br-xl" src={v.image16} alt="Graph" />
         </div>
-        <div className='py-10 h-auto bg-zinc-100'>
-          <h1 className='text-4xl text-center'>Beneficios de utilizar CropLink</h1>
-          <div className='m-32 flex justify-center h-60 items-center shadow-2xl rounded-3xl bg-custom-white'>
-            <p className='text-xl text-justify mr-10 ml-20'>
-              Monitoreo en Tiempo Real: Los administradores y dueños de fincas pueden estar informados en todo momento sobre el estado de sus cultivos, permitiendo una respuesta rápida a cualquier percance o necesidad.
-            </p>
-            <img className="w-96 h-60 rounded-tr-xl rounded-br-xl" src={v.image16} alt="Graph" />
-          </div>
-          <div className='m-32 flex justify-center h-60 items-center shadow-2xl rounded-3xl bg-custom-white'>
-            <img className="w-96 h-60 rounded-bl-xl rounded-tl-xl" src={v.Image7} alt="Graph" />
-            <p className='text-xl text-justify mr-20 ml-20'>
-              Optimización de la producción: Al tener un control efectivo y detallado de todas las producciones, los administradores pueden tomar decisiones informadas para optimizar el rendimiento y la eficiencia de sus cultivos.
-            </p>
-          </div>
-          <div className='m-32 flex justify-center h-60 items-center shadow-2xl rounded-3xl bg-custom-white'>
-            <p className='text-xl text-justify mr-20 ml-20'>
-              Seguimiento detallado de actividades: Cada actividad realizada en los lotes es registrada y monitoreada, lo que permite un control preciso y detallado de las tareas asignadas a los empleados.
-            </p>
-            <img className="w-96 h-60 rounded-tr-xl rounded-br-xl" src={v.Image6} alt="Graph" />
-          </div>
+        <div className='m-32 flex justify-center h-60 items-center shadow-2xl rounded-3xl bg-custom-white'>
+          <img className="w-96 h-60 rounded-bl-xl rounded-tl-xl" src={v.Image7} alt="Graph" />
+          <p className='text-xl text-justify mr-20 ml-20'>
+            Optimización de la producción: Al tener un control efectivo y detallado de todas las producciones, los administradores pueden tomar decisiones informadas para optimizar el rendimiento y la eficiencia de sus cultivos.
+          </p>
         </div>
+        <div className='m-32 flex justify-center h-60 items-center shadow-2xl rounded-3xl bg-custom-white'>
+          <p className='text-xl text-justify mr-20 ml-20'>
+            Seguimiento detallado de actividades: Cada actividad realizada en los lotes es registrada y monitoreada, lo que permite un control preciso y detallado de las tareas asignadas a los empleados.
+          </p>
+          <img className="w-96 h-60 rounded-tr-xl rounded-br-xl" src={v.Image6} alt="Graph" />
+        </div>
+      </div>
     </div>
   );
 }
