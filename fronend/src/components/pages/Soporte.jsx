@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../organismos/Header/Header";
 import "./VistasCss.css";
 import v from "../../styles/variables.jsx";
@@ -7,10 +7,21 @@ import { Link } from "react-router-dom"
 
 function Soporte() {
   const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  const [userRole, setUserRole] = useState('');
+
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
   };
+
+  useEffect(() => {
+    // Obtener el usuario del localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setUserRole(user.rol);
+    }
+  }, []);
 
   return (
     <div
@@ -23,7 +34,10 @@ function Soporte() {
           <h1 className='text-center text-custom-white' style={{ fontSize: '70px' }}>Bienvenidos a Soporte de CropLink</h1>
         </div>
       </div>
+      
       <div className="pb-16 text-center">
+      {userRole !== 'empleado' && (
+        <div>
         <h1 className='text-4xl text-center my-5'>Servicios</h1>
         <div className="flex justify-center">
           <div className=" w-36 mx-10 rounded-2xl py-2 hover:shadow-2xl" >
@@ -57,7 +71,9 @@ function Soporte() {
               <h1 className="text-center" style={{ fontSize: '18px' }}>Reportes</h1>
             </Link>
           </div>
+          </div>
         </div>
+         )}
         <div className="flex justify-center my-5">
           <div className="bg-custom-white mt-10 items-center flex justify-center cursor-pointer shadow-2xl w-80 h-28 mx-20 rounded-2xl py-2 hover:shadow-2xl" >
           <Link to="/update-password" className="flex justify-between items-center cursor-pointer hover:text-green no-underline hover:no-underline">

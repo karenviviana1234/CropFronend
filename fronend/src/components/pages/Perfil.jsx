@@ -23,6 +23,8 @@ const PerfilUsuario = () => {
   const [mode, setMode] = useState('create');
   const identificacion = perfil?.identificacion;
   const [usuarios, setUsuarios] = useState(null);
+  const [userRole, setUserRole] = useState('');
+
 
   const toggleSidebar = () => {
     setSidebarAbierto(!sidebarAbierto);
@@ -30,10 +32,21 @@ const PerfilUsuario = () => {
 
   const navigate = useNavigate();
 
+
   const logout = () => {
     localStorage.clear();
     navigate('/');
   };
+
+  useEffect(() => {
+    // Obtener el usuario del localStorage
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
+      setUserRole(user.rol);
+    }
+  }, []);
+
   useEffect(() => {
 
     const ObtenerDatos = async () => {
@@ -41,7 +54,6 @@ const PerfilUsuario = () => {
         const token = localStorage.getItem("token");
         const getURL = "http://localhost:3000/usuario/listarPerfil";
         const response = await axiosClient.get(getURL, { headers: { token: token } });
-        console.log(response.data);
         setPerfil(response.data.data);
       } catch (error) {
         console.error("Error al obtener la información", error.response ? error.response.data : error.message);
@@ -56,7 +68,6 @@ const PerfilUsuario = () => {
       const token = localStorage.getItem("token");
       const getURL = "http://localhost:3000/usuario/sumaEmpleados";
       const response = await axiosClient.get(getURL, { headers: { token: token } });
-      console.log(response.data);
       setUsuarios(response.data.totalEmpleados);
     } catch (error) {
       console.error("Error al obtener la información", error.response ? error.response.data : error.message);
@@ -74,7 +85,6 @@ const PerfilUsuario = () => {
       const token = localStorage.getItem("token");
       const getURL = "http://localhost:3000/finca/sumaFincas";
       const response = await axiosClient.get(getURL, { headers: { token: token } });
-      console.log(response.data);
       setFinca(response.data.totalFincas); // Aquí asignamos el valor directamente
     } catch (error) {
       console.error("Error al obtener la información", error.response ? error.response.data : error.message);
@@ -86,13 +96,11 @@ const PerfilUsuario = () => {
   }, []);
 
   const handleSubmit = async (formData, e) => {
-    console.log('Datos enviados:', formData);
     e.preventDefault();
 
     try {
       if (mode === 'update' && identificacion) {
         await axiosClient.put(`http://localhost:3000/usuario/actualizarPerfil/${identificacion}`, formData).then((response) => {
-          console.log(response);
           if (response.status === 200) {
             Swal.fire({
               position: "center",
@@ -187,6 +195,7 @@ const PerfilUsuario = () => {
                 <label>{perfil.correo}</label>
               </li>
             </ul>
+            {userRole !== 'empleado' && (
             <div className='flex justify-center gap-10 '> {/* Flex container para centrar */}
               <div className='p-10 text-black hover:text-white hover:bg-green h-40 w-96 rounded-2xl flex items-center m-10'>
                 <label className='text-xl font-semibold text-center'>Fincas Registradas: <span className='text-4xl ml-20'>{finca}</span></label>
@@ -195,6 +204,7 @@ const PerfilUsuario = () => {
                 <label className='text-xl font-semibold text-center'>Empleados Registrados: <span className='text-4xl ml-10'>{usuarios}</span></label>
               </div>
             </div>
+             )}
           </div>
         </div>
       )}

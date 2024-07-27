@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import HeaderEmpleado from "../organismos/Header/HeaderEmpleado";
 import FormEmpleado from "../moleculas/FormEmpleado.jsx";
 import { Input, Card, CardHeader } from "@nextui-org/react";
 import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
+import Header from '../organismos/Header/Header.jsx'
+import './VistasCss.css'
 
 const Empleado = () => {
   const [filterValue, setFilterValue] = useState("");
@@ -12,6 +13,13 @@ const Empleado = () => {
   const [empleado, setEmpleado] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [formData, setFormData] = useState({ observacion: '' });
+  const [sidebarAbierto, setSidebarAbierto] = useState(false);
+  const usoRef = useRef(null);
+
+  const toggleSidebar = () => {
+    setSidebarAbierto(!sidebarAbierto);
+  };
+
 
   const ObtenerDatos = async () => {
     try {
@@ -141,8 +149,8 @@ const Empleado = () => {
   };
 
   return (
-    <div className="contenidos">
-      <HeaderEmpleado />
+    <div className={`contenidos : '60px' ${sidebarAbierto ? 'contenido-extendidos' : ''}`}>
+      <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
 
       <div className="filter-input-container flex flex-row items-center space-x-4 m-10">
         <Input
