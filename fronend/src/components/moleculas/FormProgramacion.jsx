@@ -38,9 +38,12 @@ const FormProgramacion = ({ mode, initialData, handleSubmit, onClose, actionLabe
   }, []);
 
   useEffect(() => {
-    axiosClient.get('/listara').then((response) => {
-      const actividadFilter = response.data.filter((actividad) => actividad.estado === 'activo');
-      setActividad(actividadFilter);
+    axiosClient.get('/listara').then(async (response) => {
+      const actividades = response.data.filter((actividad) => actividad.estado === 'activo');
+      const programadas = await axiosClient.get('/listarProgramacion');
+      const programadasIds = programadas.data.map(p => p.fk_id_actividad);
+      const actividadesDisponibles = actividades.filter(actividad => !programadasIds.includes(actividad.id_actividad));
+      setActividad(actividadesDisponibles);
     });
   }, []);
 

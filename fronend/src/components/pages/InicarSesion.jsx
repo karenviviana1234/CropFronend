@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import './../../App.css'
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import axiosClient from '../axiosClient.js';
 import { Input } from "@nextui-org/react";
 import { EyeFilledIcon } from "../NextUI/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../NextUI/EyeSlashFilledIcon";
@@ -21,7 +21,7 @@ export const InicioSesion = () => {
 
 
   //url enviada desde el backend
-  const baseURL = "http://localhost:3000/validacion"
+  // const baseURL = "http://localhost:3000/validacion"
 
   //datos del formulario
   const correo = useRef(null)
@@ -48,7 +48,7 @@ export const InicioSesion = () => {
         password: passwordValue
       }
 
-      axios.post(baseURL, data).then((response) => {
+      axiosClient.post("/validacion", data).then((response) => {
         console.log(response)
 //condicional que envia un estado, envia el token y el usuario a la consola
         if (response.status === 200) {

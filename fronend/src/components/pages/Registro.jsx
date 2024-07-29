@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import v from '../../styles/variables'
-import axios from 'axios';
+import axiosClient from '../axiosClient.js'
+// import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import AccionesModal from '../organismos/ModalAcciones.jsx'
 import Icon from '../atomos/Sidebar/IconosSidebar.jsx';
@@ -44,8 +45,8 @@ export const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const baseURL = 'http://localhost:3000/usuario/registrarUsuario';
-      await axios.post(baseURL, formData);
+      // const baseURL = 'http://localhost:3000/usuario/registrarUsuario';
+      await axiosClient.post("/usuario/registrarUsuario", formData);
       setMensaje('Usuario Registrado exitosamente')
       setModalAcciones(true)
       Swal.fire({
