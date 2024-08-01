@@ -20,8 +20,7 @@ export const InicioSesion = () => {
   const [modalOpen, setModalOpen] = useState(false)
 
 
-  //url enviada desde el backend
-  // const baseURL = "http://localhost:3000/validacion"
+  
 
   //datos del formulario
   const correo = useRef(null)

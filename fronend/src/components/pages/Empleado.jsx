@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosClient from "../axiosClient.js";
 import Swal from "sweetalert2";
 import FormEmpleado from "../moleculas/FormEmpleado.jsx";
 import { Input, Card, CardHeader } from "@nextui-org/react";
@@ -20,12 +20,9 @@ const Empleado = () => {
     setSidebarAbierto(!sidebarAbierto);
   };
 
-
   const ObtenerDatos = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const getURL = "http://localhost:3000/Listar";
-      const response = await axios.get(getURL, { headers: { token: token } });
+      const response = await axiosClient.get("/Listar");
       const activeData = response.data.filter(item => item.estado !== 'inactivo');
       setEmpleado(activeData);
       setFilteredData(activeData);
@@ -62,9 +59,7 @@ const Empleado = () => {
   const handleSubmitObservacion = async (e, formData, idActividad, estado) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("token");
-      const baseURL = `http://localhost:3000/Registrar/${idActividad}`;
-      await axios.put(baseURL, formData, { headers: { token: token } });
+      await axiosClient.post(`/Registrar/${idActividad}`, formData);
       Swal.fire({
         title: "Éxito",
         text: "Observación registrada exitosamente",
@@ -85,8 +80,7 @@ const Empleado = () => {
   const handleIniciarTerminar = async (idActividad, estado) => {
     if (estado === "activo") {
       try {
-        const token = localStorage.getItem("token");
-        await axios.put(`http://localhost:3000/cambioestado/${idActividad}`, null, { headers: { token: token } });
+        await axiosClient.put(`/cambioestado/${idActividad}`);
         Swal.fire({
           title: "¡Actividad Iniciada!",
           text: "La actividad ha sido iniciada correctamente.",
@@ -111,8 +105,7 @@ const Empleado = () => {
         return;
       }
       try {
-        const token = localStorage.getItem("token");
-        await axios.put(`http://localhost:3000/cambioestado/${idActividad}`, null, { headers: { token: token } });
+        await axiosClient.put(`/cambioestado/${idActividad}`);
         Swal.fire({
           title: "¡Actividad Terminada!",
           text: "La actividad ha sido terminada correctamente.",
@@ -174,7 +167,6 @@ const Empleado = () => {
           <option value="inactivo">Inactivo</option>
         </select>
       </div>
-
 
       <div className="flex flex-wrap ml-4">
         {filteredData.map((actividad, index) => (

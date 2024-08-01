@@ -28,7 +28,6 @@ import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
 import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
-import DescargarPDF from '../organismos/DescargarPDF.jsx';
 import TabsGreen from '../moleculas/Tabs.jsx';
 export function Fincas() {
 
@@ -123,7 +122,6 @@ export function Fincas() {
                     onClick={() => peticionDesactivar(finca.id_finca)}
                     estado={finca.estado}
                   />
-                  <DescargarPDF />
                 </div>
               </Dropdown>
             </div>

@@ -41,18 +41,7 @@ export const UsuarioProvider = ({ children }) => {
         }
     }
 
-    const getFinca = async () => {
-        try {
-            const response = await axiosClient.get('/finca/listarFinca');
-            setFinca(response.data);
-        } catch (error) {
-            console.log('Error en el servidor ' + error);
-        }
-    };
-
-    useEffect(() => {
-        getFinca();  
-    }, []);
+ 
   return (
     //Se exporta todo lo que se utilizo
     <UsuarioContext.Provider

@@ -109,7 +109,9 @@ export function Usuarios() {
             const handleUpdateClick = (identificacion, usuario) => {
                 localStorage.setItem('idUser', identificacion);
                 clickEditar(identificacion, usuario);
-                console.log('ID del usuario seleccionado:', identificacion);
+                console.log('ID del usuario seleccionado:', 
+                    
+                );
                 console.log('Datos del usuario seleccionado:', usuario);
             };
 

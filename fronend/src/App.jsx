@@ -49,7 +49,8 @@ function App() {
 
 
 
-
+ 
+ 
               <Route path="/Inicio" element={<Dashboard />} />
               <Route path="/perfil" element={<PerfilUsuario />} />
               <Route path="/soporte" element={<Soporte />} />

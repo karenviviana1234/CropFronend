@@ -1,12 +1,12 @@
 /* Por favor no modificar el codigo altera todas las tablas */
 .contenido {
   padding-top: 40px;
-  background:  url(../../assets/pixelcut-export.png);
+  background:  url(../../assets/fondocool.png);
   background-repeat: no-repeat;
   background-size: cover;  
   height: 100vh; 
   overflow-x: hidden;
-  margin-left: 60px; 
+  margin-left: 45px; 
   width: calc(100% - 60px);
 }
 .contenido-extendido {
