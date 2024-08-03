@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import LotesModal from '../templates/TipoRModal.jsx';
 import './CssTablas.css'
 import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
@@ -24,7 +23,6 @@ import {
     Pagination,
 } from "@nextui-org/react";
 import { PlusIcon } from "./../NextUI/PlusIcon.jsx";
-import { VerticalDotsIcon } from "./../NextUI/VerticalDotsIcon.jsx";
 import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
 import ButtonDesactivar from "../atomos/ButtonDesactivar.jsx"
@@ -98,12 +96,8 @@ export function TipoRecursos() {
             });
         }, [sortDescriptor, items]);
 
-
-
-    
         const renderCell = React.useCallback((tipo_recursos, columnKey) => {
             const cellValue = tipo_recursos[columnKey];
-
 
             switch (columnKey) {
                 case "estado":
@@ -171,7 +165,7 @@ export function TipoRecursos() {
                 <>
 
                     <div className="flex flex-col  mt-3" >
-                        
+
                         <div className="flex justify-between gap-3 items-end ">
                             <Input
                                 isClearable
@@ -224,13 +218,13 @@ export function TipoRecursos() {
                                     <option value="15">15</option>
                                 </select>
                             </label>
-                        </div> 
+                        </div>
                         <div className='flex justify-normal'>
-            <TabsGreen label="Lote" href="/Lote" />
-            <TabsGreen label="Cultivos" href="/Cultivos" />
-            <TabsGreen label="Variedad" href="/Variedad" />
-            <TabsGreen label="Recursos" href="/Recursos" />
-          </div>  
+                            <TabsGreen label="Lote" href="/Lote" />
+                            <TabsGreen label="Cultivos" href="/Cultivos" />
+                            <TabsGreen label="Variedad" href="/Variedad" />
+                            <TabsGreen label="Recursos" href="/Recursos" />
+                        </div>
 
                     </div>
                 </>
@@ -266,55 +260,52 @@ export function TipoRecursos() {
                 </div>
             );
         }, [items.length, page, pages, hasSearchFilter]);
-//
-//
+        //
+        //
         return (
             <div className="flex items-center justify-center p-1 w-full">
                 <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-9/12 overflow-x-auto">
-                <Table
-                    aria-label="Tabla"
-                    isHeaderSticky
-                    bottomContent={bottomContent}
-                    bottomContentPlacement="outside"
-                    classNames={{
-                        wrapper: "max-h-[100%] max-w-[100%]",
-                    }}
-                    className="flex"
-                    selectedKeys={selectedKeys}
-                    //selectionMode="multiple"
-                    sortDescriptor={sortDescriptor}
-                    topContent={topContent}
-                    topContentPlacement="outside"
-                    onSelectionChange={setSelectedKeys}
-                    onSortChange={setSortDescriptor}
-                >
-                    <TableHeader columns={data}>
-                        {(column) => (
-                            <TableColumn
-                                key={column.uid}
-                                align={column.uid === "actions" ? "center" : "start"}
-                                allowsSorting={column.sortable}
-                            >
-                                {column.name}
-                            </TableColumn>
-                        )}
-                    </TableHeader>
-                    <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
-                        {(item) => (
-                            <TableRow key={item.id_tipo_recursos}>
-                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
+                    <Table
+                        aria-label="Tabla"
+                        isHeaderSticky
+                        bottomContent={bottomContent}
+                        bottomContentPlacement="outside"
+                        classNames={{
+                            wrapper: "max-h-[100%] max-w-[100%]",
+                        }}
+                        className="flex"
+                        selectedKeys={selectedKeys}
+                        sortDescriptor={sortDescriptor}
+                        topContent={topContent}
+                        topContentPlacement="outside"
+                        onSelectionChange={setSelectedKeys}
+                        onSortChange={setSortDescriptor}
+                    >
+                        <TableHeader columns={data}>
+                            {(column) => (
+                                <TableColumn
+                                    key={column.uid}
+                                    align={column.uid === "actions" ? "center" : "start"}
+                                    allowsSorting={column.sortable}
+                                >
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody emptyContent={"No hay resultados registrados"} items={sortedItems}>
+                            {(item) => (
+                                <TableRow key={item.id_tipo_recursos}>
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
 
         );
     }
 
-
-    /* Espacio 1 */
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAcciones, setModalAcciones] = useState(false);
     const [mode, setMode] = useState('create');
@@ -328,26 +319,26 @@ export function TipoRecursos() {
         setSidebarAbierto(!sidebarAbierto);
     };
 
-
     useEffect(() => {
         peticionGet()
     }, []);
 
-    // Trae los datos a la tabla tipo recurso
     const peticionGet = async () => {
         try {
             await axiosClient.get('/listarRecurso').then((response) => {
-                console.log(response.data)
+             
+
                 setTipoRecursos(response.data)
             })
         } catch (error) {
-            console.log('Error en el servidor ' + error)
+            alert('Error en el servidor')
+
         }
     };
     const data = [
         {
             uid: 'id_tipo_recursos',
-            name: 'Id',  // El titulo de los id
+            name: 'Id',
             sortable: true
         },
         {
@@ -382,16 +373,12 @@ export function TipoRecursos() {
         }
     ];
 
-    // desactivar tipo recurso
     const peticionDesactivar = async (id_tipo_recursos) => {
 
-        // console.log("ID del lotes a desactivar:", id);
         try {
             axiosClient.put(`/desactivarRecurso/${id_tipo_recursos}`, null).then((response) => {
-                console.log(response.data)
                 if (response.status == 200) {
                     const nuevoEstado = response.data.message;
-                    /* fetchData() */
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "¡Esto podra afectar a tus tipo de recurso!",
@@ -418,19 +405,16 @@ export function TipoRecursos() {
             alert('Error del servidor ' + error)
         }
     }
-    // registrar y actualizar lote
     const handleSubmit = async (formData, e) => {
-        console.log('Datos enviados:', formData);
         e.preventDefault()
 
         try {
 
             if (mode === 'create') {
                 await axiosClient.post('/RegistroRecurso', formData).then((response) => {
-                    console.log('API Response:', response);
                     if (response.status == 200) {
                         Swal.fire({
-                            position: "center", // Posición centrada
+                            position: "center", 
                             icon: "success",
                             title: "Tipo de recurso registrado con éxito",
                             showConfirmButton: false,
@@ -444,7 +428,6 @@ export function TipoRecursos() {
             } else if (mode === 'update') {
 
                 await axiosClient.put(`/actualizarRecurso/${idTipoRecurso.id_tipo_recursos}`, formData).then((response) => {
-                    console.log(response)
                     if (response.status === 200) {
                         Swal.fire({
                             position: "center",
@@ -475,29 +458,27 @@ export function TipoRecursos() {
     return (
         <>
             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-            <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-
-
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <TipoRModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar Herramienta' : 'Actualizar Herramienta'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                />
-                <Ejemplo
-                    data={data}
-                    tipoRecursos={tipoRecursos}
-                />
-            </div>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
+                <div className='w-full max-w-[90%] ml-28 items-center p-10'>
+                    <AccionesModal
+                        isOpen={modalAcciones}
+                        onClose={() => setModalAcciones(false)}
+                        label={mensaje}
+                    />
+                    <TipoRModal
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        title={mode === 'create' ? 'Registrar Herramienta' : 'Actualizar Herramienta'}
+                        actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
+                        initialData={initialData}
+                        handleSubmit={handleSubmit}
+                        mode={mode}
+                    />
+                    <Ejemplo
+                        data={data}
+                        tipoRecursos={tipoRecursos}
+                    />
+                </div>
             </div>
         </>
     )

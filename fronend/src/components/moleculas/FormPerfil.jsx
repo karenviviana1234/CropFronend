@@ -17,7 +17,6 @@ const FormPerfil = () => {
       const token = localStorage.getItem("token");
       const getURL = "http://localhost:3000/usuario/listarPerfil";
       const response = await axiosClient.get(getURL, { headers: { token: token } });
-      console.log(response.data);
       setPerfil(response.data.data);
       setNombre(response.data.data.nombre); 
       setApellido(response.data.data.apellido);
@@ -47,7 +46,6 @@ const FormPerfil = () => {
         setPerfil({ nombre, apellido, correo });
       }
     } catch (error) {
-      console.error('Error al actualizar la informacion:', error);
       Swal.fire('¡Error!', 'Hubo un problema al actualizar tu perfil. Inténtalo de nuevo más tarde.', 'error');
     }
   };

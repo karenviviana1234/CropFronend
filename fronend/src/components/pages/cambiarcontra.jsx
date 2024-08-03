@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import v from '../../styles/variables';
 
 const CambiarContra = () => {
   const [newPassword, setNewPassword] = useState('');

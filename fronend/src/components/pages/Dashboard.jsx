@@ -9,7 +9,6 @@ function Dashboard() {
   const usoRef = useRef(null);
 
   useEffect(() => {
-    // Obtener el usuario del localStorage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
@@ -27,37 +26,36 @@ function Dashboard() {
 
   return (
     <div className={`contenidos : '60px' ${sidebarAbierto ? 'contenido-extendidos' : ''}`}>      <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-  <div className='bg-cover bg-center' style={{ backgroundImage: `url(${v.Image1})`, height: '800px', backgroundRepeat: 'no-repeat' }}>        <div className='flex items-center'>
-          <div className='ml-28'>
-            <h3 className='text-custom-white pt-80 text-2xl'>Plataforma diseñada para agricultores</h3>
-            <h1 className='text-custom-white text-6xl'>CROP LINK</h1>
-            <h2 className='text-custom-white text-3xl text-justify mr-40'>
-              Una plataforma innovadora y accesible que transforma la gestión de cultivos y fincas. Pensada para optimizar la productividad y la rentabilidad de los usuarios, esta herramienta es tu aliado en la toma de decisiones informadas para el éxito de tus cultivos.
-            </h2>
-            {userRole !== 'empleado' && (
+      <div className='bg-cover bg-center' style={{ backgroundImage: `url(${v.Image1})`, height: '800px', backgroundRepeat: 'no-repeat' }}>        <div className='flex items-center'>
+        <div className='ml-28'>
+          <h3 className='text-custom-white pt-80 text-2xl'>Plataforma diseñada para agricultores</h3>
+          <h1 className='text-custom-white text-6xl'>CROP LINK</h1>
+          <h2 className='text-custom-white text-3xl text-justify mr-40'>
+            Una plataforma innovadora y accesible que transforma la gestión de cultivos y fincas. Pensada para optimizar la productividad y la rentabilidad de los usuarios, esta herramienta es tu aliado en la toma de decisiones informadas para el éxito de tus cultivos.
+          </h2>
+          {userRole !== 'empleado' && (
             <button onClick={scrollUso} className='inline-block mt-3 w-28 h-11 bg-green text-xl text-custom-white rounded-lg cursor-pointer transition duration-500 ease-in-out hover:bg-transparent hover:border-white hover:translate-x-1 hover:font-medium hover:focus:outline-none hover:border-2'>
               Ver más
             </button>
-                  )}
+          )}
 
-          </div>
         </div>
       </div>
-      
-      {/* Renderizar la sección solo si el rol no es 'empleado' */}
+      </div>
+
       {userRole !== 'empleado' && (
-        <div className='flex flex-col items-center' style={{height:'900px'}} ref={usoRef}>
+        <div className='flex flex-col items-center' style={{ height: '900px' }} ref={usoRef}>
           <h1 className='text-4xl text-center text-green bold mt-28 mb-10'>¿Cómo Utilizar CropLink?</h1>
           <div className='flex justify-center items-center text-justify mx-20'>
             <p className='text-xl'>
               ¡Bienvenido a CropLink! Sigue estos sencillos pasos para empezar a gestionar tus campos de manera eficiente. Abre la aplicación, inicia sesión, selecciona tu campo, agrega nuevas tareas y configura los detalles. ¡Es así de fácil! Mejora la productividad de tus cultivos con CropLink.
             </p>
-            <img src={v.gifpaso} className='ml-10' style={{width: '600px', height: '600px'}} alt="Gif" />
+            <img src={v.gifpaso} className='ml-10' style={{ width: '600px', height: '600px' }} alt="Gif" />
           </div>
         </div>
       )}
 
-      <div className='flex flex-col items-center' style={{height:'800px'}}>
+      <div className='flex flex-col items-center' style={{ height: '800px' }}>
         <h1 className='mt-20 mb-10 text-4xl text-center text-green bold'>Nuestra Historia</h1>
         <div className='flex justify-center items-center'>
           <p className='ml-36 mr-20 flex justify-center text-xl'>
@@ -93,4 +91,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Dashboard;

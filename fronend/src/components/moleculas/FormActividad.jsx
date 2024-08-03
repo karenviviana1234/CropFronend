@@ -31,7 +31,6 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
   useEffect(() => {
     axiosClient.get('/listarVariedades').then((response) => {
       const variedadesFilter = response.data.filter(variedad => variedad.estado === 'activo');
-      console.log("Variedades obtenidas:", variedadesFilter);
       setVariedades(variedadesFilter);
     });
   }, []);
@@ -39,7 +38,6 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
   useEffect(() => {
     axiosClient.get('/listarRecurso').then((response) => {
       const tipo_recursosFilter = response.data.filter(tipo_recursos => tipo_recursos.estado === 'existente');
-      console.log("Recursos obtenidos:", tipo_recursosFilter);
       setTipo_Recursos(tipo_recursosFilter);
     });
   }, []);
@@ -75,7 +73,6 @@ export const FormActividad = ({ mode, initialData, handleSubmit, onClose, action
       };
       handleSubmit(formData, e);
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
   };

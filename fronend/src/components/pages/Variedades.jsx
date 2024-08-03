@@ -55,8 +55,6 @@ export function Variedades() {
             { name: "Inactivo", uid: "activo" },
         ];
 
-
-
         const hasSearchFilter = Boolean(filterValue);
 
         const filteredItems = React.useMemo(() => {
@@ -101,14 +99,10 @@ export function Variedades() {
         const renderCell = React.useCallback((variedad, columnKey) => {
             const cellValue = variedad[columnKey];
 
-
             const handleUpdateClick = (id_variedad, variedad) => {
                 localStorage.setItem('idUser', id_lote);
                 clickEditar(id_lote, variedad);
-                console.log('ID de la variedadseleccionada:', id_variedad);
-                console.log('Datos de la variedad seleccionada:', variedad);
             };
-
 
             switch (columnKey) {
                 case "estado":
@@ -230,11 +224,11 @@ export function Variedades() {
                             </label>
                         </div>
                         <div className='flex justify-normal'>
-            <TabsGreen label="Lote" href="/Lote" />
-            <TabsGreen label="Cultivos" href="/Cultivos" />
-            <TabsGreen label="Variedad" href="/Variedad" />
-            <TabsGreen label="Recursos" href="/Recursos" />
-          </div>  
+                            <TabsGreen label="Lote" href="/Lote" />
+                            <TabsGreen label="Cultivos" href="/Cultivos" />
+                            <TabsGreen label="Variedad" href="/Variedad" />
+                            <TabsGreen label="Recursos" href="/Recursos" />
+                        </div>
                     </div>
                 </>
 
@@ -273,49 +267,47 @@ export function Variedades() {
         return (
             <div className="flex items-center justify-center p-4 w-full">
                 <div className="w-6/12 sm:w-full  lg:w-11/12 xl:w-8/12 overflow-x-auto">
-                <Table
-                    aria-label="Tabla"
-                    isHeaderSticky
-                    bottomContent={bottomContent}
-                    bottomContentPlacement="outside"
-                    classNames={{
-                        wrapper: "max-h-[100%] max-w-[100%]",
-                    }}
-                    className="flex"
-                    selectedKeys={selectedKeys}
-                    // selectionMode="multiple"
-                    sortDescriptor={sortDescriptor}
-                    topContent={topContent}
-                    topContentPlacement="outside"
-                    onSelectionChange={setSelectedKeys}
-                    onSortChange={setSortDescriptor}
-                >
-                    <TableHeader columns={data}>
-                        {(column) => (
-                            <TableColumn
-                                key={column.uid}
-                                align={column.uid === "actions" ? "center" : "start"}
-                                allowsSorting={column.sortable}
-                            >
-                                {column.name}
-                            </TableColumn>
-                        )}
-                    </TableHeader>
-                    <TableBody emptyContent={"No hay variedades registradas"} items={sortedItems}>
-                        {(item) => (
-                            <TableRow key={item.id_variedad}>
-                                {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </div>
+                    <Table
+                        aria-label="Tabla"
+                        isHeaderSticky
+                        bottomContent={bottomContent}
+                        bottomContentPlacement="outside"
+                        classNames={{
+                            wrapper: "max-h-[100%] max-w-[100%]",
+                        }}
+                        className="flex"
+                        selectedKeys={selectedKeys}
+                        sortDescriptor={sortDescriptor}
+                        topContent={topContent}
+                        topContentPlacement="outside"
+                        onSelectionChange={setSelectedKeys}
+                        onSortChange={setSortDescriptor}
+                    >
+                        <TableHeader columns={data}>
+                            {(column) => (
+                                <TableColumn
+                                    key={column.uid}
+                                    align={column.uid === "actions" ? "center" : "start"}
+                                    allowsSorting={column.sortable}
+                                >
+                                    {column.name}
+                                </TableColumn>
+                            )}
+                        </TableHeader>
+                        <TableBody emptyContent={"No hay variedades registradas"} items={sortedItems}>
+                            {(item) => (
+                                <TableRow key={item.id_variedad}>
+                                    {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </div>
             </div>
 
         );
     }
 
-    /* Espacio 1 */
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAcciones, setModalAcciones] = useState(false);
     const [mode, setMode] = useState('create');
@@ -333,19 +325,16 @@ export function Variedades() {
         peticionGet()
     }, []);
 
-    // Trae los datos a la tabla lote
     const peticionGet = async () => {
         try {
             await axiosClient.get('/listarVariedades').then((response) => {
-                console.log(response.data)
                 setVariedades(response.data)
             })
         } catch (error) {
-            console.log('Error en el servidor ' + error)
+            alert('Error en el servidor')
         }
     };
 
-    // columnas de la tabla variedades
     const data = [
         {
             uid: 'id_variedad',
@@ -373,11 +362,9 @@ export function Variedades() {
             sortable: true
         }
     ];
-    // desactivar variedad
     const peticionDesactivar = async (id_variedad) => {
         try {
             const response = await axiosClient.put(`/desactivarvariedad/${id_variedad}`, null);
-            console.log(response.data);
             if (response.status === 200) {
                 const nuevoEstado = response.data.message;
                 Swal.fire({
@@ -397,7 +384,6 @@ export function Variedades() {
                         });
                         peticionGet();
                     } else {
-                        // Si el usuario cancela, mostrar el mensaje de cancelación
                         Swal.fire({
                             title: "Cancelado",
                             text: "La operación ha sido cancelada",
@@ -414,16 +400,13 @@ export function Variedades() {
     };
 
 
-    // registrar y actualizar variedad
     const handleSubmit = async (formData, e) => {
-        console.log('Datos enviados:', formData);
         e.preventDefault()
 
         try {
 
             if (mode === 'create') {
                 await axiosClient.post('/registrarVariedad', formData).then((response) => {
-                    console.log('API Response:', response);
                     if (response.status == 200) {
                         Swal.fire({
                             position: "center", // Posición centrada
@@ -440,7 +423,6 @@ export function Variedades() {
             } else if (mode === 'update') {
 
                 await axiosClient.put(`/actualizarVariedad/${idVariedad.id_variedad}`, formData).then((response) => {
-                    console.log(response);
                     if (response.status === 200) {
                         Swal.fire({
                             position: "center",
@@ -458,7 +440,6 @@ export function Variedades() {
             setModalOpen(false)
 
         } catch (error) {
-            console.log('Error en el servidor ', error)
             alert('Error en el servidor')
         }
     }
@@ -472,11 +453,9 @@ export function Variedades() {
     return (
 
         <>
-             <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-            <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-             
+            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
+                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
                 <div className='w-full max-w-[90%] ml-28 items-center p-10'>
-                    
                     <AccionesModal
                         isOpen={modalAcciones}
                         onClose={() => setModalAcciones(false)}
@@ -500,199 +479,4 @@ export function Variedades() {
         </>
     )
 }
-/* import React, { useEffect, useState } from 'react'
-import './CssTablas.css'
-import Header from '../organismos/Header/Header.jsx';
-import VariedadesModal from '../templates/VariedadesModal.jsx';
-import AccionesModal from '../organismos/ModalAcciones.jsx';
-import axios from 'axios';
-import Ejemplo from '../organismos/TableVariedad.jsx';
-import Swal from 'sweetalert2';
 
-export function Variedades() {
-    const [sidebarAbierto, setSidebarAbierto] = useState(false);
-
-    const toggleSidebar = () => {
-        setSidebarAbierto(!sidebarAbierto);
-    };
-
-    
-    const [modalOpen, setModalOpen] = useState(false)
-    const [modalAcciones, setModalAcciones] = useState(false)
-    const [mode, setMode] = useState('create')
-    const [initialData, setInitialData] = useState(null)
-    const [mensaje, setMensaje] = useState('')
-    const [variedades, setVariedades] = useState([])
-    const [idVariedad, setIdVariedad] = useState(null); 
-
-    useEffect(() => {
-        fetchData()
-    }, [])
-
-    const token = localStorage.getItem('token')
-
-    const fetchData = async () => {
-        try {
-            const getURL = 'http://localhost:3000/listarVariedades'
-            axios.get(getURL, { headers: { token: token } }).then((response) => {
-                console.log(response.data)
-                setVariedades(response.data)
-            })
-
-        } catch (error) {
-            console.log('Error en el servidor' + error);
-        }
-    }
-
-    const data = [
-        {
-            uid: 'id_variedad',
-            name: 'Id', 
-            sortable: true
-        },
-        {
-            uid: 'nombre_variedad',
-            name: 'Nombre',
-            sortable: true
-        },
-        {
-            uid: 'tipo_cultivo',
-            name: 'Tipo Cultivo',
-            sortable: true
-        },
-        {
-            uid: 'estado',
-            name: 'Estado',
-            sortable: true
-        },
-        {
-            uid: 'actions',
-            name: "Acciones",
-            sortable: true
-        }
-    ];
-
-    const handleDesactivar = (id_variedad) => {
-        Swal.fire({
-            title: "¿Estás seguro?",
-            text: "¡Esto podrá afectar a tus variedades!",
-            icon: "question",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Sí, estoy seguro!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                try {
-                    axios.put(`http://localhost:3000/desactivarvariedad/${id_variedad}`, null, { headers: { token: token } })
-                        .then((response) => {
-                            if (response.status === 200) {
-                                const nuevoEstado = response.data.message;
-                                fetchData();
-                                Swal.fire({
-                                    title: "¡Actualizado!",
-                                    text: `${nuevoEstado}`,
-                                    icon: "success"
-                                });
-                            } else {
-                                alert('Error al actualizar');
-                            }
-                        });
-                } catch (error) {
-                    alert('Error con el servidor');
-                }
-            } else {
-                Swal.fire({
-                    title: "Cancelado",
-                    text: "La operación ha sido cancelada",
-                    icon: "info"
-                });
-            }
-        });
-    };
-
-
-    const handleSubmit = async (datosForm, e) => {
-        e.preventDefault();
-
-        try {
-            if (mode === 'create') {
-                const postURL = 'http://localhost:3000/registrarVariedad'
-
-                await axios.post(postURL, datosForm, { headers: { token: token } }).then((response) => {
-                    console.log(response)
-                    if (response.status == 200) {
-                        fetchData()
-                        Swal.fire({
-                            position: "center", 
-                            icon: "success",
-                            title: "Variedad registrado con éxito",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    }
-                })
-            }
-            else if (mode === 'update') {
-                const updateURL = `http://localhost:3000/actualizarVariedad/${idVariedad}`;
-                axios.put(updateURL, datosForm, { headers: { token: token } }).then((response) => {
-                    if (response.status === 200) {
-                        fetchData();
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: "Se actualizó con éxito la variedad",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    } else {
-                        alert('Error al actualizar');
-                    }
-                });
-            }
-            setModalOpen(false);
-        } catch (error) {
-            console.log('Error en el servidor ' + error);
-            alert('Error, intente de nuevo');
-        }
-    };
-
-
-    const handleToggle = (mode, initialData, id_variedad) => {
-        setInitialData(initialData)
-        setModalOpen(true)
-        setMode(mode)
-        setIdVariedad(id_variedad);
-    };
-
-    return (
-        <>
-            <div className={`contenido ${sidebarAbierto ? 'contenido-extendido' : ''}`}>
-                <Header toggleSidebar={toggleSidebar} sidebarAbierto={sidebarAbierto} />
-
-                <AccionesModal
-                    isOpen={modalAcciones}
-                    onClose={() => setModalAcciones(false)}
-                    label={mensaje}
-                />
-                <VariedadesModal
-                    open={modalOpen}
-                    onClose={() => setModalOpen(false)}
-                    title={mode === 'create' ? 'Registrar variedad' : 'Actualizar variedad'}
-                    actionLabel={mode === 'create' ? 'Registrar' : 'Actualizar'}
-                    initialData={initialData}
-                    handleSubmit={handleSubmit}
-                    mode={mode}
-                    setModalOpen={setModalOpen}
-                />
-                <Ejemplo
-                    clickDesactivar={handleDesactivar}
-                    clickEditar={(id_variedad) => handleToggle('update', null, id_variedad)}
-                    clickRegistrar={() => handleToggle('create', null, null)}
-                    data={data}
-                    variedades={variedades}
-                />
-            </div>
-        </>
-    )
-} */

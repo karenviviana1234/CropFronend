@@ -19,7 +19,6 @@ export const FormProduccion = ({ mode, initialData, handleSubmit, onClose, actio
     const obtenerProgramacion = async () => {
       try {
         const response = await axiosClient.get('/listarProgramacion');
-        console.log(response.data);
         if (Array.isArray(response.data)) {
           setProgramacion(response.data);
         } else {

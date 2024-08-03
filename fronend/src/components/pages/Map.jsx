@@ -3,12 +3,11 @@ import { MapContainer, TileLayer, Marker, Popup, LayerGroup, LayersControl, useM
 import Header from '../organismos/Header/Header.jsx';
 import L from 'leaflet';
 import 'leaflet-minimap';
-import 'leaflet-minimap/dist/Control.MiniMap.min.css'; // Importa el CSS del mini mapa
+import 'leaflet-minimap/dist/Control.MiniMap.min.css'; 
 import axiosClient from '../axiosClient.js';
 import './CssTablas.css';
 import '../../mapa.css';
 
-// Define los iconos personalizados
 const houseIcon = L.icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/5074/5074409.png',
   iconSize: [32, 32],
@@ -36,7 +35,7 @@ function MiniMap() {
     const miniMap = new L.Control.MiniMap(miniMapLayer, {
       toggleDisplay: true,
       minimized: false,
-      position: 'bottomleft' // Posiciona el mini mapa en la esquina inferior izquierda
+      position: 'bottomleft' 
     }).addTo(map);
 
     return () => {

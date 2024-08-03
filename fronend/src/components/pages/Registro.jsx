@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import v from '../../styles/variables'
 import axiosClient from '../axiosClient.js'
-// import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'
 import AccionesModal from '../organismos/ModalAcciones.jsx'
 import Icon from '../atomos/Sidebar/IconosSidebar.jsx';
@@ -17,12 +16,9 @@ import Swal from 'sweetalert2';
 export const Registro = () => {
 
   const navigate = useNavigate()
-  //mensaje para mostrar mensajes de éxito o error.
   const [mensaje, setMensaje] = useState('')
-//modalAcciones para controlar la visibilidad del modal.
   const [modalAcciones, setModalAcciones] = useState(false)
 
-  // datos almacenados en el formulario, se guardan
   const [formData, setFormData] = useState({
     identificacion: '',
     nombre: '',
@@ -32,7 +28,6 @@ export const Registro = () => {
     rol: 'administrador',
   });
 
-//handleChange actualiza el estado formData cuando el usuario cambia los valores del formulario.
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -40,12 +35,10 @@ export const Registro = () => {
     });
   };
 
-//handleSubmit envía los datos del formulario a la API 
-//para registrar un nuevo usuario y muestra un mensaje de éxito o error.
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const baseURL = 'http://localhost:3000/usuario/registrarUsuario';
       await axiosClient.post("/usuario/registrarUsuario", formData);
       setMensaje('Usuario Registrado exitosamente')
       setModalAcciones(true)
@@ -58,12 +51,10 @@ export const Registro = () => {
       });
       navigate('/iniciosesion')
     } catch (error) {
-      console.error('Error al procesar la solicitud:', error);
+      alert('Error en el servidor')
     }
   };
-  //isVisible para controlar la visibilidad de la contraseña.
   const [isVisible, setIsVisible] = React.useState(false);
-//toggleVisibility alterna la visibilidad de la contraseña entre texto y puntos.
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
@@ -184,8 +175,7 @@ export const Registro = () => {
         <Footer />
       </div>
     </div>
-    //Se muestra un modal de acciones (AccionesModal) cuando el registro es exitoso.
-//Se incluye un pie de página (Footer).
+   
   )
 }
 

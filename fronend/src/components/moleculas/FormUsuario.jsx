@@ -58,7 +58,6 @@ export const FormUsuarios = ({ mode, initialData, handleSubmit, onClose, actionL
       };
       handleSubmit(formData, e);
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
   };

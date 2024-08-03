@@ -111,7 +111,6 @@ const PDF = () => {
                 const response = await axiosClient.get(getURL, {
                     headers: { token: token }
                 });
-                console.log(response.data);
                 setProduccion(response.data);
             } catch (error) {
                 console.error("Error al obtener la información", error.response ? error.response.data : error.message);

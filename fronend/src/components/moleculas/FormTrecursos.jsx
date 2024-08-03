@@ -31,7 +31,6 @@ const FormTrecursos = ({ mode, initialData, handleSubmit, onClose, actionLabel }
       }
       handleSubmit(formData, e)
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
   }

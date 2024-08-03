@@ -16,15 +16,12 @@ function Grafica() {
   async function obtenerProducciones() {
     try {
       const token = localStorage.getItem('token');
-      const getURL = 'http://localhost:3000/sumarProducciones';
-
-      const response = await axiosClient.get(getURL, {
+      const response = await axiosClient.get(("/sumarProducciones"), {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      console.log(response.data);
       setProducciones(response.data);
     } catch (error) {
       if (error.response) {
@@ -42,15 +39,13 @@ function Grafica() {
   async function obtenerInversiones() {
     try {
       const token = localStorage.getItem('token');
-      const getURL = 'http://localhost:3000/sumarProducciones';
 
-      const response = await axiosClient.get(getURL, {
+      const response = await axiosClient.get(("/sumarProducciones"), {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
-      console.log(response.data);
       setInversiones(response.data);
     } catch (error) {
       if (error.response) {

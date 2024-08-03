@@ -14,7 +14,6 @@ export const PaswordProvider = ({ children }) => {
     const cambiarPassword = async (data) =>{
         try {
             axiosClient.put(`/auth/cambiar`).then((response)=>{
-                console.log(response.data);
                 setMensaje(response.data.message)
                 setModalMessage(true)
             })
@@ -27,7 +26,6 @@ export const PaswordProvider = ({ children }) => {
   const tokenPassword = async (data) => {
       try {
         axiosClient.post(`/auth/recuperar`, data).then((response)=>{
-          console.log(response.data);
           setMensaje(response.data.message)
           setModalMessage(true)
           })
@@ -46,7 +44,6 @@ export const PaswordProvider = ({ children }) => {
       }, [errors]);
 
   return (
-    //Se exporta todo lo que se utilizo
     <PasswordContext.Provider
        value={{
             cambiarPassword,

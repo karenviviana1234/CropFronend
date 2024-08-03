@@ -100,8 +100,7 @@ export function Lotes() {
             const handleUpdateClick = (id_lote, lote) => {
                 localStorage.setItem('idUser', id_lote);
                 clickEditar(id_lote, lote);
-                console.log('ID del lote seleccionado:', id_lote);
-                console.log('Datos del lote seleccionado:', lote);
+              
             };
 
             switch (columnKey) {
@@ -111,7 +110,7 @@ export function Lotes() {
                             {cellValue}
                         </Chip>
                     );
-                case "actions": /*  */
+                case "actions": 
                     return (
                         <div className="relative flex justify-start  items-center gap-2">
                             <Dropdown>
@@ -319,7 +318,6 @@ export function Lotes() {
     const [lotes, setLotes] = useState([]);
     const { idLote, setLoteId } = useContext(LotesContext)
     const [sidebarAbierto, setSidebarAbierto] = useState(false);
-  // const nuevo = response.data.filter(item=> item.estado === "activo")
 
     const toggleSidebar = () => {
         setSidebarAbierto(!sidebarAbierto);
@@ -329,19 +327,15 @@ export function Lotes() {
         peticionGet()
     }, []);
 
-    // Trae los datos a la tabla lote
     const peticionGet = async () => {
         try {
             await axiosClient.get('/listarlote').then((response) => {
                 setLotes(response.data)
             })
         } catch (error) {
-            console.log('Error en el servidor ' + error)
+            alert('Error en el servidor')
         }
     };
-
-    // columnas de la tabla lotes
-  // setEstadonuevo(nuevo)
 
     const data = [
         {
@@ -385,7 +379,6 @@ export function Lotes() {
     const peticionDesactivar = async (id_lote) => {
         try {
             const response = await axiosClient.put(`/desactivarlote/${id_lote}`, null);
-            console.log(response.data);
 
             if (response.status === 200) {
                 const nuevoEstado = response.data.message;
@@ -419,7 +412,6 @@ export function Lotes() {
                 throw new Error('Error, el mensaje recibido no tiene el formato esperado');
             }
         } catch (error) {
-            console.log(error.response.data.message); // Imprimir el mensaje de error en la consola
             if (error.response && error.response.data && error.response.data.message) {
                 const errorMessage = error.response.data.message;
                 if (errorMessage === "No se puede activar el lote porque la finca está inactiva") {
@@ -446,17 +438,15 @@ export function Lotes() {
 
     // registrar y actualizar lote
     const handleSubmit = async (formData, e) => {
-        console.log('Datos enviados:', formData);
         e.preventDefault()
 
         try {
 
             if (mode === 'create') {
                 await axiosClient.post('/Registrarlote', formData).then((response) => {
-                    console.log('API Response:', response);
                     if (response.status == 200) {
                         Swal.fire({
-                            position: "center", // Posición centrada
+                            position: "center", 
                             icon: "success",
                             title: "Lote registrado con éxito",
                             showConfirmButton: false,
@@ -470,7 +460,6 @@ export function Lotes() {
             } else if (mode === 'update') {
 
                 await axiosClient.put(`/Actualizarlote/${idLote.id_lote}`, formData).then((response) => {
-                    console.log(response);
                     if (response.status === 200) {
                         Swal.fire({
                             position: "center",
@@ -488,7 +477,6 @@ export function Lotes() {
             setModalOpen(false)
 
         } catch (error) {
-            console.log('Error en el servidor ', error)
             alert('Error en el servidor')
         }
     }

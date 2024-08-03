@@ -39,12 +39,10 @@ const PerfilUsuario = () => {
     const ObtenerDatos = async () => {
       try {
         const token = localStorage.getItem("token");
-        // const getURL = "http://localhost:3000/usuario/listarPerfil";
         const response = await axiosClient.get("/usuario/listarPerfil");
-        console.log(response.data);
         setPerfil(response.data.data);
       } catch (error) {
-        console.error("Error al obtener la información", error.response ? error.response.data : error.message);
+        alert('Error en el servidor')
       }
     };
     ObtenerDatos();
@@ -54,12 +52,10 @@ const PerfilUsuario = () => {
   const sumaEmpleados = async () => {
     try {
       const token = localStorage.getItem("token");
-      const getURL = "http://localhost:3000/usuario/sumaEmpleados";
-      const response = await axiosClient.get(getURL, { headers: { token: token } });
-      console.log(response.data);
+      const response = await axiosClient.get("/usuario/sumaEmpleados");
       setUsuarios(response.data.totalEmpleados);
     } catch (error) {
-      console.error("Error al obtener la información", error.response ? error.response.data : error.message);
+      alert('Error en el servidor')
     }
   };
 
@@ -72,12 +68,10 @@ const PerfilUsuario = () => {
   const SumaFincas = async () => {
     try {
       const token = localStorage.getItem("token");
-      const getURL = "http://localhost:3000/finca/sumaFincas";
-      const response = await axiosClient.get(getURL, { headers: { token: token } });
-      console.log(response.data);
-      setFinca(response.data.totalFincas); // Aquí asignamos el valor directamente
+      const response = await axiosClient.get("/finca/sumaFincas");
+      setFinca(response.data.totalFincas); 
     } catch (error) {
-      console.error("Error al obtener la información", error.response ? error.response.data : error.message);
+      alert('Error en el servidor')
     }
   };
 
@@ -86,13 +80,11 @@ const PerfilUsuario = () => {
   }, []);
 
   const handleSubmit = async (formData, e) => {
-    console.log('Datos enviados:', formData);
     e.preventDefault();
 
     try {
       if (mode === 'update' && identificacion) {
         await axiosClient.put(`/usuario/actualizarPerfil/${identificacion}`, formData).then((response) => {
-          console.log(response);
           if (response.status === 200) {
             Swal.fire({
               position: "center",
@@ -109,7 +101,6 @@ const PerfilUsuario = () => {
       }
       setModalOpen(false);
     } catch (error) {
-      console.log('Error en el servidor ', error);
       alert('Error en el servidor');
     }
   };

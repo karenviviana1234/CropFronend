@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import axiosClient from '../axiosClient.js';
 import UsuarioContext from '../../context/UsuariosContext.jsx';
 
-//importanciones que se necesitan en la tabla de nextui
 import {
     Table,
     TableHeader,
@@ -23,7 +22,6 @@ import {
     Chip,
     Pagination,
 } from "@nextui-org/react";
-//importaciones de nextui
 import { PlusIcon } from "./../NextUI/PlusIcon.jsx";
 import { SearchIcon } from "./../NextUI/SearchIcon.jsx";
 import { ChevronDownIcon } from "./../NextUI/ChevronDownIcon.jsx";
@@ -32,8 +30,7 @@ import ButtonActualizar from "../atomos/ButtonActualizar.jsx"
 import Header from '../organismos/Header/Header.jsx';
 
 export function Usuarios() {
-//estados que se utililzan
-        // const [estadonuevo, setEstadonuevo] = useState([]);
+
 
     const statusColorMap = {
         activo: "success",
@@ -43,7 +40,6 @@ export function Usuarios() {
 
     function EjemploUsuario() {
 
-        //page se utilizan para gestionar el estado de la búsqueda, filtrado, selección y paginación.
         const [filterValue, setFilterValue] = useState("");
         const [selectedKeys, setSelectedKeys] = useState(new Set([]));
         const [statusFilter, setStatusFilter] = useState("all");
@@ -58,10 +54,8 @@ export function Usuarios() {
             { name: "Activo", uid: "inactivo" },
             { name: "Inactivo", uid: "activo" },
         ];
-        // const [estadonuevo, setnuevo] =useState([])
 
         const hasSearchFilter = Boolean(filterValue);
-        //filteredItems filtra los usuarios según el valor de búsqueda y el filtro de estado
         const filteredItems = React.useMemo(() => {
             let filteredusuarios = usuarios;
 
@@ -92,7 +86,6 @@ export function Usuarios() {
 
             return filteredItems.slice(start, end);
         }, [page, filteredItems, rowsPerPage]);
-//sortedItems ordena los elementos según la columna seleccionada.
         const sortedItems = React.useMemo(() => {
             return [...items].sort((a, b) => {
                 const first = a[sortDescriptor.column];
@@ -102,17 +95,12 @@ export function Usuarios() {
                 return sortDescriptor.direction === "descending" ? -cmp : cmp;
             });
         }, [sortDescriptor, items]);
-//Renderización de Celdas: renderCell define cómo se renderizan las celdas, incluyendo los botones de actualización y desactivación.
         const renderCell = React.useCallback((usuario, columnKey) => {
             const cellValue = usuario[columnKey];
 
             const handleUpdateClick = (identificacion, usuario) => {
                 localStorage.setItem('idUser', identificacion);
                 clickEditar(identificacion, usuario);
-                console.log('ID del usuario seleccionado:', 
-                    
-                );
-                console.log('Datos del usuario seleccionado:', usuario);
             };
 
             switch (columnKey) {
@@ -122,7 +110,7 @@ export function Usuarios() {
                             {cellValue}
                         </Chip>
                     );
-                case "actions": /*  */
+                case "actions":
                     return (
                         <div className="relative flex justify-start  items-center gap-2">
                             <Dropdown>
@@ -141,8 +129,7 @@ export function Usuarios() {
                     return cellValue;
             }
         }, []);
-//Gestión de Paginación: onNextPage, onPreviousPage, onRowsPerPageChange gestionan el cambio de página y 
-//la cantidad de filas por página.
+
         const onNextPage = React.useCallback(() => {
             if (page < pages) {
                 setPage(page + 1);
@@ -177,7 +164,6 @@ export function Usuarios() {
         const onStatusFilter = (selectedKeys) => {
             setStatusFilter(selectedKeys)
         }
-//Contenido Superior e Inferior: topContent y bottomContent definen la interfaz para la búsqueda, filtrado, y paginación.
         const topContent = React.useMemo(() => {
             return (
                 <>
@@ -216,7 +202,7 @@ export function Usuarios() {
                                         ))}
                                     </DropdownMenu>
                                 </Dropdown>
-                                <Button className="z-1 mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
+                                <Button className=" mr-30 text-white bg-[#006000] " style={{ position: 'relative' }} endContent={<PlusIcon />} onClick={() => handleToggle('create')}>
                                     Registrar
                                 </Button>
                             </div>
@@ -247,7 +233,6 @@ export function Usuarios() {
             hasSearchFilter,
         ]);
 
-//aqui se ve la paginacioon y los btones de anterior y siguiente
         const bottomContent = React.useMemo(() => {
             return (
                 <div className="py-2 px-2 flex justify-between items-center m-3">
@@ -315,11 +300,9 @@ export function Usuarios() {
         );
     }
 
-    /* Espacio 1 */
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAcciones, setModalAcciones] = useState(false);
     const [mode, setMode] = useState('create');
-    // const nuevo =response.data.filter(item => item.estado === "activo" )
     const [initialData, setInitialData] = useState(null);
     const [mensaje, setMensaje] = useState('')
     const [usuarios, setusuarios] = useState([]);
@@ -330,8 +313,7 @@ export function Usuarios() {
         setSidebarAbierto(!sidebarAbierto);
     };
 
-//Peticiones HTTP: peticionGet obtiene los usuarios del servidor.
-//Carga los usuarios al montar el componente.
+
     useEffect(() => {
         peticionGet()
     }, []);
@@ -346,8 +328,7 @@ export function Usuarios() {
         }
     };
 
-//datos de la tabla
- // setEstadonuevo(nuevo)
+
     const data = [
         {
             uid: 'identificacion',
@@ -385,16 +366,12 @@ export function Usuarios() {
             sortable: true
         }
     ];
-//Desactivación de Usuarios: peticionDesactivar desactiva a un usuario con una confirmación previa mediante SweetAlert
     const peticionDesactivar = async (identificacion) => {
 
-        // console.log("ID del usuarios a desactivar:", identificacion);
         try {
             axiosClient.put(`/usuario/desactivarUsuario/${identificacion}`, null).then((response) => {
-                console.log(response.data)
                 if (response.status == 200) {
                     const nuevoEstado = response.data.message;
-                    /* fetchData() */
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "¡Esto podra afectar a tus usuarios!",
@@ -423,22 +400,16 @@ export function Usuarios() {
     }
 
     const handleSubmit = async (formData, e) => {
-        console.log('Datos enviados:', formData);
         e.preventDefault()
 
-//Utilza dos modos para registrar y actualizar y tenemos una confirmacion con SweetAlert
         try {
 
             if (mode === 'create') {
-                /*  if (!formData.nombre || !formData.longitud || !formData.latitud || !formData.fk_id_finca) {
-                     alert('Por favor complete todos los campos requeridos');
-                     return;
-                 } */
+              
                 await axiosClient.post('/usuario/registrarEmple', formData).then((response) => {
-                    console.log('API Response:', response);
                     if (response.status == 200) {
                         Swal.fire({
-                            position: "center", // Posición centrada
+                            position: "center", 
                             icon: "success",
                             title: "Usuario registrado con éxito",
                             showConfirmButton: false,
@@ -450,9 +421,7 @@ export function Usuarios() {
                     }
                 })
             } else if (mode === 'update') {
-//aqui se esta actulizando el usuario
                 await axiosClient.put(`/usuario/actualizarUsuario/${idUsuario.identificacion}`, formData).then((response) => {
-                    console.log(response);
                     if (response.status === 200) {
                         Swal.fire({
                             position: "center",
@@ -470,7 +439,6 @@ export function Usuarios() {
             setModalOpen(false)
 
         } catch (error) {
-            console.log('Error en el servidor ', error)
             alert('Error en el servidor')
         }
     }

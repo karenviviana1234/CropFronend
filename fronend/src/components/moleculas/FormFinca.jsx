@@ -26,7 +26,6 @@ const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
       };
       handleSubmit(formData, e);
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
   };
@@ -58,8 +57,8 @@ const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
     value={longitud}
     onChange={(e) => setLongitud(e.target.value)}
     required
-    min="-79.03" // Mínimo valor de longitud válido en Colombia
-    max="-66.85" // Máximo valor de longitud válido en Colombia
+    min="-79.03"
+    max="-66.85" 
     step="any"
     title="La longitud debe ser un número válido entre -79.03 y -66.85 para ubicaciones en Colombia"
   />
@@ -74,8 +73,8 @@ const FormFinca = ({ actionLabel, handleSubmit, mode, onClose }) => {
     value={latitud}
     onChange={(e) => setLatitud(e.target.value)}
     required
-    min="4.22" // Mínimo valor de latitud válido en Colombia
-    max="12.45" // Máximo valor de latitud válido en Colombia
+    min="4.22" 
+    max="12.45" 
     step="any"
     title="La latitud debe ser un número válido entre 4.22 y 12.45 para ubicaciones en Colombia"
   />

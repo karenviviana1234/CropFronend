@@ -38,7 +38,6 @@ export const FormLotes = ({ mode, initialData, handleSubmit, onClose, actionLabe
       };
       handleSubmit(formData, e);
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
   };

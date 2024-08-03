@@ -41,7 +41,6 @@ function UpdateUserPasswordMolecule({ titleBtn, onClose }) {
     } catch (error) {
       console.log(error);
     }
-    console.log(formData);
   };
 
   return (

@@ -27,7 +27,7 @@ const Empleado = () => {
       setEmpleado(activeData);
       setFilteredData(activeData);
     } catch (error) {
-      console.error("Error al obtener los datos:", error);
+      alert('Error en el servidor')
     }
   };
 
@@ -65,10 +65,9 @@ const Empleado = () => {
         text: "Observación registrada exitosamente",
         icon: "success",
       });
-      setFormData(formData); // Actualizar el estado de formData con la observación enviada
+      setFormData(formData); 
       ObtenerDatos();
     } catch (error) {
-      console.error('Error al procesar la solicitud:', error.response?.data || error.message);
       Swal.fire({
         title: "Error",
         text: error.response?.data?.message || "Error al procesar la solicitud",
@@ -88,7 +87,6 @@ const Empleado = () => {
         });
         ObtenerDatos();
       } catch (error) {
-        console.error("Error al iniciar la actividad:", error);
         Swal.fire({
           title: "Error",
           text: "Hubo un problema al iniciar la actividad",
@@ -111,7 +109,7 @@ const Empleado = () => {
           text: "La actividad ha sido terminada correctamente.",
           icon: "success",
         });
-        setFormData({ observacion: '' }); // Limpiar el formulario después de terminar
+        setFormData({ observacion: '' }); 
         ObtenerDatos();
       } catch (error) {
         console.error("Error al terminar la actividad:", error);

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-/* import { Header } from '../molecules/Header.jsx'; */
 import AccionesModal from '../organismos/ModalAcciones.jsx';
 import Swal from 'sweetalert2';
 import FincasModal from '../templates/FincaModal.jsx';
@@ -327,7 +326,6 @@ export function Fincas() {
 
   }, []);
 
-  //PETICION GET PARA TRAER LOS DATOS DE LAS FINCAS REGISTRADAS
 
   const peticionGet = async () => {
     try {
@@ -336,17 +334,14 @@ export function Fincas() {
       })
 
     } catch (error) {
-      console.error('Error al obtener los datos:', error);
+      alert('Error en el servidor')
     }
   };
-
-
-  //COLUMNAS DEL DATA_TABLE
 
   const data = [
     {
       uid: 'id_finca',
-      name: 'Id',  // El titulo de los id
+      name: 'Id',  
       sortable: true
     },
     {
@@ -376,16 +371,11 @@ export function Fincas() {
     }
   ];
 
-  //PETICION PARA DESACTIVAR FINCAS    
   const peticionDesactivar = async (id_finca) => {
-
-    // console.log("ID del lotes a desactivar:", id_lote);
     try {
       axiosClient.put(`/finca/desactivarFinca/${id_finca}`, null).then((response) => {
-        console.log(response.data)
         if (response.status == 200) {
           const nuevoEstado = response.data.message;
-          /* fetchData() */
           Swal.fire({
             title: "¿Estás seguro?",
             text: "¡Esto podra afectar a tus fincas!",
@@ -413,9 +403,7 @@ export function Fincas() {
     }
   }
 
-  //PETICION PARA ACTIVAR FINCAS
   const handleSubmit = async (formData, e) => {
-    console.log('Datos enviados:', formData);
     e.preventDefault()
 
 
@@ -423,10 +411,9 @@ export function Fincas() {
 
       if (mode === 'create') {
         await axiosClient.post('/finca/RegistroFinca', formData).then((response) => {
-          console.log('API Response:', response);
           if (response.status == 200) {
             Swal.fire({
-              position: "center", // Posición centrada
+              position: "center", 
               icon: "success",
               title: "Finca registrada con éxito",
               showConfirmButton: false,
@@ -440,7 +427,6 @@ export function Fincas() {
       } else if (mode === 'update') {
 
         await axiosClient.put(`/finca/actualizarFinca/${idFinca.id_finca}`, formData).then((response) => {
-          console.log(response);
           if (response.status === 200) {
             Swal.fire({
               position: "center",
@@ -458,7 +444,6 @@ export function Fincas() {
       setModalOpen(false)
 
     } catch (error) {
-      console.log('Error en el servidor ', error)
       alert('Error en el servidor')
     }
   }

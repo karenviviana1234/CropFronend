@@ -16,7 +16,6 @@ const FormEmpleado = ({ actionLabel, handleSubmit, initialData }) => {
       const formData = { observacion };
       handleSubmit(e, formData); // Aquí se pasa formData como argumento
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema: ' + error);
     }
   };

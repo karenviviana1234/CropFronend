@@ -17,7 +17,6 @@ const FormCultivos = ({ actionLabel, handleSubmit, initialdata, mode, onClose })
 
   useEffect(() => {
     axiosClient.get('/listarlote').then((response) => {
-      console.log(response.data)
 
       const loteFilter = response.data.filter(lote => lote.estado == 'activo')
       setLote(loteFilter)
@@ -26,7 +25,6 @@ const FormCultivos = ({ actionLabel, handleSubmit, initialdata, mode, onClose })
 
   useEffect(() => {
     axiosClient.get('/listarVariedades').then((response) => {
-      console.log(response.data)
       const variedadFilter = response.data.filter(variedad => variedad.estado == 'activo')
       setVariedad(variedadFilter)
     })
@@ -52,7 +50,6 @@ const FormCultivos = ({ actionLabel, handleSubmit, initialdata, mode, onClose })
       }
       handleSubmit(formData, e)
     } catch (error) {
-      console.log(error);
       alert('Hay un error en el sistema ' + error);
     }
   }
@@ -97,9 +94,9 @@ const FormCultivos = ({ actionLabel, handleSubmit, initialdata, mode, onClose })
               value={loteFK}
               onChange={(e) => setLoteFK(e.target.value)}
             >
-              <option value="" disabled hidden>Seleccionar lote</option>
+              <option  disabled hidden>Seleccionar lote</option>
               {lote.map(lot => (
-                <option key={lot.id_lote} value={lot.id_lote} textValue={lot.id_lote}>
+                <option key={lot.id_lote} value={lot.id_lote}>
                   {lot.nombre}
                 </option>
               ))}
@@ -116,7 +113,7 @@ const FormCultivos = ({ actionLabel, handleSubmit, initialdata, mode, onClose })
             >
               <option value="" disabled hidden>Seleccionar variedad</option>
               {variedad.map(vari => (
-                <option key={vari.id_variedad} value={vari.id_variedad} textValue={vari.id_variedad}>
+                <option key={vari.id_variedad} value={vari.id_variedad}>
                   {vari.nombre_variedad}
                 </option>
               ))}

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Button, Input } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import PasswordContext from '../../context/PasswordContext.jsx';
-import Icon from '../atomos/Iconos.jsx';
 
 function RecuperarPasswordUserLogin() {
   const navigate = useNavigate();
@@ -12,8 +11,6 @@ function RecuperarPasswordUserLogin() {
   const handleChange = (e) => {
     setCorreo(e.target.value);
   };
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();

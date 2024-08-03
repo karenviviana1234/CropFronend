@@ -101,7 +101,6 @@ export function Cultivos() {
 
             switch (columnKey) {
                 case "fecha_inicio":
-                    // Formatear la fecha para que solo muestre la fecha sin la hora
                     const formattedDate = format(new Date(cellValue), 'dd-MM-yyyy');
                     return formattedDate;
                 case "estado":
@@ -334,11 +333,10 @@ export function Cultivos() {
     const peticionGet = async () => {
         try {
             await axiosClient.get('/listarCultivos').then((response) => {
-                console.log(response.data)
                 setCultivos(response.data)
             })
         } catch (error) {
-            console.log('Error en el servidor ' + error)
+            alert('Error en el servidor')
         }
     };
 
@@ -385,16 +383,12 @@ export function Cultivos() {
             sortable: true
         }
     ];
-    // desactivar lote
     const peticionDesactivar = async (id_cultivo) => {
 
-        // console.log("ID del cultivos a desactivar:", id_cultivo);
         try {
             axiosClient.put(`/desactivarCultivos/${id_cultivo}`, null).then((response) => {
-                console.log(response.data)
                 if (response.status == 200) {
                     const nuevoEstado = response.data.message;
-                    /* fetchData() */
                     Swal.fire({
                         title: "¿Estás seguro?",
                         text: "¡Esto podra afectar a tus cultivos!",
@@ -422,16 +416,13 @@ export function Cultivos() {
         }
     }
 
-    // registrar y actualizar cultivo
     const handleSubmit = async (formData, e) => {
-        console.log('Datos enviados:', formData);
         e.preventDefault()
 
         try {
 
             if (mode === 'create') {
                 await axiosClient.post('/registrarCultivos', formData).then((response) => {
-                    console.log('API Response:', response);
                     if (response.status == 200) {
                         Swal.fire({
                             position: "center", // Posición centrada
@@ -448,7 +439,6 @@ export function Cultivos() {
             } else if (mode === 'update') {
 
                 await axiosClient.put(`/actualizarCultivos/${idCultivo.id_cultivo}`, formData).then((response) => {
-                    console.log(response);
                     if (response.status === 200) {
                         Swal.fire({
                             position: "center",
@@ -466,7 +456,6 @@ export function Cultivos() {
             setModalOpen(false)
 
         } catch (error) {
-            console.log('Error en el servidor ', error)
             alert('Error en el servidor')
         }
     }
